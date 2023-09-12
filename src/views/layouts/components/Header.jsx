@@ -88,10 +88,15 @@ function Header({config}) {
         </div>
         <div className={`items-center justify-between ${isMobileMenuOpen ? 'block' : 'hidden'} w-full bg-white rounded-b-2xl md:flex md:w-auto md:order-1 transition-transform ease-in-out duration-300`} id="navbar-language">
           <ul className="flex flex-col gap-2 font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white transition-max-height duration-300 ease-in-out">
+            {
+              // ${oneMenu.familyLink.includes(pathName) 
+              Menu.map(oneMenu => (
+                <li key={oneMenu.name}>
+                  <NavLink to={oneMenu.path} className="block py-2 pl-3 pr-4 text-gray-900 rounded md:bg-transparent md:p-0 md:dark:text-blue-500" aria-current="page">{oneMenu.name}</NavLink>
+                </li>
+              ))
+            }
             
-            <li>
-              <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded md:bg-transparent md:p-0 md:dark:text-blue-500" aria-current="page">Home</a>
-            </li>
             
           </ul>
         </div>
