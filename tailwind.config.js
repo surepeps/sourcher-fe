@@ -12,7 +12,8 @@ export default {
         'bgColor': '#FFFFFF',
         'textPurple': '#591664',
         'awimGreen': '#004C3F',
-        'awimFadeGreen': '#004C3F90'
+        'awimFadeGreen': '#004C3F90',
+        'awimYellow': '#F1A24C',
       },
       fontFamily: {
         notoSans: ['Noto Sans', 'sans'],
