@@ -1,0 +1,12 @@
+/* Custom CSS */
+.ScrollableCont::-webkit-scrollbar {
+    width: 0.5rem; /* Adjust the scrollbar width as needed */
+  }
+  
+  .ScrollableCont::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+  
+  .ScrollableCont::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
