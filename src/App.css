@@ -10,3 +10,7 @@
   .ScrollableCont::-webkit-scrollbar-track {
     background-color: transparent;
   }
+
+  *:focus {
+    outline: none !important;
+  }

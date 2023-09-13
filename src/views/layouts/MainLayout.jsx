@@ -6,9 +6,12 @@ function MainLayout({ children, config, userData, skeleton }) {
     <div>
       <Header config={config} />
     
-      {React.Children.map(children, child => {
-        return React.cloneElement(child, { config });
-      })}
+      <div className="mt-18 lg:mt-[90px]">
+        {React.Children.map(children, child => {
+          return React.cloneElement(child, { config });
+        })}
+      </div>
+      
 
     </div>
   )

@@ -1,17 +1,22 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
+
 
 function AuthLayout({ config, children }) {
   return (
     <div className='w-full h-screen flex font-notoSans'>
       
       <div className="w-[50%] pl-20 pt-10 hidden lg:block xl:bg-top bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(${config.authBanner})` }}>
-        <img src={config.awimLogo} alt="" className='' />
-
+        <NavLink to='/'>
+          <img src={config.awimLogo} alt="" className='' />
+        </NavLink>
       </div>
       <div className="lg:w-[50%] w-full px-6 md:px-20 lg:px-32 xl:px-38 2xl:px-44 py-5 lg:py-10 ">
 
         <div className="logoCont block lg:hidden fixed top-0 left-0 bg-white py-5 px-6 md:px-20 lg:px-32 xl:px-38 2xl:px-44 w-full">
-          <img src={config.awimDarkLogo} alt="" className='' />
+          <NavLink to='/'>
+            <img src={config.awimDarkLogo} alt="" className='' />
+          </NavLink>
         </div>
 
         <div className="ScrollableCont overflow-y-auto pt-20 lg:pt-0 w-full h-full scrollbar-width-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">

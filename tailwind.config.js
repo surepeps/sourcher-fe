@@ -10,6 +10,7 @@ export default {
     extend: {
       colors: {
         'bgColor': '#FFFFFF',
+        'textWhite': '#FFFFFF',
         'textPurple': '#591664',
         'awimGreen': '#004C3F',
         'awimFadeGreen': '#004C3F90',

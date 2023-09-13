@@ -1,11 +1,14 @@
 import React from 'react'
-import Header from '../layouts/components/Header'
+import HomeBanner from './components/banner/HomeBanner'
 
 
-function Home() {
+
+function Home({config}) {
   return (
     <div>
-    
+      {/* Home Banner */}
+      <HomeBanner config={config} />
+      
     </div>
   )
 }
