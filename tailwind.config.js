@@ -15,6 +15,7 @@ export default {
         'awimGreen': '#004C3F',
         'awimFadeGreen': '#004C3F90',
         'awimYellow': '#F1A24C',
+        'letterColor5': '#0F172A5',
       },
       fontFamily: {
         notoSans: ['Noto Sans', 'sans'],

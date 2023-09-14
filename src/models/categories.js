@@ -1,0 +1,18 @@
+export const categories = [
+    { name: 'All'},
+    { name: 'Healthcare'},
+    { name:'Tech'},
+    { name: 'Art'},
+    { name: 'Media'},
+    { name: 'Banking'},
+    { name: 'Government'},
+    { name: 'Education'},
+    { name: 'Advertising'},
+    { name: 'Legal'},
+    { name: 'Education 2'},
+    { name: 'Education 3'},
+    { name: 'Education 4'},
+    { name: 'Education 5'},
+    { name: 'Education 6'},
+    { name: 'Fin Tech'},
+]

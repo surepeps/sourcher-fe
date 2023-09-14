@@ -2,11 +2,11 @@ import React from 'react'
 
 function HomeBanner({config}) {
   return (
-    <div className='bg-no-repeat bg-center bg-cover flex flex-col gap-6 lg:gap-8 justify-center items-center py-36 font-semibold font-notoSans' style={{ backgroundImage: `url(${config.homeBanner})`}}>
-      <h1 className="lg:text-6xl text-4xl text-textWhite w-full lg:w-4/12 text-center leading-snug"> Find & Connect with Experts </h1>
-      <p className="text-textWhite text-sm lg:text-md lg:w-4/12 w-full text-center px-4 lg:px-14 leading-7 lg:leading-8 font-normal">We empower your journey by connecting you with accomplished female experts across diverse disciplines.</p>
+    <div className='bg-no-repeat bg-center bg-cover flex flex-col gap-6 lg:gap-8 justify-center items-center pt-36 lg:pb-36 pb-14 font-semibold font-notoSans' style={{ backgroundImage: `url(${config.homeBanner})`}}>
+      <h1 className="lg:text-6xl text-4xl text-textWhite w-full md:w-10/12 lg:w-8/12 xl:w-4/12 text-center leading-snug"> Find & Connect with Experts </h1>
+      <p className="text-textWhite text-sm lg:text-lg md:w-6/12 xl:w-4/12 lg:w-5/12 w-full text-center px-4 lg:px-10 leading-7 lg:leading-8 font-normal">We empower your journey by connecting you with accomplished female experts across diverse disciplines.</p>
 
-      <div className="lg:w-auto w-[92%] px-2 mx-auto bg-bgColor rounded-xl py-2 mt-5 lg:mt-8 mb-10 flex lg:flex-row flex-col gap-3">
+      <div className="lg:w-auto w-[92%] px-2 mx-auto bg-bgColor rounded-xl py-2 mt-5 lg:mt-8 lg:mb-10 flex lg:flex-row flex-col gap-3">
         
         <div className="flex gap-2 px-2 items-center">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
