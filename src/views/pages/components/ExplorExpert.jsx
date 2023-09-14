@@ -96,14 +96,20 @@ function ExplorExpert({ categories }) {
       </div>
 
       <div className="experts w-full pt-10">
-        <div className="AllCards w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 xl:grid-cols-4">
+        <div className="AllCards w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:grid-cols-4">
            {
             exploreExperts.map(expert => (<SingleExpert key={expert.id} expert={expert} />))
            }
             
         </div>
-        <div className="btnView">
-
+        <div className="btnView flex justify-center pt-10">
+           <button className='px-8 py-3 flex transition duration-300 ease-in-out gap-3 items-center rounded-xl text-textPurple text-sm border-2 border-textPurple bg-transparent hover:text-textWhite hover:bg-textPurple '>
+              View All
+              <svg className='fill-current' width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.0253 15.6833C11.8669 15.6833 11.7086 15.625 11.5836 15.5C11.3419 15.2583 11.3419 14.8583 11.5836 14.6166L16.2003 9.99998L11.5836 5.38331C11.3419 5.14164 11.3419 4.74164 11.5836 4.49998C11.8253 4.25831 12.2253 4.25831 12.4669 4.49998L17.5253 9.55831C17.7669 9.79998 17.7669 10.2 17.5253 10.4416L12.4669 15.5C12.3419 15.625 12.1836 15.6833 12.0253 15.6833Z" fill="fill-current"/>
+                <path d="M16.941 10.625H2.91602C2.57435 10.625 2.29102 10.3417 2.29102 10C2.29102 9.65833 2.57435 9.375 2.91602 9.375H16.941C17.2827 9.375 17.566 9.65833 17.566 10C17.566 10.3417 17.2827 10.625 16.941 10.625Z" fill="fill-current"/>
+              </svg>
+           </button>
         </div>
       </div>
     </div>
