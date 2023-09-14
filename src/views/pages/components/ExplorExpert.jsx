@@ -1,4 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import SingleExpert from './experts/SingleExpert';
+import { exploreExperts } from '../../../models/experts';
+
+
 
 function ExplorExpert({ categories }) {
     const [selectedCategory, setSelectedCategory] = useState('All');
@@ -26,7 +30,7 @@ function ExplorExpert({ categories }) {
 
     const scrollRight = () => {
         const list = listRef.current;
-        const scrollAmount = 200; // Adjust this value as needed for your design
+        const scrollAmount = 200;
         const maxScroll = list.scrollWidth - list.clientWidth;
         const newScrollLeft = Math.min(list.scrollLeft + scrollAmount, maxScroll);
 
@@ -35,7 +39,6 @@ function ExplorExpert({ categories }) {
         behavior: 'smooth',
         });
     };
-
 
 
   return (
@@ -92,7 +95,17 @@ function ExplorExpert({ categories }) {
 
       </div>
 
-      <div className="experts"></div>
+      <div className="experts w-full pt-10">
+        <div className="AllCards w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 xl:grid-cols-4">
+           {
+            exploreExperts.map(expert => (<SingleExpert key={expert.id} expert={expert} />))
+           }
+            
+        </div>
+        <div className="btnView">
+
+        </div>
+      </div>
     </div>
   )
 }
