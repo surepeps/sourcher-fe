@@ -1,9 +1,9 @@
 import React from 'react'
 import HtmlRender from '../../../../helpers/HtmlRender'
 
-function SingleExpert({expert}) {
+function SingleExpert({expert, myclass = 'w-full'}) {
   return (
-    <div className={`w-full border-2 border-[#0F172A10] h-auto ${expert.availability ? 'rounded-r-3xl rounded-bl-3xl rounded-tl-lg' : 'rounded-3xl'} `}>
+    <div className={`${myclass} border-2 border-[#0F172A10] h-auto ${expert.availability ? 'rounded-r-3xl rounded-bl-3xl rounded-tl-lg' : 'rounded-3xl'} `}>
         <div className="middle h-auto w-full relative">
             {
               expert.availability ?

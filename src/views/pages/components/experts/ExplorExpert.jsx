@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import SingleExpert from './experts/SingleExpert';
-import { exploreExperts } from '../../../models/experts';
+import SingleExpert from './SingleExpert';
+import { exploreExperts } from '../../../../models/experts';
 
 
 
@@ -8,6 +8,8 @@ function ExplorExpert({ categories }) {
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [showScrollRight, setShowScrollRight] = useState(true);
     const listRef = useRef(null);
+
+    const fourExperts = exploreExperts.slice(0, 4);
 
     useEffect(() => {
         const list = listRef.current;
@@ -98,7 +100,7 @@ function ExplorExpert({ categories }) {
       <div className="experts w-full pt-10">
         <div className="AllCards w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:grid-cols-4">
            {
-            exploreExperts.map(expert => (<SingleExpert key={expert.id} expert={expert} />))
+            fourExperts.map(expert => (<SingleExpert key={expert.id} expert={expert} />))
            }
             
         </div>
