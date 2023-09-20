@@ -9,6 +9,7 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const api = new ApiService();
@@ -36,6 +37,7 @@ export function AuthProvider({ children }) {
       const tokenFromLocalStorage = JSON.parse(localStorage.getItem('token'));
       if (tokenFromLocalStorage.token) {
         setToken(tokenFromLocalStorage);
+        setIsLoggedIn(true);
         fetchUserData();
       }
       setLoading(false);
@@ -87,7 +89,7 @@ export function AuthProvider({ children }) {
   const authContextValue = useMemo(() => {
     return {
       user,
-      isLoggedIn: !!user,
+      isLoggedIn,
       login,
       logout,
       token,
@@ -95,7 +97,7 @@ export function AuthProvider({ children }) {
       fetchUserData,
       loading,
     };
-  }, [user, token, loading]);
+  }, [user, token, isLoggedIn, loading]);
 
   return (
     <AuthContext.Provider value={authContextValue}>

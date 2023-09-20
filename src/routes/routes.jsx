@@ -29,6 +29,7 @@ const createRoute = (path, element, pageName, privateRoute = true, layout = Main
     createRoute("/forgot-password", ForgotPassword, "Forgot Password", false, AuthLayout),
     createRoute("/register", Register, "Register", false, AuthLayout),
     createRoute("/", Home, "Dashboard", false),
+    createRoute("/home", Home, "Dashboard", true),
 
   ];
   

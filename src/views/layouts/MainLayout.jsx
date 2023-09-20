@@ -4,6 +4,8 @@ import Footer from './components/Footer';
 
 
 function MainLayout({ children, config, userData, skeleton }) {
+
+  console.log("Main Layout: ", userData)
   return (
     <div>
       {/* Footer */}
