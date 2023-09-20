@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import ApiService from '../helpers/http/apiService';
 import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import { responseCatcher } from '../helpers/http/response';
-
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -16,57 +15,54 @@ export function AuthProvider({ children }) {
 
   const fetchUserData = async () => {
     try {
+      const tokenData = JSON.parse(localStorage.getItem('token'));
+      if (!tokenData || !tokenData.token || tokenData.expires <= new Date().getTime()) {
+        // Token has expired or is not present
+        handleTokenExpiration();
+        return;
+      }
+
       const response = await api.getWithToken('/user');
-      setUser(response.user);
-    } catch (error) {
-      responseCatcher(error)
-      console.error('Error fetching authenticated data:', error);
-
-      // when auth fails
-      setUser(null);
-      setIsLoggedIn(false);
-      setToken(null);
-      localStorage.removeItem('token');
-
-    } finally {
+      setUser(response.data);
       setLoading(false);
+    } catch (error) {
+      responseCatcher(error);
+      handleTokenExpiration();
     }
-  };
-
-  const asyncLocalStorage = {
-    getItem: async (key) => {
-      return await Promise.resolve(localStorage.getItem(key));
-    },
   };
 
   useEffect(() => {
     async function checkLocalStorage() {
-      const tokenFromLocalStorage = await asyncLocalStorage.getItem('token');
-      if (tokenFromLocalStorage) {
-        setIsLoggedIn(true);
-        setLoading(false);
+      const tokenFromLocalStorage = JSON.parse(localStorage.getItem('token'));
+      if (tokenFromLocalStorage.token) {
+        setToken(tokenFromLocalStorage);
         fetchUserData();
-      } else {
-        setLoading(false);
       }
+      setLoading(false);
     }
     checkLocalStorage();
   }, []);
 
+  const handleTokenExpiration = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem('token');
+    setLoading(false);
+    toast.error('Session expired. Please log in again.');
+  };
+
   const authenticateUser = async (response) => {
-    const { token: newToken, userData: newUser } = response;
-    localStorage.setItem('token', JSON.stringify(newToken));
-    setToken(newToken);
-    setUser(newUser);
-    setIsLoggedIn(true);
+    const { token: newToken, expires_in } = response.data;
+    const expirationTime = new Date().getTime() + expires_in * 1000;
+    localStorage.setItem('token', JSON.stringify({ token: newToken, expires: expirationTime }));
+    setToken({ token: newToken, expires: expirationTime });
+    fetchUserData();
     toast.success(response.message);
   };
 
   const register = async (userFormData) => {
     try {
       const response = await api.postWithOutToken('/auth/register', userFormData);
-      
-      // authenticateUser(response);
     } catch (error) {
       responseCatcher(error);
     }
@@ -82,17 +78,16 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-      toast.success("Logged out Successfully");
-      setUser(null);
-      setIsLoggedIn(false);
-      setToken(null);
-      localStorage.removeItem('token');
+    toast.success('Logged out Successfully');
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem('token');
   };
 
   const authContextValue = useMemo(() => {
     return {
       user,
-      isLoggedIn,
+      isLoggedIn: !!user,
       login,
       logout,
       token,
@@ -100,11 +95,12 @@ export function AuthProvider({ children }) {
       fetchUserData,
       loading,
     };
-  }, [user, isLoggedIn, token, loading]);
+  }, [user, token, loading]);
 
   return (
     <AuthContext.Provider value={authContextValue}>
       {children}
+      {/* <ToastContainer /> */}
     </AuthContext.Provider>
   );
 }

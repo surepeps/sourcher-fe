@@ -25,7 +25,7 @@ class ApiService {
 
       if (token) {
         options.headers = {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token.token}`,
         };
       }
 
@@ -69,7 +69,7 @@ class ApiService {
 
       if (token) {
         options.headers = {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token.token}`,
         };
       }
 
