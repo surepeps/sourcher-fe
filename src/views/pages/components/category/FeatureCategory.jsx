@@ -9,7 +9,7 @@ function FeatureCategory() {
     const featuredCategories = categories.filter(category => category.featured);
 
   return (
-    <div className='max-w-screen-2xl mx-auto flex flex-col py-0 lg:py-10 px-4 w-full items-center font-notoSans relative'>
+    <div className='max-w-screen-2xl mx-auto flex flex-col py-0 lg:py-10 px-4 lg:px-4 items-center font-notoSans relative'>
         <div className="w-full">
 
             <div className="top">

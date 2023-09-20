@@ -61,7 +61,7 @@ function FeatureExperts() {
 
   return (
     <div className="bg-awimGray w-full pt-16">
-        <div className='container mx-auto flex flex-col pb-10 px-4 w-full items-center font-notoSans relative'>
+        <div className='max-w-screen-2xl mx-auto flex flex-col pb-10 px-4 w-full items-center font-notoSans relative'>
             <div className="w-full">
                 
                 <div className="flex justify-between items-center">
@@ -98,7 +98,7 @@ function FeatureExperts() {
 
                     {
                         exploreExperts.map(expert => (
-                            <SingleExpert key={expert.id} expert={expert} myclass='flex-none w-full lg:w-[340px]' />
+                            <SingleExpert key={expert.id} expert={expert} myclass='flex-none w-[340px]' />
                         ))
                     }
 

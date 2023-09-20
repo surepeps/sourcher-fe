@@ -6,6 +6,9 @@ import ExplorExpert from './components/experts/ExplorExpert'
 import FeatureExperts from './components/experts/FeatureExperts'
 import FeatureCategory from './components/category/FeatureCategory'
 import About from './components/about/About'
+import AdsBanner from './components/banner/AdsBanner'
+import HowItWorks from './components/about/HowItWorks'
+import BecomeExpertBanner from './components/banner/BecomeExpertBanner'
 
 
 
@@ -38,6 +41,22 @@ function Home({config}) {
       <div className="pt-24">
         <About />
       </div>
+
+      {/* Ads Banner */}
+      <div className="pt-24">
+        <AdsBanner />
+      </div>
+
+      {/* How it works */}
+      <div className='pt-24'>
+        <HowItWorks />
+      </div>
+
+      {/* Become and Expert Banner */}
+      <div className='pt-24'>
+        <BecomeExpertBanner config={config} />
+      </div>
+
 
     </div>
   )

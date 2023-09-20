@@ -1,11 +1,19 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
+import { useRequestLoading } from '../../context/LoadingContext';
+import OverlaySpinner from '../miscellaneous/OverlaySpinner';
+
 
 
 function AuthLayout({ config, children }) {
+
+  const {isRequestLoading} = useRequestLoading();
+
   return (
     <div className='w-full h-screen flex font-notoSans'>
       
+      {isRequestLoading ? <OverlaySpinner /> : ""}
+
       <div className="w-[50%] pl-20 pt-10 hidden lg:block xl:bg-top bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(${config.authBanner})` }}>
         <NavLink to='/'>
           <img src={config.awimLogo} alt="" className='' />

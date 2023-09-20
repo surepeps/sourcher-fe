@@ -1,9 +1,12 @@
 import React from 'react'
 import Header from './components/Header'
+import Footer from './components/Footer';
+
 
 function MainLayout({ children, config, userData, skeleton }) {
   return (
     <div>
+      {/* Footer */}
       <Header config={config} />
     
       <div className="mt-18 lg:mt-[90px]">
@@ -12,6 +15,8 @@ function MainLayout({ children, config, userData, skeleton }) {
         })}
       </div>
       
+        {/* Footer */}
+        <Footer config={config} />
 
     </div>
   )

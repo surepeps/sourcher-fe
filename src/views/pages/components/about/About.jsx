@@ -3,9 +3,9 @@ import AboutImg from '/assets/images/about.png';
 
 function About() {
   return (
-    <div className='max-w-screen-2xl mx-auto flex flex-col py-0 lg:py-10 px-4 w-full items-center font-notoSans relative'>
+    <div className='container mx-auto flex flex-col py-0 lg:py-10 px-4 w-full items-center font-notoSans relative'>
         <div className="w-full flex flex-col gap-10 lg:flex-row justify-between items-center">
-            <div className="left w-full lg:w-[500px] flex flex-col gap-8">
+            <div className="left w-full lg:w-[500px] xl:w-[650px] flex flex-col gap-8">
                 <h2 className="lg:text-4xl text-2xl font-semibold">About AWIM</h2>
 
                 <p className="desc text-sm md:text-md lg:text-lg leading-7">

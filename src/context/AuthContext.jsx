@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import ApiService from '../helpers/http/apiService';
 import { toast } from 'react-toastify';
-import { responseCatcher } from '../helpers/http/response'
+import { responseCatcher } from '../helpers/http/response';
+
 
 const AuthContext = createContext();
 
@@ -10,7 +11,6 @@ export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
-  
 
   const api = new ApiService();
 
@@ -65,7 +65,8 @@ export function AuthProvider({ children }) {
   const register = async (userFormData) => {
     try {
       const response = await api.postWithOutToken('/auth/register', userFormData);
-      authenticateUser(response);
+      
+      // authenticateUser(response);
     } catch (error) {
       responseCatcher(error);
     }
