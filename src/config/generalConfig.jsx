@@ -9,6 +9,8 @@ import partner3 from '/assets/images/partner3.png'
 import partner4 from '/assets/images/partner4.png'
 import BecomeExpertImage from '/assets/images/becomeExpert.png'
 
+import noImage from '/assets/images/noImage.png'
+
 
 const generalConfig =  {
     APIURL: 'https://api.sourceher.com/v1',
@@ -16,6 +18,7 @@ const generalConfig =  {
     awimLogo: awimLogo,
     awimDarkLogo: awimDarkLogo,
     homeBanner: homeBanner,
+    noImage:noImage,
     partner1: partner1,
     partner2: partner2,
     partner3: partner3,

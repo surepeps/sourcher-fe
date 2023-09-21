@@ -6,7 +6,7 @@ export const Menu = [
     },
     {
         name: 'About Us',
-        path: '/about-us',
+        path: '/route1',
         familyLink: ["/about-us"]
     },
     {

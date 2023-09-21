@@ -7,9 +7,15 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { ModalService } from './context/ModalService';
 import SureModal from './views/miscellaneous/SureModal';
+import { useAuth } from './context/AuthContext';
+import LoadingSpinner from './views/miscellaneous/LoadingSpinner';
+
+
 
 
 function App() {
+
+  const { loading } = useAuth();
 
   return (
     <ModalService>
@@ -17,17 +23,24 @@ function App() {
       <LoadingProvider>
         <BrowserRouter>
           <ToastContainer />
-          <Routes>
-                    
-            {/* All Routes */}
-            {routes.map((route, index) => (
-              <Route key={index} path={route.path} element={route.element} />
-            ))}
+          
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            // <FadeTransition>
+              <Routes>
+                
+                {/* All Routes */}
+                {routes.map((route, index) => (
+                  <Route key={index} path={route.path} element={route.element} />
+                ))}
 
-            {/* Error 404 */}
-            <Route path="*" element={<Error_404 />} />
+                {/* Error 404 */}
+                <Route path="*" element={<Error_404 />} />
 
-          </Routes>
+              </Routes>
+            // </FadeTransition>
+          )}
 
           <SureModal /> 
 

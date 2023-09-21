@@ -1,9 +1,13 @@
 import React, {useState} from 'react'
 import { Menu } from '../../../models/topNavMenu'
 import { NavLink, useLocation } from 'react-router-dom'
+import LoggedIn from './HeaderAuth/LoggedIn';
+import LoggedInMobile from './HeaderAuth/LoggedInMobile';
 
 
-function Header({config}) {
+
+
+function Header({config, userData, isLoggedIn}) {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
@@ -19,6 +23,8 @@ function Header({config}) {
   const location = useLocation();
 
   const pathName = location.pathname;
+
+  console.log("Header logged:", isLoggedIn)
 
   return (
     <div className=''>
@@ -73,8 +79,20 @@ function Header({config}) {
 
 
             <div className="gap-3 justify-between hidden lg:flex py-2 px-7">
-              <NavLink to='/login' className='flex justify-center border-2 border-awimGreen text-awimGreen text-md hover:bg-awimGreen hover:text-textWhite items-center py-2 px-8 transition duration-300 ease-in-out rounded-lg'>Login </NavLink>
-              <NavLink to='/register' className='flex justify-center border-2 border-awimGreen bg-awimGreen hover:bg-bgColor hover:text-awimGreen hover:border-awimGreen hover:border-2 text-bgColor items-center py-2 px-8 rounded-lg transition duration-300 ease-in-out'>Sign Up</NavLink>
+              {
+                isLoggedIn ? 
+                (
+                  <LoggedIn user={userData} config={config} />
+                )
+                :
+                (
+                  <>
+                    <NavLink to='/login' className='flex justify-center border-2 border-awimGreen text-awimGreen text-md hover:bg-awimGreen hover:text-textWhite items-center py-2 px-8 transition duration-300 ease-in-out rounded-lg'>Login </NavLink>
+                    <NavLink to='/register' className='flex justify-center border-2 border-awimGreen bg-awimGreen hover:bg-bgColor hover:text-awimGreen hover:border-awimGreen hover:border-2 text-bgColor items-center py-2 px-8 rounded-lg transition duration-300 ease-in-out'>Sign Up</NavLink>
+                  </>
+                )
+              }
+              
             </div>
 
             <button onClick={toggleMobileMenu} aria-expanded={isMobileMenuOpen ? 'true' : 'false'}  type="button" className={`inline-flex items-center p-2 w-9 h-9 justify-center text-sm text-gray-500 rounded-lg lg:hidden bg-awimGreen focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-language transition-transform duration-300 ${isMobileMenuOpen ? 'transform rotate-180' : ''} `}>
@@ -110,8 +128,13 @@ function Header({config}) {
           </ul>
 
           <div className="flex justify-between lg:hidden py-2 px-7">
-            <NavLink to='/login' className='flex justify-center border-2 border-awimGreen text-awimGreen text-md hover:bg-awimGreen hover:text-textWhite items-center py-2.5 px-12 transition duration-300 ease-in-out rounded-lg'>Login </NavLink>
-            <NavLink to='/register' className='flex justify-center border-2 bg-awimGreen hover:bg-bgColor hover:text-awimGreen hover:border-awimGreen hover:border-2 text-bgColor items-center py-2.5 px-12 rounded-lg transition duration-300 ease-in-out'>Sign Up</NavLink>
+            {
+              isLoggedIn ? (<LoggedInMobile user={userData} config={config} />) :
+              <>
+                <NavLink to='/login' className='flex justify-center border-2 border-awimGreen text-awimGreen text-md hover:bg-awimGreen hover:text-textWhite items-center py-2.5 px-12 transition duration-300 ease-in-out rounded-lg'>Login </NavLink>
+                <NavLink to='/register' className='flex justify-center border-2 bg-awimGreen hover:bg-bgColor hover:text-awimGreen hover:border-awimGreen hover:border-2 text-bgColor items-center py-2.5 px-12 rounded-lg transition duration-300 ease-in-out'>Sign Up</NavLink>
+              </>
+            }
           </div>
 
         </div>

@@ -5,16 +5,18 @@ import LayoutSkeleton from '../views/skeletons/LayoutSkeleton';
 import generalConfig from '../config/generalConfig';
 import { useAuth } from '../context/AuthContext';
 
-const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, skeleton, ...rest }) => {
-  const { user, isLoggedIn, logout } = useAuth();
-  const navigate = useNavigate();
 
-  console.log("Auth middleware: ", user);
+
+
+const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, skeleton, ...rest }) => {
+  const { user, loading, isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
 
   // Combine configuration
   const combineConfig = useMemo(() => {
     return { ...generalConfig, ...{ pageName: rest.pageName } };
   }, [rest.pageName]);
+
 
   // Perform logout when component mounts
   useEffect(() => {
@@ -22,36 +24,65 @@ const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, ske
       logout();
       navigate("/login");
     }
+
+    // if (isLoggedIn && !rest.privateRoute) {
+    //   navigate("/");
+    // }
+
+    // if (!isLoggedIn && rest.privateRoute) {
+    //   navigate("/login");
+    // }
+
+    // if (isLogReq && !isLoggedIn) {
+    //   // Redirect to '/login' if isLoggedIn is required but user is not logged in
+    //   navigate("/login");
+    // }
+    // if (!isLogReq && isLoggedIn) {
+    //   // Redirect to '/' if not logged in is required but user is logged in
+    //   navigate("/");
+    // }
+    // if (isLogReq && !isLoggedIn) {
+    //   // Redirect to '/login' if privateRoute is required but user is not logged in
+    //   navigate("/login");
+    // }
   }, [isLoggedIn, logout, navigate, rest.path]);
 
- 
-  if (!isLoggedIn && rest.privateRoute) {
-    // Redirect to '/' for private routes when not logged in
-    return <Navigate to='/login' />;
+  if (isLoggedIn && (rest.type === 'public')) {
+    return <Navigate to='/' />;
   }
 
-  if (isLoggedIn && ['login', 'register', 'forgot-password'].includes(rest.path.split('/')[1])) {
-    // Redirect to '/' if trying to access login, register, or forgot-password when logged in
-    return <Navigate to='/' />;
+  if (!isLoggedIn && rest.privateRoute) {
+    return <Navigate to='/login' />;
   }
 
   return (
     <>
-      {isLoggedIn ? (
-        !user ? (
-          <LayoutSkeleton skeleton={skeleton} />
-        ) : (
-          <Layout skeleton={skeleton} config={combineConfig} userData={user}>
+      {
+        isLoggedIn ? 
+          !user && (rest.type !== 'public') ?
+
+          (<LayoutSkeleton skeleton={skeleton} />)
+
+          :
+
+          (<Layout skeleton={skeleton} config={combineConfig} isLoggedIn={isLoggedIn} userData={user}>
+            <Component {...rest} />
+          </Layout>)
+        :
+
+        (
+          <Layout skeleton={skeleton} config={combineConfig}>
             <Component {...rest} />
           </Layout>
         )
-      ) : (
-        <Layout skeleton={skeleton} config={combineConfig}>
+      }
+      {/* {!user && rest.privateRoute ? <LayoutSkeleton skeleton={skeleton} /> :
+        <Layout skeleton={skeleton} config={combineConfig} userData={user}>
           <Component {...rest} />
         </Layout>
-      )}
+      } */}
     </>
   );
 };
   
-export default AuthMiddleware;
+  export default AuthMiddleware;

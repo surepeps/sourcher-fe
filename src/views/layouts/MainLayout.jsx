@@ -3,17 +3,16 @@ import Header from './components/Header'
 import Footer from './components/Footer';
 
 
-function MainLayout({ children, config, userData, skeleton }) {
+function MainLayout({ children, config, isLoggedIn, userData, skeleton }) {
 
-  console.log("Main Layout: ", userData)
   return (
     <div>
       {/* Footer */}
-      <Header config={config} />
+      <Header userData={userData} isLoggedIn={isLoggedIn} config={config} />
     
       <div className="mt-18 lg:mt-[90px]">
         {React.Children.map(children, child => {
-          return React.cloneElement(child, { config });
+          return React.cloneElement(child, { config, isLoggedIn });
         })}
       </div>
       
