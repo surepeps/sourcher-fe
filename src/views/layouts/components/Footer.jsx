@@ -1,14 +1,16 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import { Menu } from '../../../models/topNavMenu';
 
 
 function Footer({config}) {
   return (
-    <div className='bg-awimDarkBlue py-14 px-20'>
-      <div className="max-w-screen-2xl mx-auto w-full flex flex-col justify-between">
-        <div className="top">
+    <div className='bg-awimDarkBlue py-14 px-4 lg:px-20 font-notoSans'>
+      <div className="max-w-screen-2xl mx-auto gap-14 lg:gap-32 w-full flex flex-col justify-between">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-3 justify-between w-full items-start gap-10">
 
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col w-full gap-5">
             <div className="logo">
               <img src={config.awimLogo} alt="" />
             </div>
@@ -50,22 +52,68 @@ function Footer({config}) {
             </div>
 
           </div>
-          <div className="rrr">
 
+
+          <div className="flex flex-row lg:justify-center justify-between w-full lg:gap-60">
+              <div className="flex w-full flex-col gap-6">
+
+              <div className="top">
+                <h2 className='text-awimYellow text-lg font-bold'>Quick Links</h2>
+              </div>
+
+              <div className="menus">
+                <ul className='text-textWhite font-light text-sm flex flex-col gap-4'>
+                  {
+                    Menu.map(menu => (
+                      <li className='hover:text-awimYellow transition duration-300 ease-in-out' key={menu.name}>
+                        <NavLink>{menu.name}</NavLink>
+                      </li>
+                    ))
+                  }
+                  
+                </ul>
+              </div>
+
+              </div>
+
+              <div className="flex w-full flex-col gap-6">
+                <div className="top">
+                  <h2 className='text-awimYellow text-lg font-bold'>Categories</h2>
+                </div>
+
+                <div className="menus">
+                  <ul className='text-textWhite font-light text-sm flex flex-col gap-4'>
+                    {
+                      Menu.map(menu => (
+                        <li className='hover:text-awimYellow transition duration-300 ease-in-out' key={menu.name}>
+                          <NavLink>{menu.name}</NavLink>
+                        </li>
+                      ))
+                    }
+                    
+                  </ul>
+                </div>
+
+              </div>
 
           </div>
-          <div className="rrr">
+          
 
+          <div className="flex flex-col gap-6 w-full">
+              <div className="top">
+                <h2 className='text-awimYellow text-lg font-bold'>Subscribe to Our Newletter</h2>
+              </div>
 
-          </div>
-          <div className="rrr">
-
+              <div className="w-full bg-textWhite justify-between items-center rounded-lg py-2 pag-3 px-3 flex ">
+                <input placeholder='Enter Email Address' type="text" className='border-0 text-md ' />
+                <button className='bg-awimYellow border border-awimYellow hover:bg-transparent hover:text-awimYellow text-sm transition duration-300 ease-in-out rounded-lg py-3 px-5 font-semibold'>Submit</button>
+              </div>
 
           </div>
 
         </div>
 
-        <div className="flex justify-between items-center text-textWhite">
+        <div className="flex justify-between flex-col lg:flex-row gap-4 items-center text-textWhite">
           <p className="copy">SourceHer©Copyright 2023. All rights reserved.</p>
 
           <div className="flex gap-6">

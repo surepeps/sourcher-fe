@@ -8,7 +8,7 @@ function About() {
             <div className="left w-full lg:w-[500px] xl:w-[650px] flex flex-col gap-8">
                 <h2 className="lg:text-4xl text-2xl font-semibold">About AWIM</h2>
 
-                <p className="desc text-sm md:text-md lg:text-lg leading-7">
+                <p className="desc text-sm lg:text-md xl:text-lg !leading-10">
                     AWiM's aim is to promote the visibility of African women experts working across varied industries and fields and also create enabling environment for women’s presentation and representation in the media by increasing the number of women experts’ sources in the media thus amplifying the voice of women experts in the media. We start by identifying their expertise and compiling their data into one central database. The process continues with an effort to connect these experts with journalists who can then cite them in their news reports, stories and programs thereby creating opportunities for networking amongst the profiles featured through special events, programs, webinars, discounts on our services and training content.
                 </p>
 
@@ -25,7 +25,7 @@ function About() {
                 <div className="z-50 relative ml-6 mb-7 lg:mb-10">
                     <img className='' src={AboutImg} />
                 </div>
-                <div className='bg-textPurple rounded-lg absolute bottom-0 z-0 left-0 w-[303px] h-[212px] lg:w-[409px] lg:h-[324px]'></div>
+                <div className='bg-textPurple rounded-lg absolute bottom-0 z-0 left-0 w-[90%] h-[70%]'></div>
             </div>
 
         </div>

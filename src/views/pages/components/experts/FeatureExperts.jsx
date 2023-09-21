@@ -96,13 +96,8 @@ function FeatureExperts() {
 
                 <div ref={listRef} className="overflow-x-auto ScrollableCont flex space-x-6 py-10 w-full h-auto">
 
-                    {
-                        exploreExperts.map(expert => (
-                            <SingleExpert key={expert.id} expert={expert} myclass='flex-none w-[340px]' />
-                        ))
-                    }
-
-                    <button onClick={() => handleScroll(-500)} className='absolute hidden lg:block -left-12 top-60 z-50'>
+                
+                    <button onClick={() => handleScroll(-500)} className='absolute hidden lg:block left-0 top-60 z-50'>
                         <svg width="82" height="82" viewBox="0 0 82 82" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g filter="url(#filter0_d_0_1)">
                             <rect x="23" y="23" width="36" height="36" rx="18" fill="white"/>
@@ -122,9 +117,15 @@ function FeatureExperts() {
                             </defs>
                         </svg>
                     </button>
+
+                    {
+                        exploreExperts.map(expert => (
+                            <SingleExpert key={expert.id} expert={expert} myclass='flex-none w-[340px]' />
+                        ))
+                    }
                     
 
-                    <button onClick={() => handleScroll(500)} type="button" className='absolute hidden lg:block -right-6 top-60 z-50'>
+                    <button onClick={() => handleScroll(500)} type="button" className='absolute hidden right-0 lg:block top-60 z-50'>
                         <svg width="76" height="77" viewBox="0 0 76 77" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g filter="url(#filter0_d_0_1)">
                             <rect width="36" height="36" rx="18" transform="matrix(-1 0 0 1 56 20)" fill="white"/>

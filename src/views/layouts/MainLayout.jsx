@@ -12,7 +12,7 @@ function MainLayout({ children, config, isLoggedIn, userData, skeleton }) {
     
       <div className="mt-18 lg:mt-[90px]">
         {React.Children.map(children, child => {
-          return React.cloneElement(child, { config, isLoggedIn });
+          return React.cloneElement(child, { config, userData, isLoggedIn });
         })}
       </div>
       

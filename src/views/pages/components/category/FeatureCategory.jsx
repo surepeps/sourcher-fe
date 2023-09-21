@@ -9,25 +9,16 @@ function FeatureCategory() {
     const featuredCategories = categories.filter(category => category.featured);
 
   return (
-    <div className='max-w-screen-2xl mx-auto flex flex-col py-0 lg:py-10 px-4 lg:px-4 items-center font-notoSans relative'>
+    <div className='max-w-screen-2xl mx-auto flex flex-col py-0 lg:py-10 px-4 items-center font-notoSans relative'>
         <div className="w-full">
 
             <div className="top">
                 <h2 className="lg:text-3xl text-2xl font-semibold">Featured Categories</h2>
             </div>
 
-            <div className="content w-full relative">
-                <div className="overflow-x-auto ScrollableCont flex space-x-6 py-10 w-full h-auto">
-                    {
-                        featuredCategories.map(category => (
-                            <SingleCategory key={category.name} category={category}/>
-                        ))
-                    }
-                    
-                </div>
+            <div className="overflow-x-auto ScrollableCont flex py-10 w-full h-auto">
 
-
-                <button className='absolute hidden lg:block -left-11 top-36 z-50'>
+                <button className='absolute hidden lg:block left-0 top-60 z-50'>
                     <svg width="82" height="82" viewBox="0 0 82 82" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_d_0_1)">
                         <rect x="23" y="23" width="36" height="36" rx="18" fill="white"/>
@@ -48,7 +39,16 @@ function FeatureCategory() {
                     </svg>
                 </button>
 
-                <button type="button" className='absolute hidden lg:block -right-11 top-36 z-50'>
+                <div className="overflow-x-auto ScrollableCont flex space-x-6 py-10 w-full h-auto">
+                    {
+                        featuredCategories.map(category => (
+                            <SingleCategory key={category.name} category={category}/>
+                        ))
+                    }
+                    
+                </div>
+
+                <button type="button" className='absolute hidden lg:block right-0 top-60 z-50'>
                     <svg width="76" height="77" viewBox="0 0 76 77" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_d_0_1)">
                         <rect width="36" height="36" rx="18" transform="matrix(-1 0 0 1 56 20)" fill="white"/>

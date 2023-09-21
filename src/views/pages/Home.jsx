@@ -38,7 +38,7 @@ function Home({config}) {
       </div>
 
       {/* About Awim */}
-      <div className="pt-24">
+      <div className="lg:pt-24 pt-8">
         <About />
       </div>
 
