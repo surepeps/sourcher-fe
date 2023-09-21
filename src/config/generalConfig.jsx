@@ -10,6 +10,7 @@ import partner4 from '/assets/images/partner4.png'
 import BecomeExpertImage from '/assets/images/becomeExpert.png'
 
 import noImage from '/assets/images/noImage.png'
+import profileBanner from '/assets/images/profileBanner.png'
 
 
 const generalConfig =  {
@@ -19,6 +20,7 @@ const generalConfig =  {
     awimDarkLogo: awimDarkLogo,
     homeBanner: homeBanner,
     noImage:noImage,
+    profileBanner:profileBanner,
     partner1: partner1,
     partner2: partner2,
     partner3: partner3,

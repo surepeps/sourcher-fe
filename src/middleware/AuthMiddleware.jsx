@@ -4,7 +4,7 @@ import MainLayout from '../views/layouts/MainLayout';
 import LayoutSkeleton from '../views/skeletons/LayoutSkeleton';
 import generalConfig from '../config/generalConfig';
 import { useAuth } from '../context/AuthContext';
-
+import Error_404 from '../views/pages/errors/Error_404';
 
 
 
@@ -25,26 +25,6 @@ const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, ske
       navigate("/login");
     }
 
-    // if (isLoggedIn && !rest.privateRoute) {
-    //   navigate("/");
-    // }
-
-    // if (!isLoggedIn && rest.privateRoute) {
-    //   navigate("/login");
-    // }
-
-    // if (isLogReq && !isLoggedIn) {
-    //   // Redirect to '/login' if isLoggedIn is required but user is not logged in
-    //   navigate("/login");
-    // }
-    // if (!isLogReq && isLoggedIn) {
-    //   // Redirect to '/' if not logged in is required but user is logged in
-    //   navigate("/");
-    // }
-    // if (isLogReq && !isLoggedIn) {
-    //   // Redirect to '/login' if privateRoute is required but user is not logged in
-    //   navigate("/login");
-    // }
   }, [isLoggedIn, logout, navigate, rest.path]);
 
   if (isLoggedIn && (rest.type === 'public')) {
@@ -65,13 +45,13 @@ const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, ske
 
           :
 
-          (<Layout skeleton={skeleton} config={combineConfig} isLoggedIn={isLoggedIn} userData={user}>
+          (<Layout Error_404={Error_404} skeleton={skeleton} config={combineConfig} isLoggedIn={isLoggedIn} userData={user}>
             <Component {...rest} />
           </Layout>)
         :
 
         (
-          <Layout skeleton={skeleton} config={combineConfig}>
+          <Layout Error_404={Error_404} skeleton={skeleton} config={combineConfig}>
             <Component {...rest} />
           </Layout>
         )

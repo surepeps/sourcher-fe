@@ -6,7 +6,6 @@ import LoggedInMobile from './HeaderAuth/LoggedInMobile';
 
 
 
-
 function Header({config, userData, isLoggedIn}) {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

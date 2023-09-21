@@ -1,4 +1,5 @@
 import React from 'react';
+import { createRoute } from '../helpers/routeUtils';
 import AuthLayout from '../views/layouts/AuthLayout';
 import MainLayout from '../views/layouts/MainLayout';
 import NoSkeleton from '../views/skeletons/NoSkeleton';
@@ -8,9 +9,7 @@ import Register from '../views/pages/auth/Register';
 import ForgotPassword from '../views/pages/auth/ForgotPassword';
 import Home from '../views/pages/Home';
 import NewPage from '../views/pages/NewPage';
-import { createRoute } from '../helpers/routeUtils';
 import ProfileController from '../controllers/ProfileController';
-
 
 
 
@@ -23,9 +22,6 @@ const routes = [
   createRoute('/experts', NewPage, 'Experts', false, MainLayout, LayoutSkeleton, 'semiPrivate'),
   createRoute('/route1', Home, 'Route1', true, MainLayout, LayoutSkeleton, 'private'),
   createRoute('/sh/:username', ProfileController, 'My Profile', false, MainLayout, LayoutSkeleton, 'semiPrivate'),
-  // createRoute('/route2', YourComponent2, 'Route2', true, MainLayout, LayoutSkeleton, 'private'),
-  // createRoute('/route3', YourComponent3, 'Route3', true, MainLayout, LayoutSkeleton, 'private'),
-  // Add more private routes as needed
 ];
 
 export default routes;

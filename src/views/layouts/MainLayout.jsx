@@ -3,7 +3,7 @@ import Header from './components/Header'
 import Footer from './components/Footer';
 
 
-function MainLayout({ children, config, isLoggedIn, userData, skeleton }) {
+function MainLayout({ children, config, isLoggedIn, userData, skeleton, Error_404 }) {
 
   return (
     <div>
@@ -12,7 +12,7 @@ function MainLayout({ children, config, isLoggedIn, userData, skeleton }) {
     
       <div className="mt-18 lg:mt-[90px]">
         {React.Children.map(children, child => {
-          return React.cloneElement(child, { config, userData, isLoggedIn });
+          return React.cloneElement(child, { config, userData, isLoggedIn, skeleton, Error_404 });
         })}
       </div>
       

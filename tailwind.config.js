@@ -12,6 +12,7 @@ export default {
         'bgColor': '#FFFFFF',
         'textWhite': '#FFFFFF',
         'textPurple': '#591664',
+        'awimLightPurple': '#7A3785',
         'awimGreen': '#004C3F',
         'awimFadeGreen': '#004C3F90',
         'awimYellow': '#F1A24C',
