@@ -25,7 +25,9 @@ function MyProfile({...rest}) {
     <div>
       <ProfileBanner allData={allData} />
       {
-        account_type === 'user' || account_type === 'user_2' ? (<UserProfile />) : (<ExpertProfile />)
+        (account_type === 'user' || account_type === 'user_2') 
+        ? (<UserProfile allData={allData} />) 
+        : (<ExpertProfile allData={allData} />)
       }
 
     </div>

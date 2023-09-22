@@ -16,14 +16,15 @@ function ProfileBanner({allData}) {
         alert("Hello")
     }
 
+    
   return (
     <div className='w-full bg-textPurple relative h-auto flex'>
         <img src={config.profileBanner} className='absolute left-0 top-0 bottom-0' alt=""  />
-        <div className="userImage max-w-screen-2xl mx-auto w-full items-center px-4 flex py-20 justify-between">
+        <div className="max-w-screen-2xl mx-auto w-full md:items-center items-start px-4 flex lg:py-24 pt-20 pb-14 gap-7 md:flex-row flex-col justify-between">
 
             <div className="flex items-center relative lg:flex-row flex-col gap-10">
                 <div className="imgContIcon relative">
-                    <div className="circle w-[150px] h-[150px] xl:w-[250px] xl:h-[250px] rounded-full border border-awimLightPurple">
+                    <div className="circle w-[170px] mt-7 lg:mt-1 -ml-14 lg:ml-0 h-[170px] xl:w-[250px] xl:h-[250px] rounded-full border border-awimLightPurple">
                         <img src={ProfileData.avatar ?? config.noAvatar} alt="" className='w-full h-full rounded-full' />
                     </div>
                     {
@@ -52,7 +53,7 @@ function ProfileBanner({allData}) {
                         <CountryFlag className='!w-[41px] !h-[25px]' countryCode={ProfileData.country_id} svg />
                     </div>
                     {
-                        !isProfileExpert ?
+                        isProfileExpert ?
                         (
                             <>
                                 <span className='text-textWhite text-sm lg:text-md'>Interview Language: English</span>
@@ -100,9 +101,9 @@ function ProfileBanner({allData}) {
             </div>
 
             {
-                ((isMyAccountLevel1 || isMyAccountExpert) && isMyAccount) ?
+                ((isMyAccountLevel1 || isMyAccountExpert) && !isMyAccount) ?
 
-                <div className="btnMessage relative">
+                <div className="btnMessage relative flex justify-start">
                     <NavLink className='text-md bg-textWhite shadow-none items-center rounded-lg px-4 py-3 flex gap-2 border border-textWhite hover:bg-transparent hover:text-textWhite transition duration-300 ease-in-out text-textPurple' onClick={allowChatAccess}>
                         <svg className='fill-current' width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.493 10.3333V13.725C13.493 14.025 13.4596 14.3083 13.3846 14.5667C13.0763 15.7917 12.0596 16.5583 10.6596 16.5583H8.39297L5.8763 18.2333C5.5013 18.4917 5.0013 18.2167 5.0013 17.7667V16.5583C4.1513 16.5583 3.44297 16.275 2.9513 15.7833C2.4513 15.2833 2.16797 14.575 2.16797 13.725V10.3333C2.16797 8.75 3.1513 7.65833 4.66797 7.51667C4.7763 7.50833 4.88464 7.5 5.0013 7.5H10.6596C12.3596 7.5 13.493 8.63333 13.493 10.3333Z" fill="fill-current"/>
