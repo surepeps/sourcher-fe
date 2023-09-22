@@ -11,6 +11,7 @@ import BecomeExpertImage from '/assets/images/becomeExpert.png'
 
 import noImage from '/assets/images/noImage.png'
 import profileBanner from '/assets/images/profileBanner.png'
+import noAvatar from '/assets/images/noAvatar.png'
 
 
 const generalConfig =  {
@@ -21,6 +22,7 @@ const generalConfig =  {
     homeBanner: homeBanner,
     noImage:noImage,
     profileBanner:profileBanner,
+    noAvatar:noAvatar,
     partner1: partner1,
     partner2: partner2,
     partner3: partner3,
