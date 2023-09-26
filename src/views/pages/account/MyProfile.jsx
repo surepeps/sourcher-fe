@@ -1,7 +1,9 @@
 import React from 'react'
-import ExpertProfile from './ExpertProfile'
-import UserProfile from './UserProfile'
+import ExpertProfile from './expert/ExpertProfile'
+import UserProfile from './user_level/UserProfile'
 import ProfileBanner from './ProfileBanner';
+import NonLoggedProfile from './NonLoggedProfile';
+
 
 
 function MyProfile({...rest}) {
@@ -24,12 +26,7 @@ function MyProfile({...rest}) {
   return (
     <div>
       <ProfileBanner allData={allData} />
-      {
-        (account_type === 'user' || account_type === 'user_2') 
-        ? (<UserProfile allData={allData} />) 
-        : (<ExpertProfile allData={allData} />)
-      }
-
+      <UserProfile allData={allData} />
     </div>
   )
 }

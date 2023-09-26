@@ -18,7 +18,7 @@ function ProfileBanner({allData}) {
 
     
   return (
-    <div className='w-full bg-textPurple relative h-auto flex'>
+    <div className='w-full bg-textPurple relative h-auto flex py-4'>
         <img src={config.profileBanner} className='absolute left-0 top-0 bottom-0' alt=""  />
         <div className="max-w-screen-2xl mx-auto w-full md:items-center items-start px-4 flex lg:py-24 pt-20 pb-14 gap-7 md:flex-row flex-col justify-between">
 
