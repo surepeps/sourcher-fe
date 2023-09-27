@@ -85,8 +85,8 @@ function UserProfile({ allData }) {
                 : 'hidden transition-opacity duration-300'
             }`}
           >
-            {tab.label === 'Basic Info' && <BasicInfo ProfileData={ProfileData} config={config} />}
-            {tab.label === 'Professional Profile' && <ProfessionalProfile ProfileData={ProfileData} config={config} />}
+            {tab.label === 'Basic Info' && <BasicInfo allData={allData} />}
+            {tab.label === 'Professional Profile' && <ProfessionalProfile allData={allData} />}
             {tab.label === 'Upload Links' && <Links ProfileData={ProfileData} config={config} />}
           </div>
         ))}
