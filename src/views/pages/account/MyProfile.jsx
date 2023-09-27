@@ -26,7 +26,14 @@ function MyProfile({...rest}) {
   return (
     <div className='w-full'>
       <ProfileBanner allData={allData} />
-      <UserProfile allData={allData} />
+      <div className='max-w-screen-2xl relative mx-auto px-4 py-10 font-notoSans'>
+        {
+          !iamLoggedIn ? <NonLoggedProfile allData={allData} /> :
+          account_type === 'user' || account_type === 'user_2' ? <UserProfile allData={allData} /> : <ExpertProfile allData={allData} />
+
+        }
+      </div>
+      
     </div>
   )
 }

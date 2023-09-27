@@ -6,7 +6,7 @@ function Overview({ProfileData, config}) {
     <div className='text-md flex flex-col gap-5'>
       <div className="topSec">
         <div className="topC">
-          <h2 className="text-xl font-semibold">Professional Bio</h2>
+          <h2 className="text-xl font-semibold pb-3">Professional Bio</h2>
         </div>
         <p className="">
             {ProfileData?.about}
