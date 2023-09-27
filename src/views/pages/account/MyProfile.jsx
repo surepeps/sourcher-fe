@@ -24,7 +24,7 @@ function MyProfile({...rest}) {
   }
 
   return (
-    <div>
+    <div className='w-full'>
       <ProfileBanner allData={allData} />
       <UserProfile allData={allData} />
     </div>

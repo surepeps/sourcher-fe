@@ -51,21 +51,19 @@ const TabSwitcher = ({ userType, activeTab, handleTabClick }) => {
   const filteredTabs = tabs.filter((tab) => tab.allowedUserTypes.includes(userType));
 
   return (
-    <div className="tabCont flex absolute overflow-x-auto ScrollableCont -top-14 w-full">
-      <div className="flex space-x-10 lg:space-x-32">
-        {filteredTabs.map((tab) => (
-          <button
-            key={tab.label}
-            onClick={() => handleTabClick(tab.label)}
-            className={`rounded-md ${
-              activeTab === tab.label ? 'bg-textPurple' : 'text-gray-600'
-            } items-center flex text-md pt-4 pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
-          >
-            {tabIcons[tab.label]} {/* Render the icon */}
-            {tab.label}
-          </button>
-        ))}
-      </div>
+    <div className="tabCont flex absolute space-x-10 lg:space-x-32 overflow-x-auto ScrollableCont -top-14 left-0 right-0 w-full px-4">
+      {filteredTabs.map((tab) => (
+        <button
+          key={tab.label}
+          onClick={() => handleTabClick(tab.label)}
+          className={`rounded-md ${
+            activeTab === tab.label ? 'bg-textPurple' : 'text-gray-600'
+          } items-center flex text-md pt-4 pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
+        >
+          {tabIcons[tab.label]}
+          {tab.label}
+        </button>
+      ))}
     </div>
   );
 };
@@ -85,11 +83,10 @@ function UserProfile({ allData }) {
   
   return (
     <div className="max-w-screen-2xl relative mx-auto px-4 py-10 font-notoSans">
-      {/* Render the TabSwitcher component */}
+
       <TabSwitcher userType={userType} activeTab={activeTab} handleTabClick={handleTabClick} />
 
       <div className="bg-white p-4 rounded-b-lg">
-        {/* Render the content based on the active tab */}
         {tabs.map((tab) => (
           <div
             key={tab.label}
