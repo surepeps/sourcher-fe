@@ -4,12 +4,15 @@ import App from './App.jsx'
 import './App.css'
 import './index.css'
 import { AuthProvider } from './context/AuthContext'
+import { DataProvider } from './context/DataContext.jsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <DataProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </DataProvider>
   </React.StrictMode>,
 )

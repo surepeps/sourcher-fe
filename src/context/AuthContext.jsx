@@ -36,6 +36,26 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const updateUserData = async (newUserData) => {
+    try {
+      // Make a request to update user data using the API
+      const response = await api.putWithToken('/user/update', newUserData);
+      
+      // Assuming the API response contains the updated user data
+      const updatedUserData = response.data.user;
+
+      // Update the user data in the context
+      setAuthState((prevState) => ({
+        ...prevState,
+        user: updatedUserData,
+      }));
+
+      toast.success('User data updated successfully.');
+    } catch (error) {
+      responseCatcher(error);
+    }
+  };
+
   useEffect(() => {
     async function checkLocalStorage() {
       const tokenFromLocalStorage = JSON.parse(localStorage.getItem('token'));
@@ -59,6 +79,7 @@ export function AuthProvider({ children }) {
     checkLocalStorage();
   }, [authState.isLoggedIn]);
 
+
   const handleTokenExpiration = () => {
     setAuthState({
       user: null,
@@ -70,6 +91,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('token');
     toast.error('Session expired. Please log in again.');
   };
+
 
   const authenticateUser = async (response) => {
     const { token: newToken, expires_in } = response.data;
@@ -123,6 +145,7 @@ export function AuthProvider({ children }) {
       logout,
       register,
       fetchUserData,
+      updateUserData
     };
   }, [authState]);
 

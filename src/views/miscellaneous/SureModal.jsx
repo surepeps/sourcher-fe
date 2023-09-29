@@ -10,6 +10,8 @@ function SureModal() {
 
     const bgColor = modalOptions.backgroundColor || 'bg-white';
 
+    const modalSize = modalOptions.modalSize || 'max-w-xl';
+
     const modalClasses = `fixed z-50 p-4 overflow-x-hidden flex items-center justify-center w-full overflow-y-auto inset-0 h-full bg-black bg-opacity-50 ${isOpen ? '' : 'opacity-0 pointer-events-none'}`;
 
       const closeButtonClasses = `absolute top-3 right-2.5 hover:bg-[#BF040120] ransition duration-300 ease-in-out rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white`;
@@ -21,7 +23,7 @@ function SureModal() {
             onClick={closeModal}
             className={modalClasses}
             >
-            <div className="relative w-full max-w-xl max-h-full animate-fadeIn">
+            <div className={`relative w-full ${modalSize} max-h-full animate-fadeIn`}>
                 <div className={`relative ${bgColor} justify-between rounded-3xl shadow dark:bg-gray-700`}>
                     <div className="topArea">
                         { modalOptions.modalTopImg ? <img src={modalOptions.modalTopImg} className='w-full h-auto' alt="" /> : ''}

@@ -53,6 +53,10 @@ class ApiService {
     return this.request('post', endpoint, payload);
   }
 
+  async putWithToken(endpoint, payload) {
+    return this.request('put', endpoint, payload);
+  }
+
   async postWithOutToken(endpoint, payload) {
     return this.request('post', endpoint, payload);
   }

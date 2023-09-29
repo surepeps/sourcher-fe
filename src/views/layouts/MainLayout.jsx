@@ -1,14 +1,20 @@
 import React from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer';
+import { useRequestLoading } from '../../context/LoadingContext';
+import OverlaySpinner from '../miscellaneous/OverlaySpinner';
 
 
 function MainLayout({ children, config, isLoggedIn, userData, skeleton, Error_404 }) {
+  const {isRequestLoading} = useRequestLoading();
 
   return (
     <div>
-      {/* Footer */}
+
+      {/* Header */}
       <Header userData={userData} isLoggedIn={isLoggedIn} config={config} />
+
+      {isRequestLoading ? <OverlaySpinner /> : ""}
     
       <div className="mt-18 lg:mt-[90px]">
         {React.Children.map(children, child => {
