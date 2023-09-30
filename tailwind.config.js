@@ -27,6 +27,7 @@ export default {
         'awimPink40': '#FADDFF40',
         'awimPink30': '#FADDFF30',
         'awimDarkBlue': '#0F172A',
+        'awimInputBorder': '#969595',
 
       },
       fontFamily: {
