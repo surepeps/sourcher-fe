@@ -87,7 +87,7 @@ function UserProfile({ allData }) {
           >
             {tab.label === 'Basic Info' && <BasicInfo allData={allData} />}
             {tab.label === 'Professional Profile' && <ProfessionalProfile allData={allData} />}
-            {tab.label === 'Upload Links' && <Links ProfileData={ProfileData} config={config} />}
+            {tab.label === 'Upload Links' && <Links allData={allData} />}
           </div>
         ))}
       </div>

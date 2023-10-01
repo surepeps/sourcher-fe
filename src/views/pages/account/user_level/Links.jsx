@@ -1,49 +1,67 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 
 const validationSchema = Yup.object().shape({
   professional: Yup.array().of(
     Yup.object().shape({
-      association: Yup.string(),
-      title: Yup.string().required('Title is required'),
-      duration: Yup.string(),
+      professional_description: Yup.string(),
+      professional_role: Yup.string().required('Title is required'),
+      duration: Yup.string().required('Duration is required'),
     })
   ),
   workExperience: Yup.array().of(
     Yup.object().shape({
-      title: Yup.string().required('Title is required'),
-      company: Yup.string().required('Company name is required'),
-      startDate: Yup.string().required('Start date is required'),
-      endDate: Yup.string().when('stillWorking', {
+      job_title: Yup.string().required('Title is required'),
+      company_name: Yup.string().required('Company name is required'),
+      start_date: Yup.string().required('Start date is required'),
+      end_date: Yup.string().when('still_work_there', {
         is: false,
         then: Yup.string().required('End date is required'),
         otherwise: Yup.string(),
       }),
-      stillWorking: Yup.boolean(),
-      description: Yup.string(),
+      still_work_there: Yup.boolean(),
+      job_description: Yup.string(),
     })
   ),
 });
 
 const initialValues = {
-  professional: [{ association: '', title: '', duration: '' }],
+  professional: [
+    { 
+      professional_description: '',
+      professional_role: '', 
+      duration: '' 
+    }
+  ],
   workExperience: [
     {
-      title: '',
-      company: '',
-      startDate: '',
-      endDate: '',
-      stillWorking: false,
-      description: '',
+      job_title: '',
+      company_name: '',
+      start_date: null,
+      end_date: null,
+      still_work_there: false,
+      job_description: '',
     },
   ],
 };
 
-const Links = () => {
+const Links = ({allData}) => {
+  const {ProfileData, myData, config, isProfileLevel1, isProfileLevel2, isMyAccount} = allData;
+  const {professions, workExperiences} = ProfileData;
+
+
+  const [endDateDisabled, setEndDateDisabled] = useState(false);
+
   const formik = useFormik({
-    initialValues,
+    initialValues: {
+      professional: professions || [],
+      workExperience: workExperiences || [],
+    },
     validationSchema,
     onSubmit: (values) => {
       // Handle form submission here
@@ -51,10 +69,19 @@ const Links = () => {
     },
   });
 
+  useEffect(() => {
+    formik.setFieldValue('professional', professions || []);
+    formik.setFieldValue('workExperience', workExperiences || []);
+  }, [professions, workExperiences]);
+
   const addProfessionalSection = () => {
     formik.setFieldValue('professional', [
       ...formik.values.professional,
-      { association: '', title: '', duration: '' },
+      { 
+        professional_description: '', 
+        professional_role: '',
+        duration: '' 
+      },
     ]);
   };
 
@@ -68,12 +95,12 @@ const Links = () => {
     formik.setFieldValue('workExperience', [
       ...formik.values.workExperience,
       {
-        title: '',
-        company: '',
-        startDate: '',
-        endDate: '',
-        stillWorking: false,
-        description: '',
+        job_title: '',
+        company_name: '',
+        start_date: '',
+        end_date: '',
+        still_work_there: false,
+        job_description: '',
       },
     ]);
   };
@@ -84,6 +111,19 @@ const Links = () => {
     formik.setFieldValue('workExperience', updatedWorkExperience);
   };
 
+  const handleStillWorkingChange = (index) => {
+    const updatedWorkExperience = [...formik.values.workExperience];
+    updatedWorkExperience[index].still_work_there = !updatedWorkExperience[index].still_work_there;
+    if (updatedWorkExperience[index].still_work_there) {
+      updatedWorkExperience[index].end_date = null;
+      setEndDateDisabled(true);
+    } else {
+      setEndDateDisabled(false);
+    }
+    formik.setFieldValue('workExperience', updatedWorkExperience);
+  };
+
+  
   return (
     <div>
 
@@ -91,27 +131,27 @@ const Links = () => {
         {/* Professional Sections */}
         <div>
           {formik.values.professional.map((prof, index) => (
-            <div key={index} className="professional">
+            <div key={index} className="professional transition duration-300 ease-in-out">
               <div className="singleProf mb-8 lg:gap-10 gap-4 flex-col lg:flex-row flex justify-between">
                 <div className="leftP w-full flex gap-7 mb-2 flex-col">
                   <div className="inoF w-full flex gap-2 flex-col">
-                    <label className='text-sm' htmlFor={`professional[${index}].association`}>Professional Association (Optional)</label>
+                    <label className='text-sm' htmlFor={`professional[${index}].professional_description`}>Professional Association (Optional)</label>
                     <textarea
-                      name={`professional[${index}].association`}
+                      name={`professional[${index}].professional_description`}
                       onChange={formik.handleChange}
-                      value={prof.association}
+                      value={prof.professional_description}
                       placeholder="Professional Association (Optional)"
                       className='w-full border border-awimInputBorder rounded-lg'
                     />
                   </div>
                   <div className="flex lg:gap-8 gap-3 flex-col lg:flex-row">
                     <div className="inoF w-full flex gap-2 flex-col">
-                      <label className='text-sm' htmlFor={`professional[${index}].title`}>Professional Role/Title</label>
+                      <label className='text-sm' htmlFor={`professional[${index}].professional_role`}>Professional Role/Title</label>
                       <input
                         type="text"
-                        name={`professional[${index}].title`}
+                        name={`professional[${index}].professional_role`}
                         onChange={formik.handleChange}
-                        value={prof.title}
+                        value={prof.professional_role}
                         placeholder="Professional Role/Title"
                         className='rounded-lg border border-awimInputBorder py-4 px-6 w-full focus:outline-none text-sm'
                       />
@@ -140,15 +180,6 @@ const Links = () => {
                     </svg>
                     Cancel
                   </button>
-                  <button
-                    type="submit"
-                    className='py-3 px-6 rounded-lg border border-awimGreen hover:bg-awimGreen hover:text-white text-awimGreen text-sm flex gap-2 transition duration-300 ease-in-out'
-                  >
-                    <svg className='fill-current' width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M14.0156 1.59158H5.98229C4.21563 1.59158 2.76562 3.04158 2.76562 4.80825V16.5499C2.76562 18.0499 3.84063 18.6833 5.15729 17.9583L9.22396 15.6999C9.65729 15.4583 10.3573 15.4583 10.7823 15.6999L14.849 17.9583C16.1656 18.6916 17.2406 18.0583 17.2406 16.5499V4.80825C17.2323 3.04158 15.7906 1.59158 14.0156 1.59158ZM13.0156 7.52492L9.68229 10.8583C9.55729 10.9833 9.39896 11.0416 9.24063 11.0416C9.08229 11.0416 8.92396 10.9833 8.79896 10.8583L7.54896 9.60825C7.30729 9.36658 7.30729 8.96658 7.54896 8.72492C7.79063 8.48325 8.19063 8.48325 8.43229 8.72492L9.24063 9.53325L12.1323 6.64158C12.374 6.39992 12.774 6.39992 13.0156 6.64158C13.2573 6.88325 13.2573 7.28325 13.0156 7.52492Z" fill="fill-current"/>
-                    </svg>
-                    Save
-                  </button>
                 </div>
               </div>
             </div>
@@ -169,79 +200,84 @@ const Links = () => {
                 <div className="leftC w-full flex gap-7 mb-2 flex-col">
                   <div className="flex lg:gap-8 gap-3 flex-col lg:flex-row">
                     <div className="inoF w-full flex gap-2 flex-col">
-                      <label className='text-sm' htmlFor={`workExperience[${index}].title`}>Job Role/Title</label>
+                      <label className='text-sm' htmlFor={`workExperience[${index}].job_title`}>Job Role/Title</label>
                       <input
                         type="text"
-                        name={`workExperience[${index}].title`}
+                        name={`workExperience[${index}].job_title`}
                         onChange={formik.handleChange}
-                        value={exp.title}
+                        value={exp.job_title}
                         placeholder="Job Role/Title"
                         className='rounded-lg border border-awimInputBorder py-4 px-6 w-full focus:outline-none text-sm'
                       />
-                      {formik.touched.workExperience?.[index]?.title && formik.errors.workExperience?.[index]?.title && (
-                        <div className="error">{formik.errors.workExperience[index].title}</div>
+                      {formik.touched.workExperience?.[index]?.job_title && formik.errors.workExperience?.[index]?.job_title && (
+                        <div className="error">{formik.errors.workExperience[index].job_title}</div>
                       )}
                     </div>
                     <div className="inoF w-full flex gap-2 flex-col">
-                      <label className='text-sm' htmlFor={`workExperience[${index}].company`}>Company Name</label>
+                      <label className='text-sm' htmlFor={`workExperience[${index}].company_name`}>Company Name</label>
                       <input
                         type="text"
-                        name={`workExperience[${index}].company`}
+                        name={`workExperience[${index}].company_name`}
                         onChange={formik.handleChange}
-                        value={exp.company}
+                        value={exp.company_name}
                         placeholder="Company Name"
                         className='rounded-lg border border-awimInputBorder py-4 px-6 w-full focus:outline-none text-sm'
                       />
-                      {formik.touched.workExperience?.[index]?.company && formik.errors.workExperience?.[index]?.company && (
-                        <div className="error">{formik.errors.workExperience[index].company}</div>
+                      {formik.touched.workExperience?.[index]?.company_name && formik.errors.workExperience?.[index]?.company_name && (
+                        <div className="error">{formik.errors.workExperience[index].company_name}</div>
                       )}
                     </div>
                   </div>
                   <div className="flex lg:gap-8 gap-3 flex-col lg:flex-row">
                     <div className="inoF w-full flex gap-2 flex-col">
-                      <label className='text-sm' htmlFor={`workExperience[${index}].startDate`}>Start Date</label>
-                      <input
-                        type="text"
-                        name={`workExperience[${index}].startDate`}
-                        onChange={formik.handleChange}
-                        value={exp.startDate}
-                        placeholder="Start Date"
-                        className='rounded-lg border border-awimInputBorder py-4 px-6 w-full focus:outline-none text-sm'
+                      <label className='text-sm' htmlFor={`workExperience[${index}].start_date`}>Start Date</label>
+                      <DatePicker
+                        selected={exp.start_date}
+                        onChange={(date) => {
+                          formik.setFieldValue(`workExperience[${index}].start_date`, date);
+                        }}
+                        placeholderText="Start Date"
+                        className="rounded-lg border border-awimInputBorder py-4 px-6 w-full focus:outline-none text-sm"
+                        dateFormat="MM/dd/yyyy"
+                        isClearable
                       />
-                      {formik.touched.workExperience?.[index]?.startDate && formik.errors.workExperience?.[index]?.startDate && (
-                        <div className="error">{formik.errors.workExperience[index].startDate}</div>
+                      {formik.touched.workExperience?.[index]?.start_date && formik.errors.workExperience?.[index]?.start_date && (
+                        <div className="error">{formik.errors.workExperience[index].start_date}</div>
                       )}
                     </div>
                     <div className="inoF w-full flex gap-2 flex-col">
-                      <label className='text-sm' htmlFor={`workExperience[${index}].endDate`}>End Date</label>
-                      <input
-                        type="text"
-                        name={`workExperience[${index}].endDate`}
-                        onChange={formik.handleChange}
-                        value={exp.endDate}
-                        placeholder="End Date"
-                        className='rounded-lg border border-awimInputBorder py-4 px-6 w-full focus:outline-none text-sm'
+                      <label className='text-sm' htmlFor={`workExperience[${index}].end_date`}>End Date</label>
+                      <DatePicker
+                        selected={exp.end_date}
+                        onChange={(date) => {
+                          formik.setFieldValue(`workExperience[${index}].end_date`, date);
+                        }}
+                        placeholderText="End Date"
+                        className="rounded-lg border border-awimInputBorder py-4 px-6 w-full focus:outline-none text-sm"
+                        dateFormat="MM/dd/yyyy"
+                        isClearable
+                        disabled={exp.still_work_there || endDateDisabled}
                       />
-                      {formik.touched.workExperience?.[index]?.endDate && formik.errors.workExperience?.[index]?.endDate && (
-                        <div className="error">{formik.errors.workExperience[index].endDate}</div>
+                      {formik.touched.workExperience?.[index]?.end_date && formik.errors.workExperience?.[index]?.end_date && (
+                        <div className="error">{formik.errors.workExperience[index].end_date}</div>
                       )}
                     </div>
                   </div>
                   <div className="checkInpt">
                     <input
                       type="checkbox"
-                      name={`workExperience[${index}].stillWorking`}
-                      onChange={formik.handleChange}
-                      checked={exp.stillWorking}
+                      name={`workExperience[${index}].still_work_there`}
+                      onChange={() => handleStillWorkingChange(index)} // Call the function here
+                      checked={exp.still_work_there}
                     />
-                    <label htmlFor={`workExperience[${index}].stillWorking`}>I still work here</label>
+                    <label htmlFor={`workExperience[${index}].still_work_there`}>I still work here</label>
                   </div>
                   <div className="inoF w-full flex gap-2 flex-col">
-                    <label className='text-sm' htmlFor={`workExperience[${index}].description`}>Job Description</label>
+                    <label className='text-sm' htmlFor={`workExperience[${index}].job_description`}>Job Description</label>
                     <textarea
-                      name={`workExperience[${index}].description`}
+                      name={`workExperience[${index}].job_description`}
                       onChange={formik.handleChange}
-                      value={exp.description}
+                      value={exp.job_description}
                       placeholder="Job Description"
                       className='w-full border border-awimInputBorder rounded-lg'
                     />
