@@ -48,8 +48,8 @@ function VerifyAccount() {
           </div>
 
         ) : (
-          <div className="sh">
-
+          <div className="sh py-10">
+            <h2 className='text-md text-awimGreen text-center'>Congratulations! your account is Successfully verified</h2>
           </div>
         )
       }
