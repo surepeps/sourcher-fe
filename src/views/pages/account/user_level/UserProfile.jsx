@@ -34,7 +34,7 @@ const tabIcons = {
 
 const TabSwitcher = ({ userType, activeTab, handleTabClick, isMyAccount }) => {
   return (
-    <div className="tabCont flex absolute space-x-10 lg:space-x-32 overflow-x-auto ScrollableCont -top-14 left-0 right-0 w-full px-4">
+    <div className="tabCont flex absolute space-x-10 lg:space-x-32 overflow-x-auto ScrollableCont -top-9 lg:-top-14 left-0 right-0 w-full px-4">
       {tabs.map((tab) => (
         (isMyAccount || tab.label === 'Basic Info') && tab.allowedUserTypes.includes(userType) ? (
           <button
@@ -42,7 +42,7 @@ const TabSwitcher = ({ userType, activeTab, handleTabClick, isMyAccount }) => {
             onClick={() => handleTabClick(tab.label)}
             className={`rounded-md ${
               activeTab === tab.label ? 'bg-textPurple' : 'text-gray-600'
-            } items-center flex text-md pt-4 pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
+            } items-center flex text-sm lg:text-md pt-2 lg:pt-4 pb-4 lg:pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
           >
             {tabIcons[tab.label]}
             {tab.label}

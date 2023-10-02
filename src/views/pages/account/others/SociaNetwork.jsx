@@ -15,9 +15,9 @@ function SocialLinkInput({ label, name, value, onChange, error }) {
 
   return (
     <div className="singleF flex flex-col gap-2 w-full">
-      <label className='text-sm font-semibold' htmlFor={name}>{label}</label>
+      <label className='text-xs lg:text-sm font-semibold' htmlFor={name}>{label}</label>
       <div className="formGroup flex w-full">
-        <label htmlFor={name} className='h-full py-5 text-sm px-8 rounded-l-lg bg-[#F9FAFB]'>https://</label>
+        <label htmlFor={name} className='h-full py-3 lg:py-5 text-sm px-8 rounded-l-lg bg-[#F9FAFB]'>https://</label>
         <input
           type="text"
           id={name}
@@ -66,8 +66,8 @@ function SociaNetwork({ ProfileData }) {
     }), {}),
     validationSchema,
     onSubmit: (values) => {
-      try {
         setRequestLoading(true);
+      try {
         updateUserData({updatedUserData:values});
       } catch (error) {
         console.log(error)
@@ -87,7 +87,7 @@ function SociaNetwork({ ProfileData }) {
                     label={label}
                     name={name}
                     value={formik.values[name]}
-                    onChange={(value) => formik.setFieldValue(name, value)} // Update using setFieldValue
+                    onChange={(value) => formik.setFieldValue(name, value)}
                     error={formik.touched[name] && formik.errors[name]}
                 />
                 ))}

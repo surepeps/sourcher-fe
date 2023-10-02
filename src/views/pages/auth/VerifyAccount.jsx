@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../context/AuthContext';
 import { useRequestLoading } from '../../../context/LoadingContext';
-import { useState } from 'react';
 
 
 function VerifyAccount() {
@@ -13,6 +12,7 @@ function VerifyAccount() {
   const token = queryParams.get('token');
 
   const [isVerifying, setIsVerifying] = useState(false);
+  const [verifyMessage, setVerifyMessage] = useState('');
 
   const { setRequestLoading } = useRequestLoading();
   const { VerifyAccount } = useAuth();
@@ -25,10 +25,12 @@ function VerifyAccount() {
       }else{
         try {
           setRequestLoading(true)
-          await VerifyAccount({token: token});
+          const resp = await VerifyAccount({token: token});
+          setVerifyMessage(resp.message)
           setIsVerifying(true)
         } catch (error) {
           console.log(error);
+          navigate('/')
         }finally{
           setRequestLoading(false)
         }
@@ -48,8 +50,8 @@ function VerifyAccount() {
           </div>
 
         ) : (
-          <div className="sh py-10">
-            <h2 className='text-md text-awimGreen text-center'>Congratulations! your account is Successfully verified</h2>
+          <div className="sh py-20">
+            <h2 className='text-xl text-awimGreen text-center'>Congratulations! your account is Successfully verified</h2>
           </div>
         )
       }

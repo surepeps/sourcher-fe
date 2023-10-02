@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import ApiService from '../../../helpers/http/apiService';
 import { toast } from 'react-toastify';
+import IsDoneSpinner from '../../miscellaneous/IsDoneSpinner';
+
 
 function AddOrEditPublication({ fetLinks, publication, closeModal }) {
   const api = new ApiService();
+  const [isDone, setIsDone] = useState(false)
   // Define the validation schema using Yup
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Publication Title is required'),
@@ -23,6 +26,7 @@ function AddOrEditPublication({ fetLinks, publication, closeModal }) {
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
+        setIsDone(true)
         if (publication?.id) {
           // If publication has an ID, it's an update
           await api.putWithToken(`/publication/update/${publication.id}`, values);
@@ -38,6 +42,8 @@ function AddOrEditPublication({ fetLinks, publication, closeModal }) {
       } catch (error) {
         console.error('Error:', error);
         toast.error('An error occurred');
+      }finally{
+        setIsDone(false);
       }
     },
   });
@@ -86,12 +92,13 @@ function AddOrEditPublication({ fetLinks, publication, closeModal }) {
         </div>
 
         <div className="flex gap-3 flex-col mb-4">
-          <button
-            type="submit"
-            className="bg-awimGreen border border-awimGreen text-sm text-white hover:text-awimGreen hover:bg-transparent rounded-lg transition duration-300 ease-in-out py-4 px-6"
-          >
+          {
+            isDone ? <IsDoneSpinner mainClassName='px-6 py-3 text-sm text-white border bg-awimGreen border-awimGreen hover:bg-transparent hover:text-awimGreen transition duration-300 ease-in-out rounded-lg' /> :
+            <button type="submit" className="bg-awimGreen border border-awimGreen text-sm text-white hover:text-awimGreen hover:bg-transparent rounded-lg transition duration-300 ease-in-out py-4 px-6">
             {publication?.id ? 'Update Publication' : 'Add Publication'}
-          </button>
+            </button>
+          }
+          
         </div>
       </form>
     </div>

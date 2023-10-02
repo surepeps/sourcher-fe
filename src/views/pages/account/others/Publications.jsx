@@ -46,25 +46,25 @@ function Publications({fetLinks, isMyAccount, allPubications}) {
                                     </clipPath>
                                     </defs>
                                 </svg>
-                                <p className='text-ellipsis whitespace-nowrap'>{publication.title}</p>
+                                <p className='text-ellipsis text-sm whitespace-nowrap'>{publication.title}</p>
                             </div>
                             <NavLink to={publication.url} className="flex gap-2 w-full items-center text-overflow-ellipsis">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.98969 21.5C7.32969 21.5 5.65969 20.87 4.38969 19.6C1.85969 17.06 1.85969 12.94 4.38969 10.41C4.67969 10.12 5.15969 10.12 5.44969 10.41C5.73969 10.7 5.73969 11.18 5.44969 11.47C3.49969 13.42 3.49969 16.59 5.44969 18.54C7.39969 20.49 10.5697 20.49 12.5197 18.54C13.4597 17.6 13.9797 16.34 13.9797 15C13.9797 13.67 13.4597 12.41 12.5197 11.46C12.2297 11.17 12.2297 10.69 12.5197 10.4C12.8097 10.11 13.2897 10.11 13.5797 10.4C14.8097 11.63 15.4797 13.26 15.4797 15C15.4797 16.74 14.7997 18.37 13.5797 19.6C12.3197 20.87 10.6597 21.5 8.98969 21.5Z" fill="#F1A24C"/>
                                     <path d="M19.0681 14.16C18.8781 14.16 18.6881 14.09 18.5381 13.94C18.2481 13.65 18.2481 13.17 18.5381 12.88C20.5881 10.83 20.5881 7.49999 18.5381 5.45999C16.4881 3.40999 13.1581 3.40999 11.1181 5.45999C10.1281 6.44999 9.57812 7.76999 9.57812 9.16999C9.57812 10.57 10.1281 11.89 11.1181 12.88C11.4081 13.17 11.4081 13.65 11.1181 13.94C10.8281 14.23 10.3481 14.23 10.0581 13.94C8.78813 12.67 8.07812 10.97 8.07812 9.16999C8.07812 7.36999 8.77813 5.66999 10.0581 4.39999C12.6881 1.76999 16.9681 1.76999 19.6081 4.39999C22.2381 7.02999 22.2381 11.32 19.6081 13.95C19.4581 14.09 19.2581 14.16 19.0681 14.16Z" fill="#F1A24C"/>
                                 </svg>
-                                <p className='overflow-hidden text-ellipsis whitespace-nowrap'>{publication.url}</p>
+                                <p className='overflow-hidden text-sm text-ellipsis whitespace-nowrap'>{publication.url}</p>
                             </NavLink>  
                         </div> 
                         {
                             isMyAccount ? 
                             <div className="flex gap-4 items-center">
-                                <button onClick={() => deletePublication(publication)} className='border border-red-600 bg-transparent text-red-600 hover:bg-red-600 hover:text-white px-3 py-2 rounded-md transition duration-300 ease-in-out'>
+                                <button onClick={() => deletePublication(publication)} className='border border-red-600 bg-transparent text-red-600 hover:bg-red-600 hover:text-white px-2 py-1 lg:px-3 lg:py-2 rounded-md transition duration-300 ease-in-out'>
                                     <svg className='fill-current' width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.5013 1.66699C5.90964 1.66699 2.16797 5.40866 2.16797 10.0003C2.16797 14.592 5.90964 18.3337 10.5013 18.3337C15.093 18.3337 18.8346 14.592 18.8346 10.0003C18.8346 5.40866 15.093 1.66699 10.5013 1.66699ZM13.768 10.6253H7.1013C6.75964 10.6253 6.4763 10.342 6.4763 10.0003C6.4763 9.65866 6.75964 9.37533 7.1013 9.37533H13.768C14.1096 9.37533 14.393 9.65866 14.393 10.0003C14.393 10.342 14.118 10.6253 13.768 10.6253Z" fill="fill-current"/>
                                     </svg>
                                 </button>
-                                <button onClick={() => addPublication(publication)} className='border border-awimGreen bg-transparent text-awimGreen hover:bg-awimGreen hover:text-white px-3 py-2 rounded-md transition duration-300 ease-in-out'>
+                                <button onClick={() => addPublication(publication)} className='border border-awimGreen bg-transparent text-awimGreen hover:bg-awimGreen hover:text-white px-2 py-1 lg:px-3 lg:py-2 rounded-md transition duration-300 ease-in-out'>
                                     <svg className='fill-current' width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M18 18.333H3C2.65833 18.333 2.375 18.0497 2.375 17.708C2.375 17.3663 2.65833 17.083 3 17.083H18C18.3417 17.083 18.625 17.3663 18.625 17.708C18.625 18.0497 18.3417 18.333 18 18.333Z" fill="fill-current"/>
                                         <path d="M16.3495 2.90005C14.7328 1.28338 13.1495 1.24172 11.4912 2.90005L10.4828 3.90838C10.3995 3.99172 10.3662 4.12505 10.3995 4.24172C11.0328 6.45005 12.7995 8.21672 15.0078 8.85005C15.0412 8.85838 15.0745 8.86672 15.1078 8.86672C15.1995 8.86672 15.2828 8.83338 15.3495 8.76672L16.3495 7.75838C17.1745 6.94172 17.5745 6.15005 17.5745 5.35005C17.5828 4.52505 17.1828 3.72505 16.3495 2.90005Z" fill="fill-current"/>

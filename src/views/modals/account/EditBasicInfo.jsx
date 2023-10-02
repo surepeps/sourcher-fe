@@ -9,7 +9,7 @@ import IsDoneSpinner from '../../miscellaneous/IsDoneSpinner';
 
 
 
-function EditBasicInfo({allData}) {
+function EditBasicInfo({allData, closeModal}) {
     const {categories, titles, industries} = useData();
     const {updateUserData} = useAuth()
     const [isDone, setIsDone] = useState(false)
@@ -43,11 +43,18 @@ function EditBasicInfo({allData}) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-        setRequestLoading(true);
-        setIsDone(true)
-        updateUserData({updatedUserData:values});
-        setRequestLoading(false)
-        setIsDone(false)
+        try {
+            setIsDone(true)
+            setRequestLoading(true);
+            updateUserData({updatedUserData:values});
+            closeModal();
+        } catch (error) {
+            console.log(error);
+        }finally{
+            setIsDone(false)
+            setRequestLoading(false)
+        }
+        
     },
   });
 

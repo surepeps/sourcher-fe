@@ -5,8 +5,8 @@ function NonLoggedProfile({allData}) {
 
   return (
     <div className="">
-        <div className="tabCont flex absolute space-x-10 lg:space-x-32 overflow-x-auto ScrollableCont -top-14 left-0 right-0 w-full px-4">
-            <button className='rounded-md bg-textPurple items-center flex text-md pt-4 pb-7 hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap'>
+        <div className="tabCont flex absolute space-x-10 lg:space-x-32 overflow-x-auto ScrollableCont -top-9 lg:-top-14 left-0 right-0 w-full px-4">
+            <button className='rounded-md bg-textPurple items-center flex text-sm lg:text-md pt-2 lg:pt-4 pb-4 lg:pb-7 hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap'>
                 <span>
                     <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.9987 2.33333C8.59703 2.33333 6.64453 4.28583 6.64453 6.6875C6.64453 9.04333 8.48703 10.95 10.8887 11.0325C10.962 11.0233 11.0354 11.0233 11.0904 11.0325C11.1087 11.0325 11.1179 11.0325 11.1362 11.0325C11.1454 11.0325 11.1454 11.0325 11.1545 11.0325C13.5012 10.95 15.3437 9.04333 15.3529 6.6875C15.3529 4.28583 13.4004 2.33333 10.9987 2.33333Z" fill="white"/>
