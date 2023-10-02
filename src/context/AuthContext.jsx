@@ -118,6 +118,24 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const forgotPassword = async (userFormData) => {
+    try {
+      const response = await api.postWithOutToken('/auth/request-password-reset', userFormData);
+      toast.success(response.message)
+    } catch (error) {
+      responseCatcher(error);
+    }
+  };
+
+  const resetPassword = async (userFormData) => {
+    try {
+      const response = await api.postWithOutToken('/auth/verify-password-reset', userFormData);
+      toast.success(response.message)
+    } catch (error) {
+      responseCatcher(error);
+    }
+  };
+
   const login = async (userData) => {
     try {
       const response = await api.postWithOutToken('/auth/login', userData);
@@ -145,6 +163,8 @@ export function AuthProvider({ children }) {
       logout,
       register,
       fetchUserData,
+      forgotPassword,
+      resetPassword,
       updateUserData
     };
   }, [authState]);

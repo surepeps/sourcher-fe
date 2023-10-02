@@ -7,7 +7,7 @@ import { useRequestLoading } from '../../../context/LoadingContext';
 
 function ForgotPassword() {
   const { setRequestLoading } = useRequestLoading();
-  const { login } = useAuth();
+  const { forgotPassword } = useAuth();
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -18,13 +18,13 @@ function ForgotPassword() {
       email: '',
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, {resetForm}) => {
       setRequestLoading(true);
       try {
-        await login(values);
+        await forgotPassword(values);
+        resetForm();
       } catch (error) {
-        // The error will be caught here if there's an issue with login.
-        console.log('Error during login:', error);
+        console.log('Error during forgot password:', error);
       } finally {
         setRequestLoading(false);
       }

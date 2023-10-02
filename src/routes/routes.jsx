@@ -10,12 +10,14 @@ import ForgotPassword from '../views/pages/auth/ForgotPassword';
 import Home from '../views/pages/Home';
 import NewPage from '../views/pages/NewPage';
 import ProfileController from '../controllers/ProfileController';
+import ResetPassword from '../views/pages/auth/ResetPassword';
 
 
 
 const routes = [
   createRoute('/login', Login, 'Login', false, AuthLayout, NoSkeleton, 'public'),
   createRoute('/forgot-password', ForgotPassword, 'Forgot Password', false, AuthLayout, NoSkeleton, 'public'),
+  createRoute('/reset-password', ResetPassword, 'Reset Password', false, AuthLayout, NoSkeleton, 'public'),
   createRoute('/register', Register, 'Register', false, AuthLayout, NoSkeleton, 'public'),
   createRoute('/logout', Login, 'Logout', true, MainLayout, LayoutSkeleton, 'semiPrivate'),
   createRoute('/', Home, 'Dashboard', false, MainLayout, LayoutSkeleton, 'semiPrivate'),
