@@ -136,6 +136,15 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const VerifyAccount = async (userFormData) => {
+    try {
+      const response = await api.postWithOutToken('/auth/verify-email', userFormData);
+      toast.success(response.message)
+    } catch (error) {
+      responseCatcher(error);
+    }
+  };
+
   const login = async (userData) => {
     try {
       const response = await api.postWithOutToken('/auth/login', userData);
@@ -165,6 +174,7 @@ export function AuthProvider({ children }) {
       fetchUserData,
       forgotPassword,
       resetPassword,
+      VerifyAccount,
       updateUserData
     };
   }, [authState]);
