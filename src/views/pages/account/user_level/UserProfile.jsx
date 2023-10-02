@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
-import Reviews from '../tabs/Reviews';
-import UploadLinks from '../tabs/UploadLinks';
-import ProfessionalDetails from '../tabs/ProfessionalDetails';
-import Overview from '../tabs/Overview';
-
-
 import Links from './Links';
 import ProfessionalProfile from './ProfessionalProfile';
 import BasicInfo from './BasicInfo';
 
 
-
 const tabs = [
-  { label: 'Basic Info', allowedUserTypes: ['user', 'user_2'] },
-  { label: 'Professional Profile', allowedUserTypes: ['user', 'user_2'] },
-  { label: 'Upload Links', allowedUserTypes: ['user', 'user_2'] },
+  { label: 'Basic Info', allowedUserTypes: ['user', 'user_2'], component: BasicInfo },
+  { label: 'Professional Profile', allowedUserTypes: ['user', 'user_2'], component: ProfessionalProfile },
+  { label: 'Upload Links', allowedUserTypes: ['user', 'user_2'], component: Links },
 ];
 
 const tabIcons = {
@@ -39,41 +32,39 @@ const tabIcons = {
   )
 };
 
-const TabSwitcher = ({ userType, activeTab, handleTabClick }) => {
-  const filteredTabs = tabs.filter((tab) => tab.allowedUserTypes.includes(userType));
-
+const TabSwitcher = ({ userType, activeTab, handleTabClick, isMyAccount }) => {
   return (
     <div className="tabCont flex absolute space-x-10 lg:space-x-32 overflow-x-auto ScrollableCont -top-14 left-0 right-0 w-full px-4">
-      {filteredTabs.map((tab) => (
-        <button
-          key={tab.label}
-          onClick={() => handleTabClick(tab.label)}
-          className={`rounded-md ${
-            activeTab === tab.label ? 'bg-textPurple' : 'text-gray-600'
-          } items-center flex text-md pt-4 pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
-        >
-          {tabIcons[tab.label]}
-          {tab.label}
-        </button>
+      {tabs.map((tab) => (
+        (isMyAccount || tab.label === 'Basic Info') && tab.allowedUserTypes.includes(userType) ? (
+          <button
+            key={tab.label}
+            onClick={() => handleTabClick(tab.label)}
+            className={`rounded-md ${
+              activeTab === tab.label ? 'bg-textPurple' : 'text-gray-600'
+            } items-center flex text-md pt-4 pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
+          >
+            {tabIcons[tab.label]}
+            {tab.label}
+          </button>
+        ) : null
       ))}
     </div>
   );
 };
 
 function UserProfile({ allData }) {
-  const { ProfileData, iamLoggedIn, config } = allData;
+  const { ProfileData, iamLoggedIn, isMyAccount, config } = allData;
   const [activeTab, setActiveTab] = useState('Basic Info');
+  const userType = ProfileData?.account_type;
 
   const handleTabClick = (tabLabel) => {
     setActiveTab(tabLabel);
   };
 
-  let userType = ProfileData?.account_type;
-  
   return (
     <div className="">
-
-      <TabSwitcher userType={userType} activeTab={activeTab} handleTabClick={handleTabClick} />
+      <TabSwitcher userType={userType} activeTab={activeTab} handleTabClick={handleTabClick} isMyAccount={isMyAccount} />
 
       <div className="bg-white p-4 rounded-b-lg">
         {tabs.map((tab) => (
@@ -85,9 +76,7 @@ function UserProfile({ allData }) {
                 : 'hidden transition-opacity duration-300'
             }`}
           >
-            {tab.label === 'Basic Info' && <BasicInfo allData={allData} />}
-            {tab.label === 'Professional Profile' && <ProfessionalProfile allData={allData} />}
-            {tab.label === 'Upload Links' && <Links allData={allData} />}
+            {React.createElement(tab.component, { allData })}
           </div>
         ))}
       </div>

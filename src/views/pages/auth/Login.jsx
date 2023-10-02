@@ -4,13 +4,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../../context/AuthContext';
 import { useRequestLoading } from '../../../context/LoadingContext';
-import ApiService from '../../../helpers/http/apiService';
 
 function Login() {
   const { setRequestLoading } = useRequestLoading();
   const { login } = useAuth();
-
-  const api = new ApiService();
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
