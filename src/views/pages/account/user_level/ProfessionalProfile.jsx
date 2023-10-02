@@ -26,7 +26,11 @@ const validationSchema = Yup.object().shape({
       job_title: Yup.string().required('Title is required'),
       company_name: Yup.string().required('Company name is required'),
       start_date: Yup.string().required('Start date is required'),
-      end_date: Yup.string(),
+      end_date: Yup.date().when('still_work_there', (stillWorkThere, schema) => {
+        return stillWorkThere
+          ? schema.nullable()
+          : schema.required('End date is required if not still working there');
+      }),
       still_work_there: Yup.boolean(),
       job_description: Yup.string().required('Job Description is required'),
     })
@@ -72,20 +76,21 @@ function ProfessionalProfile({allData}) {
       ]);
 
       workExperiencesData.forEach((exp) => {
-        if (exp.start_date && exp.end_date) {
-          // Parse the date strings to ISO format
-          const startDateISO = parseISO(exp.start_date);
-          const endDateISO = parseISO(exp.end_date);
-      
-          // Format the dates as needed
-          exp.start_date = startDateISO;
-          exp.end_date = endDateISO;
-        } else {
-          // Handle cases where dates are missing or invalid
-          exp.start_date = '';
-          exp.end_date = '';
+        if (exp.start_date) {
+          exp.start_date = parseISO(exp.start_date);
         }
+
+        if (exp.still_work_there) {
+          exp.end_date = '';
+        } else if (exp.end_date) {
+          exp.end_date = parseISO(exp.end_date);
+        }
+
+        // Convert still_work_there to boolean
+        exp.still_work_there = exp.still_work_there === "1";
+
       });
+      
 
       formik.setFieldValue('professional', professionalsData);
       formik.setFieldValue('workExperience', workExperiencesData);
@@ -112,12 +117,6 @@ function ProfessionalProfile({allData}) {
       const professionalsForm = values.professional;
       const workExperiencesForm = values.workExperience;
 
-      // const workExperiencesForm = values.workExperience.map((experience) => ({
-      //   ...experience,
-      //   start_date: experience.start_date ? format(parseISO(experience.start_date), 'dd-MM-yyyy') : '',
-      //   end_date: experience.end_date ? format(parseISO(experience.end_date), 'dd-MM-yyyy') : '',
-      // }));
-
       try {
         setRequestLoading(true);
         await Promise.all([
@@ -143,7 +142,7 @@ function ProfessionalProfile({allData}) {
     const updatedWorkExperience = [...formik.values.workExperience];
     updatedWorkExperience[index].still_work_there = !updatedWorkExperience[index].still_work_there;
     // Update the disabled state for this specific row
-    updatedWorkExperience[index].end_date_disabled = updatedWorkExperience[index].still_work_there;
+    updatedWorkExperience[index].end_date = updatedWorkExperience[index].still_work_there ? '' : updatedWorkExperience[index].end_date;
     formik.setFieldValue('workExperience', updatedWorkExperience);
   };
 

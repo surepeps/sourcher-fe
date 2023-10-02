@@ -11,6 +11,20 @@ const WorkExperienceSection = ({
 }) => {
   const exp = formik.values.workExperience[index];
 
+  const handleEndDateChange = (date) => {
+    // Check if the selected end_date is less than or equal to the start_date
+    if (exp.start_date && date <= exp.start_date) {
+      // You can display an error message or handle the error in your preferred way
+      // For this example, I'm setting an error message in formik's errors object
+      formik.setFieldError(`workExperience[${index}].end_date`, 'End date must be greater than start date');
+    } else {
+      // Clear any previous error message
+      formik.setFieldError(`workExperience[${index}].end_date`, '');
+      // Update the end_date in the formik values
+      formik.setFieldValue(`workExperience[${index}].end_date`, date);
+    }
+  };
+
   return (
     <div key={index} className="workexperence">
       <div className="singleWork mb-8 lg:gap-10 gap-4 flex-col lg:flex-row flex justify-between">
@@ -51,13 +65,17 @@ const WorkExperienceSection = ({
               <DatePicker
                 selected={exp.start_date}
                 onChange={(date) => {
-                  formik.setFieldValue(`workExperience[${index}].start_date`, date);
+                formik.setFieldValue(`workExperience[${index}].start_date`, date);
                 }}
                 placeholderText="Start Date"
                 className="rounded-lg border border-awimInputBorder py-4 px-6 w-full focus:outline-none text-sm"
                 dateFormat="dd-MM-yyyy"
                 isClearable
-              />
+                showYearDropdown
+                scrollableYearDropdown
+                yearDropdownItemNumber={25}
+                maxDate={new Date()}
+            />
               {formik.touched.workExperience?.[index]?.start_date && formik.errors.workExperience?.[index]?.start_date && (
                 <span className="error text-xs text-red-800">{formik.errors.workExperience[index].start_date}</span>
               )}
@@ -66,9 +84,7 @@ const WorkExperienceSection = ({
               <label className='text-sm' htmlFor={`workExperience[${index}].end_date`}>End Date</label>
               <DatePicker
                 selected={exp.end_date}
-                onChange={(date) => {
-                  formik.setFieldValue(`workExperience[${index}].end_date`, date);
-                }}
+                onChange={handleEndDateChange}
                 placeholderText="End Date"
                 className="rounded-lg border border-awimInputBorder py-4 px-6 w-full focus:outline-none text-sm"
                 dateFormat="dd-MM-yyyy"
