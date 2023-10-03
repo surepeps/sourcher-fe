@@ -99,7 +99,14 @@ function ProfessionalProfile({allData}) {
       formik.setFieldValue('professional', professionalsData);
       formik.setFieldValue('workExperience', workExperiencesData);
 
-      if (professionalsData.length > 0 || professionalsData.length > 0) {
+      if (professionalsData.length > 0 || workExperiencesData.length > 0) {
+
+        setButtonClicked((prevState) => ({
+          ...prevState,
+          professional: true,
+          workExperience: true,
+        }));
+
         setIsAllow(true);
       }
 
