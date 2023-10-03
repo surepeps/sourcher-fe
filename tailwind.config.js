@@ -28,7 +28,7 @@ export default {
         'awimPink30': '#FADDFF30',
         'awimDarkBlue': '#0F172A',
         'awimInputBorder': '#969595',
-
+        'awimRed': '#EB0E3E',
       },
       fontFamily: {
         notoSans: ['Noto Sans', 'sans'],

@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom';
+import { useModal } from '../../../../context/ModalService';
+import Logout from '../../../modals/Logout';
+
 
 function LoggedInMobile({user, config, closeMobileMenu}) {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const {openModal, closeModal} = useModal();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -27,6 +31,11 @@ function LoggedInMobile({user, config, closeMobileMenu}) {
     setIsDropdownOpen(false);
     closeMobileMenu();
   };
+
+  const logoutModal = () => {
+    closeDropBarMenu();
+    openModal(<Logout closeModal={closeModal}/>);
+  }
 
   return (
     <div className='flex gap-6 flex-col w-full font-notoSans'>
@@ -62,14 +71,21 @@ function LoggedInMobile({user, config, closeMobileMenu}) {
 
       <div className="userData">
         <div className="flex items-center md:order-2 relative" ref={dropdownRef}>
-          <div className="flex gap-3 items-center">
-            <button type="button" onClick={toggleDropdown} className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded={isDropdownOpen} data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-              <span className="sr-only">Open user menu</span>
-              <span className='w-[48px] h-[48px] rounded-full'>
-                <img className="w-full h-full rounded-full" src={config.noImage} alt="user photo" />
-              </span>
-            </button>
-            <p className='text-md font-medium'>{user.first_name} {user.last_name}</p>
+          <div onClick={toggleDropdown} className="flex w-full gap-3 justify-between items-center">
+            <div className="flex gap-3 items-center">
+              <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded={isDropdownOpen} data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                <span className="sr-only">Open user menu</span>
+                <span className='w-[48px] h-[48px] rounded-full'>
+                  <img className="w-full h-full rounded-full" src={config.noImage} alt="user photo" />
+                </span>
+              </button>
+              <p className='text-md font-medium'>{user.first_name} {user.last_name}</p>
+            </div>
+            
+            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.61901 17.925C7.46068 17.925 7.30234 17.8666 7.17734 17.7416C6.93568 17.5 6.93568 17.1 7.17734 16.8583L12.6107 11.425C13.0107 11.025 13.0107 10.375 12.6107 9.97497L7.17734 4.54163C6.93568 4.29997 6.93568 3.89997 7.17734 3.6583C7.41901 3.41663 7.81901 3.41663 8.06068 3.6583L13.494 9.09163C13.919 9.51663 14.1607 10.0916 14.1607 10.7C14.1607 11.3083 13.9273 11.8833 13.494 12.3083L8.06068 17.7416C7.93568 17.8583 7.77734 17.925 7.61901 17.925Z" fill="#1E293B"/>
+            </svg>
+
           </div>
             
             <div className={`z-50 absolute top-12 left-0 w-full right-0 ${!isDropdownOpen ? 'hidden' : 'block'} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`} id="user-dropdown">
@@ -79,19 +95,39 @@ function LoggedInMobile({user, config, closeMobileMenu}) {
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
-                  <NavLink onClick={closeDropBarMenu} to={`/sh/${user.username}`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My Profile</NavLink>
+                  <NavLink onClick={closeDropBarMenu} to={`/sh/${user.username}`} className="px-4 py-2 text-sm items-center font-semibold flex gap-5 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#273142" fillOpacity="0.08"/>
+                        <g opacity="0.8">
+                        <path d="M16.005 7.42853C13.7593 7.42853 11.9336 9.25424 11.9336 11.5C11.9336 13.7028 13.6565 15.4857 15.9022 15.5628C15.9707 15.5542 16.0393 15.5542 16.0907 15.5628C16.1079 15.5628 16.1165 15.5628 16.1336 15.5628C16.1422 15.5628 16.1422 15.5628 16.1507 15.5628C18.345 15.4857 20.0679 13.7028 20.0765 11.5C20.0765 9.25424 18.2507 7.42853 16.005 7.42853Z" fill="#1E293B"/>
+                        <path d="M20.3573 17.8428C17.9659 16.2485 14.0659 16.2485 11.6573 17.8428C10.5687 18.5713 9.96875 19.5571 9.96875 20.6113C9.96875 21.6656 10.5688 22.6428 11.6487 23.3628C12.8487 24.1685 14.4259 24.5713 16.003 24.5713C17.5802 24.5713 19.1573 24.1685 20.3573 23.3628C21.4373 22.6342 22.0373 21.6571 22.0373 20.5942C22.0288 19.5399 21.4373 18.5628 20.3573 17.8428Z" fill="#1E293B"/>
+                        </g>
+                      </svg>
+                    My Profile
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink onClick={closeDropBarMenu} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>Dashboard</NavLink>
+                  <NavLink onClick={closeDropBarMenu} className="px-4 py-2 text-sm items-center font-semibold flex gap-5 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>
+                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#273142" fillOpacity="0.08"/>
+                        <g opacity="0.8">
+                        <path d="M23.6415 15.2458V11.4829C23.6415 10.7801 23.11 9.98292 22.45 9.7172L17.6758 7.76292C16.6043 7.32577 15.3958 7.32577 14.3243 7.76292L9.55004 9.7172C8.89862 9.98292 8.36719 10.7801 8.36719 11.4829V15.2458C8.36719 19.4372 11.41 23.3629 15.5672 24.5115C15.85 24.5886 16.1586 24.5886 16.4415 24.5115C20.5986 23.3629 23.6415 19.4372 23.6415 15.2458ZM16.6472 16.7458V19.0001C16.6472 19.3515 16.3558 19.6429 16.0043 19.6429C15.6529 19.6429 15.3615 19.3515 15.3615 19.0001V16.7458C14.4958 16.4715 13.8615 15.6658 13.8615 14.7143C13.8615 13.5315 14.8215 12.5715 16.0043 12.5715C17.1872 12.5715 18.1472 13.5315 18.1472 14.7143C18.1472 15.6743 17.5129 16.4715 16.6472 16.7458Z" fill="#1E293B"/>
+                        </g>
+                      </svg>
+                    Reset Password
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink onClick={closeDropBarMenu} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>Settings</NavLink>
-                </li>
-                <li>
-                  <NavLink onClick={closeDropBarMenu} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>Chat</NavLink>
-                </li>
-                <li>
-                  <NavLink onClick={closeDropBarMenu} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/logout'>Log Out</NavLink>
+                  <NavLink onClick={logoutModal} className="px-4 py-2 text-sm items-center font-semibold flex gap-5 text-awimRed hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#EA1644" fillOpacity="0.08"/>
+                        <g opacity="0.8">
+                        <path d="M12.4732 16.06C12.4732 15.7085 12.7647 15.4171 13.1161 15.4171H17.8132V8.16567C17.8047 7.75424 17.4789 7.42853 17.0675 7.42853C12.019 7.42853 8.49609 10.9514 8.49609 16C8.49609 21.0485 12.019 24.5714 17.0675 24.5714C17.4704 24.5714 17.8047 24.2457 17.8047 23.8342V16.6942H13.1161C12.7561 16.7028 12.4732 16.4114 12.4732 16.06Z" fill="#EB0E3E"/>
+                        <path d="M23.3247 15.6057L20.8904 13.1628C20.6418 12.9142 20.2304 12.9142 19.9818 13.1628C19.7333 13.4114 19.7333 13.8228 19.9818 14.0714L21.319 15.4085H17.8047V16.6942H21.3104L19.9733 18.0314C19.7247 18.28 19.7247 18.6914 19.9733 18.94C20.1018 19.0685 20.2647 19.1285 20.4275 19.1285C20.5904 19.1285 20.7533 19.0685 20.8818 18.94L23.3161 16.4971C23.5733 16.2571 23.5733 15.8542 23.3247 15.6057Z" fill="#EB0E3E"/>
+                        </g>
+                      </svg>
+                    Log Out
+                  </NavLink>
                 </li>
               </ul>
             </div>
