@@ -25,6 +25,10 @@ function LoggedIn({user, config}) {
   };
 
 
+  const closeDropBarMenu = () => {
+    setIsDropdownOpen(false);
+  };
+
   return (
     <div className='flex gap-3 items-center'>
       <span className='relative cursor-pointer'>
@@ -64,19 +68,19 @@ function LoggedIn({user, config}) {
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
-                  <NavLink to={`/sh/${user.username}`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My Profile</NavLink>
+                  <NavLink onClick={closeDropBarMenu} to={`/sh/${user.username}`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My Profile</NavLink>
                 </li>
                 <li>
-                  <NavLink className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>Dashboard</NavLink>
+                  <NavLink onClick={closeDropBarMenu} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>Dashboard</NavLink>
                 </li>
                 <li>
-                  <NavLink className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>Settings</NavLink>
+                  <NavLink onClick={closeDropBarMenu} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>Settings</NavLink>
                 </li>
                 <li>
-                  <NavLink className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>Chat</NavLink>
+                  <NavLink onClick={closeDropBarMenu} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/'>Chat</NavLink>
                 </li>
                 <li>
-                  <NavLink className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/logout'>Log Out</NavLink>
+                  <NavLink onClick={closeDropBarMenu} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" to='/logout'>Log Out</NavLink>
                 </li>
               </ul>
             </div>

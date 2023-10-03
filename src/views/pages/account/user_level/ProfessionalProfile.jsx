@@ -3,13 +3,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import UpgradeForm from '../others/UpgradeForm';
 import NoProfessional from '../others/NoProfessional';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import ApiService from '../../../../helpers/http/apiService';
 import { useRequestLoading } from '../../../../context/LoadingContext';
 import ProfessionalSection from '../others/ProfessionalSection';
 import WorkExperienceSection from '../others/WorkExperienceSection';
 import { isValid, format, parseISO } from 'date-fns';
+import { toast } from 'react-toastify';
 
 
 
@@ -48,7 +47,7 @@ const validationSchema = Yup.object().shape({
 
 
 function ProfessionalProfile({allData}) {
-  const {ProfileData, myData, config, isProfileLevel1, isProfileLevel2, isMyAccount} = allData;
+  const {config, isProfileLevel1, isMyAccount} = allData;
   const [isAllow, setIsAllow] = useState(false);
 
   const { setRequestLoading } = useRequestLoading();
@@ -60,6 +59,11 @@ function ProfessionalProfile({allData}) {
   }
   
   const [endDateDisabled, setEndDateDisabled] = useState(false);
+
+  const [buttonClicked, setButtonClicked] = useState({
+    workExperience: false,
+    professional: false,
+  });
 
   const fetchAllData = async () => {
     try {
@@ -100,7 +104,6 @@ function ProfessionalProfile({allData}) {
       }
 
       setRequestLoading(false);
-      console.log("workExpreience ",workExperiencesData)
     } catch (error) {
       console.error('Error fetching professionals and work experiences:', error);
       setRequestLoading(false);
@@ -124,7 +127,7 @@ function ProfessionalProfile({allData}) {
           api.postWithToken('/workExperience/add', { workExperiences: workExperiencesForm }),
         ]);
         fetchAllData();
-        console.log('Success');
+        toast.success(`Professional Profile updated Successfully`)
       } catch (error) {
         console.error('Error:', error);
       } finally {
@@ -151,7 +154,12 @@ function ProfessionalProfile({allData}) {
     formik.setFieldValue(sectionType, [
       ...formik.values[sectionType],
       sectionType === 'professional'
-        ? { id: null, professional_description: '', professional_role: '', duration: '' }
+        ? { 
+          id: null, 
+          professional_description: '', 
+          professional_role: '', 
+          duration: '' 
+        }
         : {
             id: null,
             job_title: '',
@@ -162,6 +170,11 @@ function ProfessionalProfile({allData}) {
             job_description: '',
           },
     ]);
+
+    setButtonClicked((prevState) => ({
+      ...prevState,
+      [sectionType]: true,
+    }));
   };
 
   const removeSection = async (index, sectionType) => {
@@ -171,6 +184,7 @@ function ProfessionalProfile({allData}) {
       try {
         setRequestLoading(true);
         await api.getWithToken(`/${sectionType}/delete/${itemToDelete.id}`);
+        toast.success(`${sectionType} deleted Successfully`)
       } catch (error) {
         console.error(error);
         return;
@@ -236,16 +250,20 @@ function ProfessionalProfile({allData}) {
                 </button>
               </div>
 
-              <button type="submit" className='bg-awimGreen text-white py-3 px-10 rounded-lg text-sm border border-awimGreen font-semibold hover:bg-opacity-90 transition duration-300 ease-in-out mt-8'>
-                Submit
-              </button>
+              { (buttonClicked.workExperience || buttonClicked.professional) &&
+                <button
+                  type="submit"
+                  className='bg-awimGreen text-white py-3 px-10 rounded-lg text-sm border border-awimGreen font-semibold hover:bg-opacity-90 transition duration-300 ease-in-out mt-8'
+                >
+                  Submit
+                </button>
+              }
+
             </form>
           </div>
         )
       }
       
-
-
 
     </div>
   )

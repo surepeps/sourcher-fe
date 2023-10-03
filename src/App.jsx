@@ -11,43 +11,42 @@ import { useAuth } from './context/AuthContext';
 import LoadingSpinner from './views/miscellaneous/LoadingSpinner';
 
 
-
-
 function App() {
 
   const { loading } = useAuth();
 
   return (
-    <ModalService>
+    <LoadingProvider>
+      <ModalService>
+        
+          <BrowserRouter>
+            <ToastContainer />
+            
+            {loading ? (
+              <LoadingSpinner />
+            ) : (
+              // <FadeTransition>
+                <Routes>
+                  
+                  {/* All Routes */}
+                  {routes.map((route, index) => (
+                    <Route key={index} path={route.path} element={route.element} />
+                  ))}
 
-      <LoadingProvider>
-        <BrowserRouter>
-          <ToastContainer />
-          
-          {loading ? (
-            <LoadingSpinner />
-          ) : (
-            // <FadeTransition>
-              <Routes>
-                
-                {/* All Routes */}
-                {routes.map((route, index) => (
-                  <Route key={index} path={route.path} element={route.element} />
-                ))}
+                  {/* Error 404 */}
+                  <Route path="*" element={<Error_404 />} />
 
-                {/* Error 404 */}
-                <Route path="*" element={<Error_404 />} />
+                </Routes>
+              // </FadeTransition>
+            )}
 
-              </Routes>
-            // </FadeTransition>
-          )}
+            <SureModal /> 
 
-          <SureModal /> 
+          </BrowserRouter>
+    
+      </ModalService>
 
-        </BrowserRouter>
-      </LoadingProvider>
-
-    </ModalService>
+    </LoadingProvider>
   )
 }
 

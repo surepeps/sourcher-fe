@@ -1,4 +1,4 @@
-import Overview from './tabs/Overview';
+import Overview from './others/Overview';
 
 function NonLoggedProfile({allData}) {
     const {ProfileData, config} = allData;

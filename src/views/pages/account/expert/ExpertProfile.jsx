@@ -3,7 +3,7 @@ import Reviews from '../tabs/Reviews';
 import UploadLinks from '../tabs/UploadLinks';
 import ProfessionalDetails from '../tabs/ProfessionalDetails';
 import BasicInfo from '../tabs/BasicInfo';
-import Overview from '../tabs/Overview';
+import Overview from '../others/Overview';
 
 const tabs = [
   { label: 'Basic Info', allowedUserTypes: ['user', 'user_2'] },

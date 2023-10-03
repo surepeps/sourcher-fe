@@ -43,18 +43,12 @@ function EditBasicInfo({allData, closeModal}) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-        try {
-            setIsDone(true)
-            setRequestLoading(true);
-            updateUserData({updatedUserData:values});
-            closeModal();
-        } catch (error) {
-            console.log(error);
-        }finally{
-            setIsDone(false)
-            setRequestLoading(false)
-        }
-        
+        updateUserData({updatedUserData:values});
+        setRequestLoading(true);
+        setIsDone(true)
+        closeModal();
+        setIsDone(false)
+        setRequestLoading(false)
     },
   });
 

@@ -14,16 +14,16 @@ function MainLayout({ children, config, isLoggedIn, userData, skeleton, Error_40
       {/* Header */}
       <Header userData={userData} isLoggedIn={isLoggedIn} config={config} />
 
-      {isRequestLoading ? <OverlaySpinner /> : ""}
-    
       <div className="mt-18 lg:mt-[90px]">
         {React.Children.map(children, child => {
           return React.cloneElement(child, { config, userData, isLoggedIn, skeleton, Error_404 });
         })}
       </div>
       
-        {/* Footer */}
-        <Footer config={config} />
+      {/* Footer */}
+      <Footer config={config} />
+      
+      {isRequestLoading ? <OverlaySpinner /> : ""}
 
     </div>
   )

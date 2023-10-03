@@ -30,7 +30,6 @@ function MyProfile({...rest}) {
         {
           !iamLoggedIn ? <NonLoggedProfile allData={allData} /> :
           account_type === 'user' || account_type === 'user_2' ? <UserProfile allData={allData} /> : <ExpertProfile allData={allData} />
-
         }
       </div>
       
