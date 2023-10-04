@@ -2,6 +2,7 @@ import React from 'react'
 import CountryFlag from 'react-country-flag';
 import { NavLink } from 'react-router-dom';
 import { useModal } from '../../../context/ModalService';
+import UploadAvatar from '../../modals/account/UploadAvatar';
 
 
 function ProfileBanner({allData}) {
@@ -10,10 +11,14 @@ function ProfileBanner({allData}) {
 
     const {google, twitter, linkedin, youtube, instagram, facebook} = ProfileData
 
-    const {openModal} = useModal();
+    const {openModal, closeModal} = useModal();
 
     const allowChatAccess = () => {
         alert("Hello")
+    }
+
+    const uploadAvatar = () => {
+        openModal(<UploadAvatar closeModal={closeModal} />)
     }
 
     
@@ -30,7 +35,7 @@ function ProfileBanner({allData}) {
                     {
                         isMyAccount ? 
                         (
-                            <span className='cursor-pointer absolute bottom-3 lg:bottom-8 right-3'>
+                            <span onClick={uploadAvatar} className='cursor-pointer absolute bottom-3 lg:bottom-8 right-3'>
                                 <svg className='w-[36px] h-[36px] lg:w-[46px] lg:h-[46px]' width="46" height="46" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="2" y="2" width="52" height="52" rx="26" fill="#591664"/>
                                     <path d="M38.2801 39.4286H17.7087C17.2401 39.4286 16.8516 39.04 16.8516 38.5714C16.8516 38.1029 17.2401 37.7143 17.7087 37.7143H38.2801C38.7487 37.7143 39.1373 38.1029 39.1373 38.5714C39.1373 39.04 38.7487 39.4286 38.2801 39.4286Z" fill="white"/>
