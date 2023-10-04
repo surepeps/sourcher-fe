@@ -65,6 +65,29 @@ class ApiService {
     return this.request('get', endpoint);
   }
 
+  async putFormDataWithToken(endpoint, formData) {
+    // This method sends a multipart/form-data POST request with a token.
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const token = this.getToken();
+      const options = {};
+
+      if (token) {
+        options.headers = {
+          Authorization: `Bearer ${token.token}`,
+          'Content-Type': 'multipart/form-data',
+        };
+      }
+
+      const response = await this.instance.put(endpoint, formData, options);
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
   async getWithParams(endpoint, params = {}) {
     // eslint-disable-next-line no-useless-catch
     try {

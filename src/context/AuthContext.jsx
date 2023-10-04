@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
     try {
       // Make a request to update user data using the API
       const response = await api.putWithToken('/user/update', newUserData);
-      
+    
       // Assuming the API response contains the updated user data
       const updatedUserData = response.data.user;
 
@@ -55,7 +55,7 @@ export function AuthProvider({ children }) {
       responseCatcher(error);
     }
   };
-
+ 
   useEffect(() => {
     async function checkLocalStorage() {
       const tokenFromLocalStorage = JSON.parse(localStorage.getItem('token'));
