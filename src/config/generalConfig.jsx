@@ -17,6 +17,7 @@ import emptyData from '/assets/images/emptyData.png'
 
 const generalConfig =  {
     APIURL: 'https://api.sourceher.com/v1',
+    fileURL: 'https://files.sourceher.com/',
     authBanner: authBanner,
     awimLogo: awimLogo,
     awimDarkLogo: awimDarkLogo,

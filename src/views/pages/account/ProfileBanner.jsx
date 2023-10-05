@@ -17,11 +17,12 @@ function ProfileBanner({allData}) {
         alert("Hello")
     }
 
+    const imageURL = `${config.fileURL}${ProfileData.avatar}`;
+
     const uploadAvatar = () => {
-        openModal(<UploadAvatar closeModal={closeModal} />)
+        openModal(<UploadAvatar previousImage={ProfileData.avatar ? imageURL : null} closeModal={closeModal} />)
     }
 
-    
   return (
     <div className='w-full bg-textPurple relative h-auto flex py-4'>
         <img src={config.profileBanner} className='absolute left-0 top-0 bottom-0' alt=""  />
@@ -30,7 +31,7 @@ function ProfileBanner({allData}) {
             <div className="flex items-center relative lg:flex-row flex-col gap-10">
                 <div className="imgContIcon relative">
                     <div className="circle w-[170px] mt-7 lg:mt-1 -ml-14 lg:ml-0 h-[170px] xl:w-[250px] xl:h-[250px] rounded-full border border-awimLightPurple">
-                        <img src={ProfileData.avatar ?? config.noAvatar} alt="" className='w-full h-full rounded-full' />
+                        <img src={ProfileData.avatar ? imageURL : config.noAvatar} alt="" className='w-full h-full rounded-full' />
                     </div>
                     {
                         isMyAccount ? 
