@@ -20,7 +20,7 @@ function ProfileBanner({allData}) {
     const imageURL = `${config.fileURL}${ProfileData.avatar}`;
 
     const uploadAvatar = () => {
-        openModal(<UploadAvatar previousImage={ProfileData.avatar ? imageURL : null} closeModal={closeModal} />)
+        openModal(<UploadAvatar previousImgWOURL={ProfileData.avatar} previousImage={ProfileData.avatar ? imageURL : null} closeModal={closeModal} />)
     }
 
   return (
