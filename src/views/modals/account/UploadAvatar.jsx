@@ -21,7 +21,7 @@ function UploadAvatar({ previousImgWOURL, previousImage, closeModal }) {
 
   useEffect(() => {
     if (previousImage) {
-      setSelectedFile(`https:api.sourceher.com/cdn/${previousImgWOURL}`);
+      setSelectedFile(`https:api.sourceher.com/v1/cdn?imgLink=${previousImgWOURL}`);
       setShowCropSection(true);
     }
   }, [previousImage]);
