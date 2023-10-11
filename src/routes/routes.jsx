@@ -12,6 +12,7 @@ import NewPage from '../views/pages/NewPage';
 import ProfileController from '../controllers/ProfileController';
 import ResetPassword from '../views/pages/auth/ResetPassword';
 import VerifyAccount from '../views/pages/auth/VerifyAccount';
+import ExpertRegister from '../views/pages/auth/ExpertRegister';
 
 
 
@@ -21,6 +22,7 @@ const routes = [
   createRoute('/forgot-password', ForgotPassword, 'Forgot Password', false, AuthLayout, NoSkeleton, 'public'),
   createRoute('/reset-password', ResetPassword, 'Reset Password', false, AuthLayout, NoSkeleton, 'public'),
   createRoute('/verify-email', VerifyAccount, 'Veryfy Account', false, AuthLayout, NoSkeleton, 'public'),
+  createRoute('/expert-reg', ExpertRegister, 'Expert Registration', false, AuthLayout, NoSkeleton, 'public'),
   createRoute('/register', Register, 'Register', false, AuthLayout, NoSkeleton, 'public'),
   createRoute('/logout', Login, 'Logout', true, MainLayout, LayoutSkeleton, 'semiPrivate'),
   createRoute('/', Home, 'Dashboard', false, MainLayout, LayoutSkeleton, 'semiPrivate'),

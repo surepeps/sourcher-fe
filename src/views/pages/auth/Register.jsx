@@ -80,7 +80,7 @@ function Register() {
     fetchData('/service/categories', setCategories);
     fetchData('/service/industries', setIndustries);
     fetchData('/service/titles', setTitles);
-  }, []);
+  },[]);
 
   const getInputClass = (fieldName) => {
     return formik.touched[fieldName]

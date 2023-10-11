@@ -15,7 +15,7 @@ export const Menu = [
         familyLink: ["/find-expert"]
     },
     {
-        name: 'Become an Expert',
+        name: 'Expert Sign Up',
         path: '/expert-reg',
         familyLink: ["/expert-reg"]
     },
