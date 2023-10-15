@@ -70,7 +70,7 @@ function ExpertRegister() {
         </div>
 
         <div className="flex justify-center pt-6 text-md">
-          <p> Already have an account? <NavLink to='/login' className='text-awimGreen'>Login</NavLink> </p>
+          <p> Already have an Expert account? <NavLink to='/login' className='text-awimGreen'>Login</NavLink> </p>
         </div>
       </form>
     </div>
