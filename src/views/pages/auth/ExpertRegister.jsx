@@ -7,59 +7,155 @@ function ExpertRegister() {
   return (
     <div className='pt-6'>
       <div className="text-3xl xl:text-5xl font-semibold text-center lg:text-left">Expert Sign Up</div>
-      <p>We aim to create a networking/collaboration ground for African Women Experts like you to contribute your voices to our stories</p>
+      <p className='pt-4'>We aim to create a networking/collaboration ground for African Women Experts like you to contribute your voices to our stories</p>
 
-      <form onSubmit={formik.handleSubmit} className='pt-14 lg:pt-20 px-2'>
+      <form onSubmit="" className='pt-14 lg:pt-20 px-2'>
         {/* Render form fields using map or a component */}
-        {[
-          { name: 'first_name', label: 'First Name' },
-          { name: 'last_name', label: 'Last Name' },
-          { name: 'email', label: 'EEWXEmail' },
-          { name: 'phone_number', label: 'Phone Number' },
-          { name: 'cat_id', label: 'Select Category', options: categories },
-          { name: 'industry_id', label: 'Choose Industry', options: industries },
-          { name: 'title_id', label: 'Choose Title', options: titles },
-          { name: 'password', label: 'Password', type: 'password' },
-          { name: 'confirm_password', label: 'Confirm Password', type: 'password' },
-        ].map((field) => (
-          <div key={field.name} className="mb-5">
-            <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor={field.name}>
-              {field.label}
-              {formik.touched[field.name] && formik.errors[field.name] && (
-                <span className="text-red-500 text-xs">{formik.errors[field.name]}</span>
-              )}
-            </label>
-            {field.options ? (
-              <select
-                value={formik.values[field.name]}
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                name={field.name}
-                id={field.name}
-                className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline ${getInputClass(field.name)}`}
-              >
-                <option value="">Select an option</option>
-                {field.options.map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.title}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <input
-                value={formik.values[field.name]}
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                id={field.name}
-                name={field.name}
-                type={field.type || 'text'}
-                className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline ${getInputClass(field.name)}`}
-                placeholder={field.placeholder || field.label}
-              />
-            )}
-          </div>
-        ))}
+        <div className="mb-5">
+          <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor="first_name">
+              First Name
+              <span className="text-red-500 text-xs">First Name is required</span>
+          </label>
 
+          <input
+                value=""
+                id="first_name"
+                name="first_name"
+                type='text'
+                className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
+                placeholder="Enter First Name"
+              />
+
+        </div>
+
+        <div className="mb-5">
+          <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor="last_name">
+              Last Name
+              <span className="text-red-500 text-xs">Last Name is required</span>
+          </label>
+
+          <input
+                value=""
+                id="last_name"
+                name="last_name"
+                type='text'
+                className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
+                placeholder="Enter Last Name"
+              />
+
+        </div>
+
+        <div className="mb-5">
+          <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor="email_address">
+              Email Address
+              <span className="text-red-500 text-xs">Email Address is required</span>
+          </label>
+
+          <input
+                value=""
+                id="email_address"
+                name="email_address"
+                type='email'
+                className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
+                placeholder="Enter Email Address"
+              />
+
+        </div>
+
+        <div className="mb-5">
+          <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor="phone_number">
+              Phone Number 
+              <span className="text-red-500 text-xs">Phone Number is required</span>
+          </label>
+
+          <input
+                value=""
+                id="phone_number"
+                name="phone_number"
+                type='number'
+                className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
+                placeholder="Enter Phone Number"
+              />
+
+        </div>
+
+        <div className="mb-5">
+          <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor="country_code">
+              Country of Origin
+              <span className="text-red-500 text-xs">Country of Origin is required</span>
+          </label>
+          <select name="country_code" id="" className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+          </select>
+
+        </div>
+
+        <div className="mb-5">
+          <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor="country_residence">
+              Country of Residence
+              <span className="text-red-500 text-xs">Country of Residence is required</span>
+          </label>
+          <select name="country_residence" id="" className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+          </select>
+
+        </div>
+
+        <div className="mb-5">
+          <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor="city_town">
+              City / Town
+              <span className="text-red-500 text-xs">City/Town is required</span>
+          </label>
+          <select name="city_town" id="" className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+          </select>
+
+        </div>
+
+        <div className="mb-5">
+          <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor="password">
+              Password 
+              <span className="text-red-500 text-xs">Password is required</span>
+          </label>
+
+          <input
+                value=""
+                id="password"
+                name="password"
+                type='password'
+                className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
+                placeholder="Enter Password"
+              />
+
+        </div>
+
+        <div className="mb-5">
+          <label className={`flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2`} htmlFor="c_password">
+              Confirm Password 
+              <span className="text-red-500 text-xs">Confirm Password is required</span>
+          </label>
+
+          <input
+                value=""
+                id="c_password"
+                name="c_password"
+                type='password'
+                className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
+                placeholder="Enter Confirm Password"
+              />
+
+        </div>
+
+      
         <div className="mt-10">
           <button
             type="submit"
