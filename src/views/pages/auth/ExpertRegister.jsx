@@ -90,6 +90,7 @@ function ExpertRegister() {
       <form onSubmit={formik.handleSubmit} className="pt-14 lg:pt-20 px-2">
         {ExpertRegForm.map((field) => (
           <div key={field.name} className="mb-5">
+
             <label className="flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2" htmlFor={field.name}>
               {field.label}
               {formik.errors[field.name] && formik.touched[field.name] && (
@@ -102,36 +103,41 @@ function ExpertRegister() {
                 name={field.name}
                 id={field.name}
                 value={formik.values[field.name]}
-                onChange={
-                  field.name === 'country_code'
-                    ? handleCountryChange
-                    : field.name === 'country_state'
-                    ? handleStateChange
-                    : formik.handleChange
-                }
-                className="w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline"
+                onChange={(e) => {
+                  if (field.name === 'country_code') {
+                    handleCountryChange(e);
+                    formik.handleChange(e);
+                  } else if (field.name === 'country_state') {
+                    handleStateChange(e);
+                    formik.handleChange(e);
+                  } else {
+                    formik.handleChange(e);
+                  }
+                }}
+                className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
               >
                 <option value="">{field.placeholder}</option>
-                {field.name === 'country_code' ? (
-                  countries.map((country) => (
-                    <option key={country.isoCode} value={country.isoCode}>
-                      {country.name}
-                    </option>
-                  ))
-                ) : field.name === 'country_state' && selectedCountry ? (
-                  states.map((state) => (
-                    <option key={state.name} value={state.isoCode}>
-                      {state.name}
-                    </option>
-                  ))
-                ) : field.name === 'city_town' && selectedState && selectedCountry ? (
-                  cities.map((city) => (
-                    <option key={city.name} value={city.name}>
-                      {city.name}
-                    </option>
-                  ))
-                ) : null}
+                {field.name === 'country_code'
+                  ? countries.map((country) => (
+                      <option key={country.isoCode} value={country.isoCode}>
+                        {country.name}
+                      </option>
+                    ))
+                  : field.name === 'country_state' && selectedCountry
+                  ? states.map((state) => (
+                      <option key={state.name} value={state.isoCode}>
+                        {state.name}
+                      </option>
+                    ))
+                  : field.name === 'city_town' && selectedState && selectedCountry
+                  ? cities.map((city) => (
+                      <option key={city.name} value={city.name}>
+                        {city.name}
+                      </option>
+                    ))
+                  : null}
               </select>
+            
 
             ) : (
               <input
