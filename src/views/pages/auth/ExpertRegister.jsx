@@ -5,7 +5,10 @@ import * as Yup from 'yup';
 import { Country, State, City } from 'country-state-city';
 import { ExpertRegForm } from '../../../models/ExpertRegForm';
 import ApiService from '../../../helpers/http/apiService';
-
+import { useModal } from '../../../context/ModalService';
+import { useAuth } from '../../../context/AuthContext';
+import SuccessRegistered from '../../modals/SuccessRegistered';
+import { useRequestLoading } from '../../../context/LoadingContext';
 
 
 const initialValues = {};
@@ -46,8 +49,13 @@ function ExpertRegister() {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
 
+  const { setRequestLoading } = useRequestLoading();
+  const { register } = useAuth();
+
   const api = new ApiService();
-  
+
+  const { openModal } = useModal();
+
   useEffect(() => {
     const countryData = Country.getAllCountries();
     setCountries(countryData);
@@ -80,9 +88,18 @@ function ExpertRegister() {
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      // Handle form submission here
-      console.log('Form values:', values);
+    onSubmit: async (values, { resetForm }) => {
+      setRequestLoading(true);
+      try {
+        await register(values);
+        openModal(<SuccessRegistered />);
+        resetForm(); // Clear form fields after successful registration
+      } catch (error) {
+        // The error will be caught here if there's an issue with registration.
+        console.log('Error during registration:', error);
+      } finally {
+        setRequestLoading(false);
+      }
     },
   });
 
