@@ -4,6 +4,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Country, State, City } from 'country-state-city';
 import { ExpertRegForm } from '../../../models/ExpertRegForm';
+import ApiService from '../../../helpers/http/apiService';
+
 
 
 const initialValues = {};
@@ -44,6 +46,8 @@ function ExpertRegister() {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
 
+  const api = new ApiService();
+  
   useEffect(() => {
     const countryData = Country.getAllCountries();
     setCountries(countryData);
