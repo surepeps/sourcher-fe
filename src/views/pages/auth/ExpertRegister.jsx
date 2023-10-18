@@ -125,10 +125,10 @@ function ExpertRegister() {
                 id={field.name}
                 value={formik.values[field.name]}
                 onChange={(e) => {
-                  if (field.name === 'country_code') {
+                  if (field.name === 'country_id') {
                     handleCountryChange(e);
                     formik.handleChange(e);
-                  } else if (field.name === 'country_state') {
+                  } else if (field.name === 'state') {
                     handleStateChange(e);
                     formik.handleChange(e);
                   } else {
@@ -138,21 +138,21 @@ function ExpertRegister() {
                 className={`w-full py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
               >
                 <option value="">{field.placeholder}</option>
-                {field.name === 'country_code'
+                {field.name === 'country_id'
                   ? countries.map((country) => (
-                      <option key={country.isoCode} value={country.isoCode}>
+                      <option key={country.isoCode} data-countryId={country.isoCode} value={country.isoCode}>
                         {country.name}
                       </option>
                     ))
-                  : field.name === 'country_state' && selectedCountry
+                  : field.name === 'tate' && selectedCountry
                   ? states.map((state) => (
-                      <option key={state.name} value={state.isoCode}>
+                      <option key={state.name} data-stateId={state.isoCode} value={state.name}>
                         {state.name}
                       </option>
                     ))
-                  : field.name === 'city_town' && selectedState && selectedCountry
+                  : field.name === 'city' && selectedState && selectedCountry
                   ? cities.map((city) => (
-                      <option key={city.name} value={city.name}>
+                      <option key={city.name} data-cityId={city.isoCode} value={city.name}>
                         {city.name}
                       </option>
                     ))
