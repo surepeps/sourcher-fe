@@ -24,19 +24,19 @@ export const ExpertRegForm = [
         placeholder: 'Enter Phone Number',
       },
       {
-        name: 'country_code',
+        name: 'country_id',
         label: 'Country of Origin',
         type: 'select',
         placeholder: 'Select Country',
       },
       {
-        name: 'country_state',
+        name: 'state',
         label: 'State',
         type: 'select',
         placeholder: 'Select State',
       },
       {
-        name: 'city_town',
+        name: 'city',
         label: 'City / Town',
         type: 'select',
         placeholder: 'Select City',

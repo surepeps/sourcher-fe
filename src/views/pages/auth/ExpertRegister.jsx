@@ -75,7 +75,14 @@ function ExpertRegister() {
   };
 
   const handleStateChange = (event) => {
-    const state = event.target.value;
+    // const state = event.target.value;
+
+    // Access the selected option element
+    const selectedOption = event.target.options[event.target.selectedIndex];
+
+    // Retrieve the value of the data-stateid attribute using dataset
+    const state = selectedOption.dataset.stateid;
+
     setSelectedState(state);
     setSelectedCity('');
 
@@ -140,19 +147,19 @@ function ExpertRegister() {
                 <option value="">{field.placeholder}</option>
                 {field.name === 'country_id'
                   ? countries.map((country) => (
-                      <option key={country.isoCode} data-countryId={country.isoCode} value={country.isoCode}>
+                      <option key={country.isoCode} value={country.isoCode}>
                         {country.name}
                       </option>
                     ))
-                  : field.name === 'tate' && selectedCountry
+                  : field.name === 'state' && selectedCountry
                   ? states.map((state) => (
-                      <option key={state.name} data-stateId={state.isoCode} value={state.name}>
+                      <option key={state.name} data-stateid={state.isoCode} value={state.name}>
                         {state.name}
                       </option>
                     ))
                   : field.name === 'city' && selectedState && selectedCountry
                   ? cities.map((city) => (
-                      <option key={city.name} data-cityId={city.isoCode} value={city.name}>
+                      <option key={city.name} dataCityId={city.isoCode} value={city.name}>
                         {city.name}
                       </option>
                     ))
