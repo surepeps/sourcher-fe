@@ -67,7 +67,6 @@ function ExpertRegister() {
     setSelectedState('');
     setSelectedCity('');
 
-    console.log("Selected Country: ", country);
     const stateData = State.getStatesOfCountry(country);
     console.log(stateData);
     setStates(stateData);
@@ -117,14 +116,20 @@ function ExpertRegister() {
 
       <form onSubmit={formik.handleSubmit} className="pt-14 lg:pt-20 px-2">
         {ExpertRegForm.map((field) => (
-          <div key={field.name} className="mb-5">
+          <div key={field.name} className={`${field.type != 'hidden' ? 'mb-5' : ''} `}>
 
-            <label className="flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2" htmlFor={field.name}>
-              {field.label}
-              {formik.errors[field.name] && formik.touched[field.name] && (
-                <span className="text-red-500 text-xs">{formik.errors[field.name]}</span>
-              )}
-            </label>
+            {
+              field.type != 'hidden' && (
+                <label className="flex justify-between text-gray-700 text-xs lg:text-sm font-bold mb-2" htmlFor={field.name}>
+                  {field.label}
+                  {formik.errors[field.name] && formik.touched[field.name] && (
+                    <span className="text-red-500 text-xs">{formik.errors[field.name]}</span>
+                  )}
+                </label>
+              )
+            }
+
+            
 
             {field.type === 'select' ? (
               <select
