@@ -13,7 +13,7 @@ import { useRequestLoading } from '../../../context/LoadingContext';
 
 const initialValues = {};
 ExpertRegForm.forEach((field) => {
-  initialValues[field.name] = '';
+  initialValues[field.name] = field.value;
 });
 
 const generateValidationSchema = (fields) => {
@@ -96,16 +96,18 @@ function ExpertRegister() {
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       setRequestLoading(true);
-      try {
-        await register(values);
+      const registrationResult = await register(values);
+      
+      if (registrationResult.success) {
+        // Registration was successful, open the modal
         openModal(<SuccessRegistered />);
         resetForm(); // Clear form fields after successful registration
-      } catch (error) {
-        // The error will be caught here if there's an issue with registration.
-        console.log('Error during registration:', error);
-      } finally {
-        setRequestLoading(false);
+      } else {
+        // Registration failed, show an error message
+        console.log('Error during registration:', registrationResult.message);
       }
+      
+      setRequestLoading(false);
     },
   });
 
@@ -164,7 +166,7 @@ function ExpertRegister() {
                     ))
                   : field.name === 'city' && selectedState && selectedCountry
                   ? cities.map((city) => (
-                      <option key={city.name} dataCityId={city.isoCode} value={city.name}>
+                      <option key={city.name} data-cityid={city.isoCode} value={city.name}>
                         {city.name}
                       </option>
                     ))

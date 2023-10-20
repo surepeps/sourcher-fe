@@ -113,8 +113,12 @@ export function AuthProvider({ children }) {
   const register = async (userFormData) => {
     try {
       const response = await api.postWithOutToken('/auth/register', userFormData);
+      // Registration was successful
+      return { success: true, message: response.message };
     } catch (error) {
+      // Error during registration
       responseCatcher(error);
+      return { success: false, message: 'Registration failed' };
     }
   };
 

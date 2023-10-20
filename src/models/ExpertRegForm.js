@@ -14,7 +14,7 @@ export const ExpertRegForm = [
         placeholder: 'Enter Last Name',
       },
       {
-        name: 'email_address',
+        name: 'email',
         label: 'Email Address',
         type: 'email',
         value: '',
@@ -63,24 +63,10 @@ export const ExpertRegForm = [
         placeholder: 'Enter Confirm Password',
       },
       {
-        name: 'cat_id',
+        name: 'account_type',
         label: '',
         type: 'hidden',
-        value: '',
-        placeholder: '',
-      },
-      {
-        name: 'industry_id',
-        label: '',
-        type: 'hidden',
-        value: '',
-        placeholder: '',
-      },
-      {
-        name: 'title_id',
-        label: '',
-        type: 'hidden',
-        value: '',
+        value: 'expert',
         placeholder: '',
       },
 ];

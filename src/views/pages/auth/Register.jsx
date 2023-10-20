@@ -48,16 +48,18 @@ function Register() {
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       setRequestLoading(true);
-      try {
-        await register(values);
+      const registrationResult = await register(values);
+      
+      if (registrationResult.success) {
+        // Registration was successful, open the modal
         openModal(<SuccessRegistered />);
         resetForm(); // Clear form fields after successful registration
-      } catch (error) {
-        // The error will be caught here if there's an issue with registration.
-        console.log('Error during registration:', error);
-      } finally {
-        setRequestLoading(false);
+      } else {
+        // Registration failed, show an error message
+        console.log('Error during registration:', registrationResult.message);
       }
+      
+      setRequestLoading(false);
     },
   });
 
