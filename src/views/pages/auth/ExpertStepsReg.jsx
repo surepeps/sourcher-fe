@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import Step1 from '../components/expert_reg/Step1';
+import Step2 from '../components/expert_reg/Step2';
+import Step3 from '../components/expert_reg/Step3';
+import Step4 from '../components/expert_reg/Step4';
+ 
 
-function ExpertStepsReg() {
-    const [currentStep, setCurrentStep] = useState(0);
+function ExpertStepsReg({userData}) {
+    const {expert_status} = userData
+    const [currentStep, setCurrentStep] = useState(expert_status-1);
 
     const stepsData = [
         {
@@ -46,7 +52,7 @@ function ExpertStepsReg() {
 
     return (
         <div className="pt-6 font-notoSans">
-            <div className="text-3xl xl:text-5xl font-semibold text-center lg:text-left">
+            <div className="text-3xl xl:text-5xl font-semibold lg:text-left">
                 Create Your Expert Profile
             </div>
 
@@ -69,17 +75,37 @@ function ExpertStepsReg() {
                             <h4 className="text-sm font-semibold">{step.name}</h4>
                             <p className="text-xs">{step.description}</p>
                         </div>
-                        {index < stepsData.length - 1 && <hr className="border-t border-gray-300 w-20 mt-5 absolute top-3 left-20" />} {/* Add the line */}
+                        {index < stepsData.length - 1 && <hr className="border-t hidden lg:block border-gray-300 w-20 mt-5 absolute top-3 left-20" />} {/* Add the line */}
                     </div>
                 ))}
             </div>
 
             <div className="ALLcontents">
                 {/* Add content for the current step here */}
-                {currentStep === 0 && <div>Step 1 Content</div>}
-                {currentStep === 1 && <div>Step 2 Content</div>}
-                {currentStep === 2 && <div>Step 3 Content</div>}
-                {currentStep === 3 && <div>Step 4 Content</div>}
+
+                {
+                    currentStep === 0 && <div>
+                        <Step1 />
+                    </div>
+                }
+
+                {
+                    currentStep === 1 && <div>
+                        <Step2 />
+                    </div>
+                }
+
+                {
+                    currentStep === 2 && <div>
+                        <Step3 />
+                    </div>
+                }
+
+                {
+                    currentStep === 3 && <div>
+                       <Step4 />
+                    </div>
+                }
             </div>
 
             <div className="flex justify-between mt-5">

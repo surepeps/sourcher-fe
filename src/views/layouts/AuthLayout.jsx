@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom';
 import { useRequestLoading } from '../../context/LoadingContext';
 import OverlaySpinner from '../miscellaneous/OverlaySpinner';
 
+ 
 
-
-function AuthLayout({ config, children }) {
+function AuthLayout({ children, config, isLoggedIn, userData, skeleton, Error_404 }) {
 
 
   const {isRequestLoading} = useRequestLoading();
@@ -38,7 +38,7 @@ function AuthLayout({ config, children }) {
 
           <div className="content pb-8">
               {React.Children.map(children, child => {
-                return React.cloneElement(child, { config });
+                return React.cloneElement(child, { config, userData, isLoggedIn, skeleton, Error_404 });
               })}
           </div>
         </div>
