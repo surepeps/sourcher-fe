@@ -7,6 +7,7 @@ import OverlaySpinner from '../miscellaneous/OverlaySpinner';
 
 function AuthLayout({ config, children }) {
 
+
   const {isRequestLoading} = useRequestLoading();
 
   return (

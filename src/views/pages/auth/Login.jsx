@@ -25,7 +25,6 @@ function Login() {
       try {
         await login(values);
       } catch (error) {
-        // The error will be caught here if there's an issue with login.
         console.log('Error during login:', error);
       } finally {
         setRequestLoading(false);

@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
     user: null,
     token: null,
     isLoggedIn: false,
+    redirectExpert: false,
     loading: true,
   });
 
@@ -27,6 +28,7 @@ export function AuthProvider({ children }) {
       const response = await api.getWithToken('/user');
       setAuthState({
         ...authState,
+        redirectExpert: response.data.user.expert_status,
         user: response.data.user,
         loading: false,
       });
@@ -94,12 +96,13 @@ export function AuthProvider({ children }) {
 
 
   const authenticateUser = async (response) => {
-    const { token: newToken, expires_in } = response.data;
+    const { token: newToken, expires_in, redirect } = response.data;
     const expirationTime = new Date().getTime() + expires_in * 1000;
     localStorage.setItem('token', JSON.stringify({ token: newToken, expires: expirationTime }));
     setAuthState({
       ...authState,
       token: { token: newToken, expires: expirationTime },
+      redirectExpert: redirect,
       isLoggedIn: true,
     });
 

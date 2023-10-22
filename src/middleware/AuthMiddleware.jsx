@@ -9,7 +9,7 @@ import Error_404 from '../views/pages/errors/Error_404';
 
 
 const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, skeleton, ...rest }) => {
-  const { user, loading, isLoggedIn, logout } = useAuth();
+  const { user, loading, isLoggedIn, redirectExpert, logout } = useAuth();
   const navigate = useNavigate();
 
   // Combine configuration
@@ -27,8 +27,13 @@ const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, ske
 
   }, [isLoggedIn, logout, navigate, rest.path]);
 
-  if (isLoggedIn && (rest.type === 'public')) {
+
+  if (isLoggedIn && (rest.type === 'public') || (rest.path === '/expert-steps' && isLoggedIn && !redirectExpert)) {
     return <Navigate to='/' />;
+  }
+
+  if (isLoggedIn && redirectExpert && rest.path !== '/expert-steps'){
+    return <Navigate to='/expert-steps' />;
   }
 
   if (!isLoggedIn && rest.privateRoute) {
