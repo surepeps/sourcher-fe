@@ -5,7 +5,7 @@ import Step3 from '../components/expert_reg/Step3';
 import Step4 from '../components/expert_reg/Step4';
  
 
-function ExpertStepsReg({userData}) {
+function ExpertStepsReg({userData, config}) {
     const {expert_status} = userData
     const [currentStep, setCurrentStep] = useState(expert_status-1);
 
@@ -85,7 +85,7 @@ function ExpertStepsReg({userData}) {
 
                 {
                     currentStep === 0 && <div>
-                        <Step1 />
+                        <Step1 userData={userData} config={config} />
                     </div>
                 }
 

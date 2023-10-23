@@ -12,17 +12,21 @@ function UploadAvatar({ previousImgWOURL, previousImage, closeModal }) {
   const [croppedImage, setCroppedImage] = useState(null);
   const [showCropSection, setShowCropSection] = useState(false);
   const [showCropButton, setShowCropButton] = useState(true);
+  const [loading, setLoading] = useState(false);
   const cropperRef = useRef(null);
 
   const { setRequestLoading } = useRequestLoading();
-
   const api = new ApiService();
-  const { updateUserData } = useAuth();
+  const { fetchUserData } = useAuth();
 
   useEffect(() => {
     if (previousImage) {
-      setSelectedFile(`https:api.sourceher.com/v1/cdn?imgLink=${previousImgWOURL}`);
-      setShowCropSection(true);
+      setLoading(true); // Show the loading spinner
+      setTimeout(() => {
+        setSelectedFile(`https:api.sourceher.com/v1/cdn?url=${previousImage}`);
+        setShowCropSection(true);
+        setLoading(false); // Hide the loading spinner
+      }, 1000);
     }
   }, [previousImage]);
 
@@ -68,18 +72,16 @@ function UploadAvatar({ previousImgWOURL, previousImage, closeModal }) {
   const handleUpload = async () => {
     if (croppedImage) {
       try {
+        console.log(croppedImage);
         setRequestLoading(true);
 
         const formData = new FormData();
         formData.append('imageSrc', croppedImage.file, croppedImage.name);
 
-        const resp = await api.putFormDataWithToken(
-          '/user/upload-avatar',
-          formData
-        );
+        const resp = await api.putFormDataWithToken('/user/upload-avatar', formData);
 
         toast.success(resp.message);
-
+        fetchUserData();
         closeModal();
       } catch (error) {
         console.error('Image upload failed', error);
@@ -89,51 +91,82 @@ function UploadAvatar({ previousImgWOURL, previousImage, closeModal }) {
     }
   };
 
+  const renderLoadingSpinner = () => (
+    <div className="text-center">
+      <div className="spinner-border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
+
+  const renderCropSection = () => (
+    <div className="border border-gray-400 rounded-lg p-4">
+      <Cropper
+        ref={cropperRef}
+        src={selectedFile instanceof Blob ? URL.createObjectURL(selectedFile) : selectedFile}
+        aspectRatio={1}
+        guides={true}
+        className="w-full h-96 rounded-lg"
+      />
+    </div>
+  );
+
+  const renderCropButton = () => (
+    <button
+      onClick={handleCrop}
+      className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl shadow-lg focus:outline-none focus:ring focus:ring-blue-300"
+    >
+      Crop Image
+    </button>
+  );
+
+  const renderResetButton = () => (
+    <button
+      onClick={handleReset}
+      className="mt-2 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl shadow-lg focus:outline-none focus:ring focus:ring-red-300"
+    >
+      Reset
+    </button>
+  );
+
+  const renderRemoveImageButton = () => (
+    <button
+      onClick={handleRemoveImage}
+      className="mt-2 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl ml-3 shadow-lg focus:outline-none focus:ring focus:ring-red-300"
+    >
+      Remove Image
+    </button>
+  );
+
+  const renderUploadSection = () => (
+    <div className="mt-6">
+      <h2 className="text-xl mb-2">Cropped Image</h2>
+      <img
+        src={selectedFile instanceof Blob ? URL.createObjectURL(selectedFile) : selectedFile}
+        alt="Cropped"
+        className="max-w-xs mx-auto rounded-lg shadow-lg"
+      />
+      <button
+        onClick={handleUpload}
+        className="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-xl shadow-lg focus:outline-none focus:ring focus:ring-green-300"
+      >
+        Upload Image
+      </button>
+    </div>
+  );
+
   return (
     <div className="container mx-auto mt-5">
       <h1 className="text-3xl mb-6 font-semibold text-center text-gray-800">
         Image Uploader
       </h1>
-      {selectedFile ? (
+      {loading ? renderLoadingSpinner() : selectedFile ? (
         <div className="mt-6">
           <h2 className="text-xl mb-2">Crop Image</h2>
-          {showCropSection && (
-            <div className="border border-gray-400 rounded-lg p-4">
-              <Cropper
-                ref={cropperRef}
-                src={
-                  selectedFile instanceof Blob
-                    ? URL.createObjectURL(selectedFile)
-                    : selectedFile
-                }
-                aspectRatio={1}
-                guides={true}
-                className="w-full h-96 rounded-lg"
-              />
-            </div>
-          )}
-          {showCropButton && (
-            <button
-              onClick={handleCrop}
-              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl shadow-lg focus:outline-none focus:ring focus:ring-blue-300"
-            >
-              Crop Image
-            </button>
-          )}
-          {croppedImage && (
-            <button
-              onClick={handleReset}
-              className="mt-2 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl shadow-lg focus:outline-none focus:ring focus:ring-red-300"
-            >
-              Reset
-            </button>
-          )}
-          <button
-            onClick={handleRemoveImage}
-            className="mt-2 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl ml-3 shadow-lg focus:outline-none focus:ring focus:ring-red-300"
-          >
-            Remove Image
-          </button>
+          {showCropSection && renderCropSection()}
+          {showCropButton && renderCropButton()}
+          {croppedImage && renderResetButton()}
+          {renderRemoveImageButton()}
         </div>
       ) : (
         <Dropzone onDrop={onDrop} accept="image/*" multiple={false}>
@@ -150,26 +183,7 @@ function UploadAvatar({ previousImgWOURL, previousImage, closeModal }) {
           )}
         </Dropzone>
       )}
-      {croppedImage && (
-        <div className="mt-6">
-          <h2 className="text-xl mb-2">Cropped Image</h2>
-          <img
-            src={
-              croppedImage instanceof Blob
-                ? URL.createObjectURL(croppedImage.file)
-                : croppedImage
-            }
-            alt="Cropped"
-            className="max-w-xs mx-auto rounded-lg shadow-lg"
-          />
-          <button
-            onClick={handleUpload}
-            className="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-xl shadow-lg focus:outline-none focus:ring focus:ring-green-300"
-          >
-            Upload Image
-          </button>
-        </div>
-      )}
+      {croppedImage && renderUploadSection()}
     </div>
   );
 }
