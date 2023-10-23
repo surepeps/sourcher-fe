@@ -7,6 +7,7 @@ import SingleProfessional from './professions/SingleProfessional';
 import SingleWorkExperience from './work_experience/SingleWorkExperience';
 import EditWorkExperience from './work_experience/EditWorkExperience';
 import { isValid, format, parseISO } from 'date-fns';
+import { useAuth } from '../../../../context/AuthContext';
 
 
 
@@ -18,8 +19,13 @@ function Step2({ userData, config, setCurrentStep }) {
   const [allWorkExperiences, setAllWorkExperiences] = useState(null);
 
   const [showDeleteButton, setShowDeleteButton] = useState(false);
+
+  const [activateNextButton, setActivateNextButton] = useState(true);
+
   const api = new ApiService();
   const { setRequestLoading } = useRequestLoading();
+
+  const {updateUserData} = useAuth()
 
   const fetchAllData = async () => {
     try {
@@ -33,13 +39,13 @@ function Step2({ userData, config, setCurrentStep }) {
         professionalsResponse.data,
         workExperiencesResponse.data,
       ]);
-
+      
       workExperiencesData.forEach((exp) => {
         if (exp.start_date) {
           exp.start_date = parseISO(exp.start_date);
         }
 
-        if (exp.still_work_there) {
+        if (exp.still_work_there == "1") {
           exp.end_date = '';
         } else if (exp.end_date) {
           exp.end_date = parseISO(exp.end_date);
@@ -53,6 +59,9 @@ function Step2({ userData, config, setCurrentStep }) {
       setAllProfessions(professionalsData);
       setAllWorkExperiences(workExperiencesData);
 
+
+      (professionalsData.length > 0 && workExperiencesData.length > 0) ? setActivateNextButton(false) : setActivateNextButton(true); 
+
     } catch (error) {
       console.error('Error fetching professionals and work experiences:', error);
     } finally {
@@ -63,6 +72,7 @@ function Step2({ userData, config, setCurrentStep }) {
   useEffect(() => {
     fetchAllData();
   }, []);
+
 
   // Add new Profession
   const addProfessionalAssociation = () => {
@@ -128,6 +138,25 @@ function Step2({ userData, config, setCurrentStep }) {
     setShowDeleteButton(true);
   };
 
+  // Move to next Step
+  const moveToNext = async () => {
+    try {
+      setRequestLoading(true);
+
+      const userData = {
+        expert_status: 3
+      };
+
+      await updateUserData({updatedUserData:userData});
+
+      setCurrentStep(2);
+    } catch (error) {
+      console.error(error);
+    }finally{
+      setRequestLoading(false);
+    }
+  }
+
   return (
     <div className="px-2">
 
@@ -158,7 +187,7 @@ function Step2({ userData, config, setCurrentStep }) {
           <EditProfessional
             association={editingAssociation}
             onCancel={() => setEditingAssociation(null)}
-            deleteProfession={() => deleteProfession(editingAssociation.id)}
+            deleteProfession={() => deleteProfession(editingAssociation.id, () => setEditingAssociation(null))}
             showDeleteButton={showDeleteButton}
             fetchAllData={fetchAllData}
           />
@@ -213,7 +242,7 @@ function Step2({ userData, config, setCurrentStep }) {
           <EditWorkExperience
             experience={editingWorkExperience}
             onCancel={() => setEditingWorkExperience(null)}
-            deleteWorkExperience={() => deleteWorkExperience(editingWorkExperience.id)}
+            deleteWorkExperience={() => deleteWorkExperience(editingWorkExperience.id, () => setEditingWorkExperience(null))}
             showDeleteButton={showDeleteButton}
             fetchAllData={fetchAllData}
           />
@@ -244,6 +273,15 @@ function Step2({ userData, config, setCurrentStep }) {
 
       </div>
 
+      <div className="mt-10 flex flex-col gap-5">
+        <button disabled={activateNextButton} onClick={moveToNext} type="button" className="w-full py-5 rounded-lg px-4 text-sm text-white bg-awimGreen hover:bg-awimFadeGreen focus:outline-none focus:shadow-outline transition duration-300 ease-in-out">
+          Next
+        </button>
+
+        <button onClick={moveToNext} type="button" className="w-full py-5 rounded-lg px-4 text-sm border border-awimGreen text-awimGreen hover:bg-awimGreen hover:text-textWhite focus:outline-none focus:shadow-outline transition duration-300 ease-in-out">
+          Skip for Later
+        </button>
+      </div>
 
     </div>
   );

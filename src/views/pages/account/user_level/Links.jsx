@@ -1,9 +1,7 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import SociaNetwork from '../others/SociaNetwork'
 import Publications from '../others/Publications';
-import { useEffect } from 'react';
 import ApiService from '../../../../helpers/http/apiService';
-import { useState } from 'react';
 import { useRequestLoading } from '../../../../context/LoadingContext';
 
 

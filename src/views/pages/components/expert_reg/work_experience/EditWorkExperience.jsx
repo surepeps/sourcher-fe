@@ -40,6 +40,7 @@ function EditWorkExperience({ experience, onCancel, deleteWorkExperience, showDe
     onSubmit: async (values) => {
       try {
         setRequestLoading(true);
+        console.log("Submitted Values :", values);
         await api.postWithToken('/workExperience/add', { workExperiences: [values] });
         toast.success(`Work Experience Profile updated Successfully`);
         fetchAllData();
@@ -107,7 +108,7 @@ function EditWorkExperience({ experience, onCancel, deleteWorkExperience, showDe
                 selected={formik.values.start_date}
                 onChange={date => formik.setFieldValue('start_date', date)}
                 placeholderText="Start Date"
-                className="py-5 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline"
+                className="py-5 w-full rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline"
                 dateFormat="dd-MM-yyyy"
                 isClearable
                 showYearDropdown
@@ -147,6 +148,7 @@ function EditWorkExperience({ experience, onCancel, deleteWorkExperience, showDe
               className="w-5 h-5 rounded-lg checked:text-white checked:bg-textPurple"
               name="still_work_there"
               id="still_work_there"
+              checked={formik.values.still_work_there}
               {...formik.getFieldProps('still_work_there')}
             />
             <label htmlFor="still_work_there">I still work here</label>

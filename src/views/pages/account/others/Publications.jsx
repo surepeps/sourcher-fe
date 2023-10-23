@@ -4,11 +4,14 @@ import { useModal } from '../../../../context/ModalService'
 import AddOrEditPublication from '../../../modals/account/AddOrEditPublication';
 import ApiService from '../../../../helpers/http/apiService';
 import { toast } from 'react-toastify';
+import { useRequestLoading } from '../../../../context/LoadingContext';
 
 
 function Publications({fetLinks, isMyAccount, allPubications}) {
     const {openModal, closeModal} = useModal();
     const api = new ApiService();
+
+    const { setRequestLoading } = useRequestLoading();
 
     const addPublication = (publication) => {
         openModal(<AddOrEditPublication publication={publication} fetLinks={fetLinks} closeModal={closeModal} />)
@@ -16,11 +19,14 @@ function Publications({fetLinks, isMyAccount, allPubications}) {
 
     const deletePublication = async (publication) => {
         try {
+            setRequestLoading(true);
             await api.getWithToken(`/publication/delete/${publication.id}`);
             fetLinks();
             toast.success("Publication deleted successfully")
         } catch (error) {
             console.log(error)
+        }finally{
+            setRequestLoading(false);
         }
     }
 

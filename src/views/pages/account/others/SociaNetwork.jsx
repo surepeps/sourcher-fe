@@ -65,10 +65,10 @@ function SociaNetwork({ ProfileData }) {
       [name]: ProfileData[name] || '',
     }), {}),
     validationSchema,
-    onSubmit: (values) => {
-        setRequestLoading(true);
+    onSubmit: async (values) => {
       try {
-        updateUserData({updatedUserData:values});
+        setRequestLoading(true);
+        await updateUserData({updatedUserData:values});
       } catch (error) {
         console.log(error)
       } finally {

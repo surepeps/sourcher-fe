@@ -97,7 +97,7 @@ function ExpertStepsReg({userData, config}) {
 
                 {
                     currentStep === 2 && <div>
-                        <Step3 />
+                        <Step3 userData={userData} config={config} setCurrentStep={setCurrentStep}/>
                     </div>
                 }
 

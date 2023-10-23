@@ -1,6 +1,12 @@
 import React from 'react'
 
 function SingleWorkExperience({ experience, onEditWorkExperience, deleteWorkExperience, disabled }) {
+  
+  const  formatDateToMonthYear = (date) => {
+    const options = { year: 'numeric', month: 'short' };
+    return date.toLocaleDateString('en-US', options).toUpperCase();
+  }
+
   return (
     <div className={`singleWorkExperience mb-5 rounded-xl border border-awimGray80 p-3 flex justify-between ${disabled ? 'opacity-50' : ''}`}>
       <div className="leftCC flex items-center justify-between gap-3">
@@ -22,7 +28,7 @@ function SingleWorkExperience({ experience, onEditWorkExperience, deleteWorkExpe
         <div className="flex flex-col gap-10 justify-between">
           <div className="topR">
             <h2 className='title text-bold'>{experience.job_title} at {experience.company_name} </h2>
-            <p className='text-md uppercase text-awimGray80'>APR 2020 - PRESENT</p>
+            <p className='text-md uppercase text-awimGray40'>{formatDateToMonthYear(new Date(`${experience.start_date}`))} - {experience.still_work_there ? 'PRESENT' : formatDateToMonthYear(new Date(`${experience.end_date}`))}</p>
           </div>
 
           <div className="bottomR">
