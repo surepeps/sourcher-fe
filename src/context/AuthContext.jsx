@@ -3,6 +3,7 @@ import ApiService from '../helpers/http/apiService';
 import { toast } from 'react-toastify';
 import { responseCatcher } from '../helpers/http/response';
 
+
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -36,7 +37,7 @@ export function AuthProvider({ children }) {
       responseCatcher(error);
       handleTokenExpiration();
     }
-  };
+  }; 
 
   const updateUserData = async (newUserData) => {
     try {

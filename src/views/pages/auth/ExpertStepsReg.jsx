@@ -36,7 +36,7 @@ function ExpertStepsReg({userData, config}) {
         }
     ];
 
-    stepsData[currentStep].status = true; // Set the current step as active
+    stepsData[currentStep].status = true;
 
     const handleNext = () => {
         if (currentStep < stepsData.length - 1) {
@@ -85,7 +85,7 @@ function ExpertStepsReg({userData, config}) {
 
                 {
                     currentStep === 0 && <div>
-                        <Step1 userData={userData} config={config} />
+                        <Step1 userData={userData} config={config} setCurrentStep={setCurrentStep} />
                     </div>
                 }
 

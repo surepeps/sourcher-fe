@@ -4,14 +4,19 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useModal } from '../../../../context/ModalService';
 import UploadAvatar from '../../../modals/account/UploadAvatar';
-import ImageCropperModal from '../../../modals/account/ImageCropperModal';
+import { useAuth } from '../../../../context/AuthContext';
+import { useRequestLoading } from '../../../../context/LoadingContext';
 
 
 
-function Step1({userData,config}) {
+
+function Step1({userData,config, setCurrentStep}) {
   const [industries, setIndustries] = useState([]);
   const [titles, setTitles] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const { setRequestLoading } = useRequestLoading();
+
+  const {updateUserData} = useAuth()
 
   const api = new ApiService();
 
@@ -36,56 +41,60 @@ function Step1({userData,config}) {
 
   const languages = [
     {
-      id: 1,
+      id: 'English',
       title: 'English'
     },
     {
-      id: 2,
+      id: 'Spanish',
       title: 'Spanish'
     },
     {
-      id: 3,
+      id: 'French',
       title: 'French'
     },
     {
-      id: 4,
+      id: 'German',
       title: 'German'
     },
     {
-      id: 5,
+      id: 'Chinese',
       title: 'Chinese'
     },
     {
-      id: 6,
+      id: 'Japanese',
       title: 'Japanese'
     },
     {
-      id: 7,
+      id: 'Korean',
       title: 'Korean'
     },
     {
-      id: 8,
+      id: 'Arabic',
       title: 'Arabic'
     },
   ];
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
-    industry: Yup.string().required('Industry is required'),
+    title_id: Yup.string().required('Title is required'),
+    industry_id: Yup.string().required('Industry is required'),
     interviewLanguage: Yup.string().required('Interview language is required'),
-    professionalBio: Yup.string().required('Professional bio is required'),
+    about: Yup.string().required('Professional bio is required'),
   });
 
   const formik = useFormik({
     initialValues: {
-      title: '',
-      industry: '',
+      expert_status: 2, // move to the next step
+      title_id: '',
+      industry_id: '',
       interviewLanguage: '',
-      professionalBio: '',
+      about: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log('Form submitted with values:', values);
+    onSubmit: async (values) => {
+      setRequestLoading(true);
+      await updateUserData({updatedUserData:values});
+      setRequestLoading(false);
+      setCurrentStep(1);
     },
   });
 
@@ -97,12 +106,12 @@ function Step1({userData,config}) {
   const formFields = [
     {
       label: 'Choose Title',
-      name: 'title',
+      name: 'title_id',
       options: titles,
     },
     {
       label: 'Choose Industry',
-      name: 'industry',
+      name: 'industry_id',
       options: industries,
     },
     {
@@ -125,7 +134,7 @@ function Step1({userData,config}) {
         {formFields.map((field) => (
           <FormField key={field.name} label={field.label} name={field.name} options={field.options} formik={formik} />
         ))}
-        <TextField label="Professional Bio" name="professionalBio" formik={formik} />
+        <TextField label="Professional Bio" name="about" formik={formik} />
         <div className="mt-10">
           <button type="submit" className="w-full py-5 rounded-lg px-4 text-sm text-white bg-awimGreen hover:bg-awimFadeGreen focus:outline-none focus:shadow-outline transition duration-300 ease-in-out">
             Next
@@ -138,8 +147,7 @@ function Step1({userData,config}) {
 
 const ImagePicker = ({ selectedImage, handleImageChange, showUploadModal, imageURL, userData }) => (
   <div className="cursor-pointer imagePicker flex gap-6 items-center">
-    <label onClick={showUploadModal} className="imageShow mb-5 lg:w-32 lg:h-32 w-28 h-28 bg-awimGray80 rounded-full flex justify-center items-center" style={{ backgroundImage: `url(${imageURL})` }}>
-      {/* <input type="file" id="imageUpload" name="imageUpload" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} /> */}
+    <label onClick={showUploadModal} className="imageShow mb-5 lg:w-32 lg:h-32 w-28 h-28 bg-awimGray80 rounded-full flex justify-center items-center bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url(${imageURL})` }}>
       {userData.avatar ? '' : (
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clipPath="url(#clip0_1213_937)">
