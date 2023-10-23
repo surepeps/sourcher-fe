@@ -13,6 +13,7 @@ import { useRequestLoading } from '../../../../context/LoadingContext';
 function Step1({userData,config, setCurrentStep}) {
   const [industries, setIndustries] = useState([]);
   const [titles, setTitles] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const { setRequestLoading } = useRequestLoading();
 
@@ -36,6 +37,7 @@ function Step1({userData,config, setCurrentStep}) {
     };
 
     fetchData('/service/industries', setIndustries);
+    fetchData('/service/categories', setCategories);
     fetchData('/service/titles', setTitles);
   }, []);
 
@@ -76,6 +78,7 @@ function Step1({userData,config, setCurrentStep}) {
 
   const validationSchema = Yup.object().shape({
     title_id: Yup.string().required('Title is required'),
+    cat_id: Yup.string().required('Category is required'),
     industry_id: Yup.string().required('Industry is required'),
     interviewLanguage: Yup.string().required('Interview language is required'),
     about: Yup.string().required('Professional bio is required'),
@@ -85,6 +88,7 @@ function Step1({userData,config, setCurrentStep}) {
     initialValues: {
       expert_status: 2, // move to the next step
       title_id: '',
+      cat_id: '',
       industry_id: '',
       interviewLanguage: '',
       about: '',
@@ -108,6 +112,11 @@ function Step1({userData,config, setCurrentStep}) {
       label: 'Choose Title',
       name: 'title_id',
       options: titles,
+    },
+    {
+      label: 'Choose Category',
+      name: 'cat_id',
+      options: categories,
     },
     {
       label: 'Choose Industry',
