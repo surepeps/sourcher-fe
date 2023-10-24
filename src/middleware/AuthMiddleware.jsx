@@ -28,11 +28,17 @@ const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, ske
   }, [isLoggedIn, logout, navigate, rest.path]);
 
 
-  if (isLoggedIn && (rest.type === 'public') || (rest.path === '/expert-steps' && isLoggedIn && !redirectExpert)) {
+
+  if(rest.path === '/expert-steps' && isLoggedIn && user.expert_status === 0){
+    return <Navigate to={`/sh/${user.username}`} />
+  }
+
+  if (isLoggedIn && (rest.type === 'public')) {
     return <Navigate to='/' />;
   }
 
-  if (isLoggedIn && redirectExpert && rest.path !== '/expert-steps'){
+
+  if (isLoggedIn && (user.expert_status !== 0) && rest.path !== '/expert-steps'){
     return <Navigate to='/expert-steps' />;
   }
 

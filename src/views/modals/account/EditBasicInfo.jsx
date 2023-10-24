@@ -43,8 +43,8 @@ function EditBasicInfo({allData, closeModal}) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-        updateUserData({updatedUserData:values});
         setRequestLoading(true);
+        updateUserData({updatedUserData:values});
         setIsDone(true)
         closeModal();
         setIsDone(false)

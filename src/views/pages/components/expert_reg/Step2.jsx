@@ -11,7 +11,7 @@ import { useAuth } from '../../../../context/AuthContext';
 
 
 
-function Step2({ userData, config, setCurrentStep }) {
+function Step2({ userData, moveToNext }) {
   const [editingAssociation, setEditingAssociation] = useState(null);
   const [editingWorkExperience, setEditingWorkExperience] = useState(null);
 
@@ -138,25 +138,6 @@ function Step2({ userData, config, setCurrentStep }) {
     setShowDeleteButton(true);
   };
 
-  // Move to next Step
-  const moveToNext = async () => {
-    try {
-      setRequestLoading(true);
-
-      const userData = {
-        expert_status: 3
-      };
-
-      await updateUserData({updatedUserData:userData});
-
-      setCurrentStep(2);
-    } catch (error) {
-      console.error(error);
-    }finally{
-      setRequestLoading(false);
-    }
-  }
-
   return (
     <div className="px-2">
 
@@ -274,11 +255,11 @@ function Step2({ userData, config, setCurrentStep }) {
       </div>
 
       <div className="mt-10 flex flex-col gap-5">
-        <button disabled={activateNextButton} onClick={moveToNext} type="button" className="w-full py-5 rounded-lg px-4 text-sm text-white bg-awimGreen hover:bg-awimFadeGreen focus:outline-none focus:shadow-outline transition duration-300 ease-in-out">
+        <button disabled={activateNextButton} onClick={() => moveToNext(3, 2)} type="button" className="w-full py-5 rounded-lg px-4 text-sm text-white bg-awimGreen hover:bg-awimFadeGreen focus:outline-none focus:shadow-outline transition duration-300 ease-in-out">
           Next
         </button>
 
-        <button onClick={moveToNext} type="button" className="w-full py-5 rounded-lg px-4 text-sm border border-awimGreen text-awimGreen hover:bg-awimGreen hover:text-textWhite focus:outline-none focus:shadow-outline transition duration-300 ease-in-out">
+        <button onClick={() => moveToNext(3, 2)} type="button" className="w-full py-5 rounded-lg px-4 text-sm border border-awimGreen text-awimGreen hover:bg-awimGreen hover:text-textWhite focus:outline-none focus:shadow-outline transition duration-300 ease-in-out">
           Skip for Later
         </button>
       </div>
