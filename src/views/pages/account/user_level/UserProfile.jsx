@@ -3,7 +3,7 @@ import Links from './Links';
 import ProfessionalProfile from './ProfessionalProfile';
 import BasicInfo from './BasicInfo';
 
-
+ 
 const tabs = [
   { label: 'Basic Info', allowedUserTypes: ['user', 'user_2'], component: BasicInfo },
   { label: 'Professional Profile', allowedUserTypes: ['user', 'user_2'], component: ProfessionalProfile },
