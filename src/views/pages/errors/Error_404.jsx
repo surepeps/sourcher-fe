@@ -1,8 +1,12 @@
 import React from 'react'
+import Header from '../../layouts/components/Header';
 
-function Error_404() {
+function Error_404({config, isLoggedIn, userData }) {
   return (
-    <div>Error_404</div>
+    <div>
+      <h1>Oops... Page Not Found</h1>
+      {/* <img  src={config.BecomeExpertImage} alt="" /> */}
+    </div>
   )
 }
 
