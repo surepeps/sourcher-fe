@@ -51,8 +51,7 @@ function ProfileBanner({allData}) {
 
                 </div>
                 
-                
-
+            
                 <div className="nameCountrySocial flex gap-4 justify-start flex-col">
                     <div className="nameFlag flex gap-4 items-center">
                         <h1 className="lg:text-4xl text-2xl text-textWhite font-semibold">{ProfileData.first_name} {ProfileData.last_name}</h1>
@@ -62,7 +61,7 @@ function ProfileBanner({allData}) {
                         isProfileExpert ?
                         (
                             <>
-                                <span className='text-textWhite text-sm lg:text-md'>Interview Language: English</span>
+                                <span className='text-textWhite text-sm lg:text-md'>Interview Language: {ProfileData.interviewLanguage}</span>
                                 <div className="social px-5 py-3 rounded-lg flex w-full lg:w-[85%] justify-between gap-6 items-center bg-[#ffffff16]">
                                     <span>
                                         <NavLink to={twitter}>

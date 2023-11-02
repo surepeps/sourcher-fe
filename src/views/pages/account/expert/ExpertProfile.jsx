@@ -6,11 +6,12 @@ import BasicInfo from '../tabs/BasicInfo';
 import Overview from '../others/Overview';
 
 const tabs = [
-  { label: 'Basic Info', allowedUserTypes: ['user', 'user_2'] },
-  { label: 'Professional Details', allowedUserTypes: ['user', 'user_2'] },
-  { label: 'Upload Links', allowedUserTypes: ['user', 'user_2'] },
+  { label: 'Overview 2', allowedUserTypes: ['user_2'], onlyMe: true },
+  { label: 'Basic Info', allowedUserTypes: ['expert', 'user_2'] },
+  { label: 'Professional Details', allowedUserTypes: ['expert', 'user_2'] },
+  { label: 'Upload Links', allowedUserTypes: ['expert', 'user_2'] },
 ];
-
+ 
 const tabIcons = {
   Overview: (
     <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,41 +46,43 @@ const tabIcons = {
   ),
 };
 
-const TabSwitcher = ({ userType, activeTab, handleTabClick }) => {
-  const filteredTabs = tabs.filter((tab) => tab.allowedUserTypes.includes(userType));
-
+const TabSwitcher = ({ userType, activeTab, handleTabClick, isMyAccount }) => {
   return (
-    <div className="tabCont flex absolute space-x-10 lg:space-x-32 overflow-x-auto ScrollableCont -top-14 left-0 right-0 w-full px-4">
-      {filteredTabs.map((tab) => (
-        <button
-          key={tab.label}
-          onClick={() => handleTabClick(tab.label)}
-          className={`rounded-md ${
-            activeTab === tab.label ? 'bg-textPurple' : 'text-gray-600'
-          } items-center flex text-md pt-4 pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
-        >
-          {tabIcons[tab.label]}
-          {tab.label}
-        </button>
+    <div className="tabCont flex absolute space-x-10 lg:space-x-32 overflow-x-auto ScrollableCont -top-9 lg:-top-14 left-0 right-0 w-full px-4">
+      {tabs.map((tab) => (
+        (isMyAccount || tab.label === 'Basic Info') && tab.allowedUserTypes.includes(userType) ? (
+          <button
+            key={tab.label}
+            onClick={() => handleTabClick(tab.label)}
+            className={`rounded-md ${
+              activeTab === tab.label ? 'bg-textPurple' : 'text-gray-600'
+            } items-center flex text-sm lg:text-md pt-2 lg:pt-4 pb-4 lg:pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
+          >
+            {tabIcons[tab.label]}
+            {tab.label}
+          </button>
+        ) : null
       ))}
     </div>
   );
 };
 
 function ExpertProfile({ allData }) {
-  const { ProfileData, iamLoggedIn, config } = allData;
+  const { ProfileData, iamLoggedIn, myData, isMyAccount, config } = allData;
   const [activeTab, setActiveTab] = useState('Basic Info');
 
   const handleTabClick = (tabLabel) => {
     setActiveTab(tabLabel);
   };
 
-  let userType = ProfileData?.account_type;
+  const userType = ProfileData?.account_type;
+
+  const viewerAccountType = myData?.account_type;
   
   return (
-    <div className="max-w-screen-2xl relative mx-auto px-4 py-10 font-notoSans">
+    <div className="">
 
-      <TabSwitcher userType={userType} activeTab={activeTab} handleTabClick={handleTabClick} />
+      <TabSwitcher userType={userType} activeTab={activeTab} handleTabClick={handleTabClick} isMyAccount={isMyAccount} />
 
       <div className="bg-white p-4 rounded-b-lg">
         {tabs.map((tab) => (
