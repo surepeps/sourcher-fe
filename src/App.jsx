@@ -9,6 +9,7 @@ import { ModalService } from './context/ModalService';
 import SureModal from './views/miscellaneous/SureModal';
 import { useAuth } from './context/AuthContext';
 import LoadingSpinner from './views/miscellaneous/LoadingSpinner';
+import Header from './views/layouts/components/Header';
 
 
 function App() {
@@ -34,7 +35,12 @@ function App() {
                   ))}
 
                   {/* Error 404 */}
-                  <Route path="*" element={<Error_404 />} />
+                  <Route path="*" element={
+                    <>
+                    {/* <Header userData={userData} isLoggedIn={isLoggedIn} config={config} /> */}
+                    <Error_404 />
+                    </>
+                  } />
 
                 </Routes>
               // </FadeTransition>
