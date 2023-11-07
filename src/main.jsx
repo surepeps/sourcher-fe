@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './App.css'
 import './index.css'
 import { AuthProvider } from './context/AuthContext'
-import { DataProvider } from './context/DataContext.jsx'
+import { DataProvider } from './context/DataContext'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -28,23 +28,31 @@ const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, ske
   }, [isLoggedIn, logout, navigate, rest.path]);
 
 
+  useEffect(() => {
+    if (isLoggedIn && user) {
 
-  if(rest.path === '/expert-steps' && isLoggedIn && user.expert_status === 0){
-    return <Navigate to={`/sh/${user.username}`} />
-  }
+      if (rest.path === '/expert-steps' && isLoggedIn && user.expert_status === 0) {
+        navigate(`/sh/${user.username}`)
+      }
+
+      if (isLoggedIn && (user.expert_status !== 0) && rest.path !== '/expert-steps') {
+        navigate('/expert-steps')
+      }
+      
+    }
+
+  },[user,isLoggedIn, rest.path, navigate])
+ 
 
   if (isLoggedIn && (rest.type === 'public')) {
     return <Navigate to='/' />;
   }
 
 
-  if (isLoggedIn && (user.expert_status !== 0) && rest.path !== '/expert-steps'){
-    return <Navigate to='/expert-steps' />;
-  }
-
   if (!isLoggedIn && rest.privateRoute) {
     return <Navigate to='/login' />;
   }
+
 
   return (
     <>

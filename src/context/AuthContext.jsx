@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
     redirectExpert: false,
     loading: true,
   });
-
+ 
   const api = new ApiService();
 
   const fetchUserData = async () => {
@@ -33,6 +33,7 @@ export function AuthProvider({ children }) {
         user: response.data.user,
         loading: false,
       });
+
     } catch (error) {
       responseCatcher(error);
       handleTokenExpiration();
@@ -70,7 +71,7 @@ export function AuthProvider({ children }) {
         });
 
         if (authState.isLoggedIn) {
-          fetchUserData();
+          await fetchUserData();
         }
       } else {
         setAuthState({
