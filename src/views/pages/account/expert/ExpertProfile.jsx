@@ -6,10 +6,11 @@ import BasicInfo from '../tabs/BasicInfo';
 import Overview from '../others/Overview';
 
 const tabs = [
-  { label: 'Overview 2', allowedUserTypes: ['user_2'], onlyMe: true },
-  { label: 'Basic Info', allowedUserTypes: ['expert', 'user_2'] },
-  { label: 'Professional Details', allowedUserTypes: ['expert', 'user_2'] },
-  { label: 'Upload Links', allowedUserTypes: ['expert', 'user_2'] },
+  { label: 'Overview', allowedUserTypes: ['user_2','user', 'expert'], authStatus: false, hiddenForMe: true },
+  { label: 'Basic Info', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false },
+  { label: 'Professional Details', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false },
+  { label: 'Links', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false },
+  { label: 'Reviews', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false },
 ];
  
 const tabIcons = {
@@ -32,7 +33,7 @@ const tabIcons = {
       <path d="M19.2888 13.0868C19.5167 12.9602 19.8125 13.1437 19.7888 13.4034L19.4629 16.9643C19.2704 18.7977 18.5188 20.6677 14.4854 20.6677H7.50042C3.46708 20.6677 2.71542 18.7977 2.53208 16.9735L2.21504 13.5788C2.19042 13.3152 2.4723 13.1371 2.70625 13.261C3.42125 13.6552 4.16375 14.0035 4.92458 14.2785C5.20875 14.3793 5.41042 14.6177 5.49292 14.911C6.18042 17.2943 8.39875 19.0635 11.0021 19.0635C13.6512 19.0635 15.8879 17.2577 16.5387 14.7827C16.6121 14.4893 16.8138 14.251 17.0979 14.141C17.8679 13.8385 18.6013 13.481 19.2888 13.0868Z" fill="white"/>
     </svg>
   ),
-  'Upload Links': (
+  'Links': (
     <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.4794 13.5533C17.2135 13.8192 16.7919 13.8192 16.5352 13.5533C16.2694 13.2875 16.2694 12.8658 16.5352 12.6092C18.3685 10.7758 18.3685 7.79667 16.5352 5.9725C14.7019 4.14833 11.7227 4.13917 9.89854 5.9725C8.07437 7.80583 8.06521 10.785 9.89854 12.6092C10.1644 12.875 10.1644 13.2967 9.89854 13.5533C9.63271 13.8192 9.21104 13.8192 8.95437 13.5533C6.59854 11.1975 6.59854 7.36583 8.95437 5.01917C11.3102 2.6725 15.1419 2.66333 17.4885 5.01917C19.8352 7.375 19.8352 11.1975 17.4794 13.5533Z" fill="white"/>
       <path d="M4.51802 9.44667C4.78386 9.18083 5.20552 9.18083 5.46219 9.44667C5.72802 9.7125 5.72802 10.1342 5.46219 10.3908C3.62886 12.2242 3.62886 15.2033 5.46219 17.0275C7.29552 18.8517 10.2747 18.8608 12.0989 17.0275C13.923 15.1942 13.9322 12.215 12.0989 10.3908C11.833 10.125 11.833 9.70333 12.0989 9.44667C12.3647 9.18083 12.7864 9.18083 13.043 9.44667C15.3989 11.8025 15.3989 15.6342 13.043 17.9808C10.6872 20.3275 6.85552 20.3367 4.50886 17.9808C2.16219 15.625 2.16219 11.8025 4.51802 9.44667Z" fill="white"/>
@@ -46,30 +47,39 @@ const tabIcons = {
   ),
 };
 
-const TabSwitcher = ({ userType, activeTab, handleTabClick, isMyAccount }) => {
+const TabSwitcher = ({ userType, activeTab, handleTabClick, allData  }) => {
+  const { ProfileData, iamLoggedIn, myData, isMyAccount, config, isProfileExpert, isProfileLevel2, isProfileLevel1 } = allData;
+
+  const visibleTabs = tabs.filter((tab) => {
+    if (isMyAccount) {
+      return ['Basic Info', 'Professional Details', 'Links', 'Reviews'].includes(tab.label);
+    } else {
+      return ['Overview', 'Reviews'].includes(tab.label);
+    }
+  });
+
   return (
     <div className="tabCont flex absolute space-x-10 lg:space-x-32 overflow-x-auto ScrollableCont -top-9 lg:-top-14 left-0 right-0 w-full px-4">
-      {tabs.map((tab) => (
-        (isMyAccount || tab.label === 'Basic Info') && tab.allowedUserTypes.includes(userType) ? (
-          <button
-            key={tab.label}
-            onClick={() => handleTabClick(tab.label)}
-            className={`rounded-md ${
-              activeTab === tab.label ? 'bg-textPurple' : 'text-gray-600'
-            } items-center flex text-sm lg:text-md pt-2 lg:pt-4 pb-4 lg:pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
-          >
-            {tabIcons[tab.label]}
-            {tab.label}
-          </button>
-        ) : null
+      {visibleTabs.map((tab) => (
+        <button
+          key={tab.label}
+          onClick={() => handleTabClick(tab.label)}
+          className={`rounded-md ${
+            activeTab === tab.label ? 'bg-textPurple' : 'text-gray-600'
+          } items-center flex text-sm lg:text-md pt-2 lg:pt-4 pb-4 lg:pb-7  hover:bg-textPurple duration-300 transition ease-in-out font-medium gap-3 px-8 focus:outline-none text-white whitespace-nowrap`}
+        >
+          {tabIcons[tab.label]}
+          {tab.label}
+        </button>
       ))}
     </div>
   );
-};
+}; 
 
 function ExpertProfile({ allData }) {
+  console.log("All Datas :", allData)
   const { ProfileData, iamLoggedIn, myData, isMyAccount, config } = allData;
-  const [activeTab, setActiveTab] = useState('Basic Info');
+  const [activeTab, setActiveTab] = useState(isMyAccount ? 'Basic Info' : 'Overview');
 
   const handleTabClick = (tabLabel) => {
     setActiveTab(tabLabel);
@@ -82,7 +92,7 @@ function ExpertProfile({ allData }) {
   return (
     <div className="">
 
-      <TabSwitcher userType={userType} activeTab={activeTab} handleTabClick={handleTabClick} isMyAccount={isMyAccount} />
+      <TabSwitcher userType={userType} activeTab={activeTab} handleTabClick={handleTabClick} allData={allData} />
 
       <div className="bg-white p-4 rounded-b-lg">
         {tabs.map((tab) => (
@@ -97,7 +107,7 @@ function ExpertProfile({ allData }) {
             {tab.label === 'Overview' && <Overview ProfileData={ProfileData} config={config} />}
             {tab.label === 'Basic Info' && <BasicInfo ProfileData={ProfileData} config={config} />}
             {tab.label === 'Professional Details' && <ProfessionalDetails ProfileData={ProfileData} config={config} />}
-            {tab.label === 'Upload Links' && <UploadLinks ProfileData={ProfileData} config={config} />}
+            {tab.label === 'Links' && <UploadLinks ProfileData={ProfileData} config={config} />}
             {tab.label === 'Reviews' && <Reviews ProfileData={ProfileData} config={config} />}
           </div>
         ))}

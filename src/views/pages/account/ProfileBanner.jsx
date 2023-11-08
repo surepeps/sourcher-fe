@@ -62,7 +62,7 @@ function ProfileBanner({allData}) {
                         (
                             <>
                                 <span className='text-textWhite text-sm lg:text-md'>Interview Language: {ProfileData.interviewLanguage}</span>
-                                <div className="social px-5 py-3 rounded-lg flex w-full lg:w-[85%] justify-between gap-6 items-center bg-[#ffffff16]">
+                                <div className="social px-5 py-3 rounded-lg flex w-[80%] lg:w-[55%] justify-between gap-6 items-center bg-[#ffffff16]">
                                     <span>
                                         <NavLink to={twitter}>
                                             <svg className='w-[21px] h-[21px]' width="31" height="25" viewBox="0 0 31 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +106,7 @@ function ProfileBanner({allData}) {
             </div>
 
             {
-                ((isMyAccountLevel1 || isMyAccountExpert) && !isMyAccount) ?
+                ((isMyAccountLevel2 || isMyAccountExpert) && !isMyAccount) ?
 
                 <div className="btnMessage relative flex justify-start">
                     <NavLink className='text-md bg-textWhite shadow-none items-center rounded-lg px-4 py-3 flex gap-2 border border-textWhite hover:bg-transparent hover:text-textWhite transition duration-300 ease-in-out text-textPurple' onClick={allowChatAccess}>
