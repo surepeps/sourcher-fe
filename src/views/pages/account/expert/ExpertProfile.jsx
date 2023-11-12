@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Reviews from '../tabs/Reviews';
 import UploadLinks from '../tabs/UploadLinks';
 import ProfessionalDetails from '../tabs/ProfessionalDetails';
