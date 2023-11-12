@@ -1,4 +1,3 @@
-import React from 'react'
 import HomeBanner from './components/banner/HomeBanner'
 import Partners from './components/Partners'
 import { categories } from '../../models/categories'

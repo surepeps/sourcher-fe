@@ -1,5 +1,3 @@
-import React from 'react'
-
 function HowItWorks({}) {
 
     const youTubeUrl = `https://www.youtube.com/embed/54HxJdsk6NY`;
