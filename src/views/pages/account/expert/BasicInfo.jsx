@@ -1,5 +1,6 @@
 import React from 'react'
 import UpgradeExpertForm from '../others/UpgradeExpertForm'
+import { getCountryLabelByValue } from '../../../../helpers/Helper';
 
  
 function BasicInfo({ProfileData}) {
@@ -74,12 +75,12 @@ function BasicInfo({ProfileData}) {
 
           <div className="DInfo">
             <h2 className='text-md pb-1 font-bold'>Country of Origin</h2>
-            <p className='text-sm font-normal'>{ProfileData.country_id}</p>
+            <p className='text-sm font-normal'>{getCountryLabelByValue(ProfileData.country_id)}</p>
           </div>
 
           <div className="DInfo">
             <h2 className='text-md pb-1 font-bold'>Country of residence</h2>
-            <p className='text-sm font-normal'>{ProfileData.country_id}</p>
+            <p className='text-sm font-normal'>{getCountryLabelByValue(ProfileData.country_id)}</p>
           </div>
 
           <div className="DInfo">
