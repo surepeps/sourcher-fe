@@ -1,9 +1,13 @@
 import React from 'react'
 import UpgradeExpertForm from '../others/UpgradeExpertForm'
 import { getCountryLabelByValue } from '../../../../helpers/Helper';
+import EditBasicInfo from '../../../modals/account/EditBasicInfo';
+import { useModal } from '../../../../context/ModalService';
 
  
-function BasicInfo({ProfileData}) {
+function BasicInfo({allData}) {
+  const {openModal, closeModal} = useModal();
+  const {ProfileData} = allData;
   const {Title, Category, Industry, publications, professions, workExperiences} = ProfileData;
 
   const editProfessionalModal = () => {
@@ -11,7 +15,9 @@ function BasicInfo({ProfileData}) {
   }
 
   const editBasicInfoModal = () => {
-
+    openModal(<EditBasicInfo closeModal={closeModal} allData={allData} />, {
+      modalSize: 'max-w-4xl'
+    })
   }
 
   return (

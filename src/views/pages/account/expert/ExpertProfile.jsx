@@ -106,25 +106,13 @@ function ExpertProfile({ allData }) {
             }`}
           >
             {tab.label === 'Overview' && <Overview ProfileData={ProfileData} config={config} />}
-            {tab.label === 'Basic Info' && <BasicInfo ProfileData={ProfileData} config={config} />}
+            {tab.label === 'Basic Info' && <BasicInfo allData={allData} />}
             {tab.label === 'Professional Details' && <ProfessionalProfile ProfileData={ProfileData} config={config} />}
             {tab.label === 'Links' && <Links ProfileData={ProfileData} config={config} />}
             {tab.label === 'Reviews' && <Reviews ProfileData={ProfileData} config={config} />}
           </div>
         ))}
 
-        {/* {tabs.map((tab) => (
-          <div
-            key={tab.label}
-            className={`${
-              activeTab === tab.label
-                ? 'block transition-opacity duration-300'
-                : 'hidden transition-opacity duration-300'
-            }`}
-          >
-            {React.createElement(tab.component, { allData })}
-          </div>
-        ))} */}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useData } from '../../../context/DataContext'
 import SearchSelect from '../../miscellaneous/SearchSelect';
 import { useFormik } from 'formik';
@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useAuth } from '../../../context/AuthContext';
 import { useRequestLoading } from '../../../context/LoadingContext';
 import IsDoneSpinner from '../../miscellaneous/IsDoneSpinner';
+import { Country, State, City } from 'country-state-city';
 
 
 
@@ -14,13 +15,60 @@ function EditBasicInfo({allData, closeModal}) {
     const {updateUserData} = useAuth()
     const [isDone, setIsDone] = useState(false)
 
+    const {ProfileData, myData, config, isProfileLevel1, isProfileLevel2, isMyAccount} = allData;
+
+    const [selectedCountry, setSelectedCountry] = useState('');
+    const [selectedState, setSelectedState] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
+    const [countries, setCountries] = useState([]);
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+
 
     const { setRequestLoading } = useRequestLoading();
 
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const {ProfileData, myData, config, isProfileLevel1, isProfileLevel2, isMyAccount} = allData;
+    useEffect(() => {
+        if(ProfileData.account_type === "expert"){
+            const countryData = Country.getAllCountries();
+            setCountries(countryData);
+            setSelectedCountry(ProfileData?.country_id);
+            setSelectedState(ProfileData.state);
+            setSelectedCity(ProfileData.city);
+        }
+    }, [ProfileData.account_type]);
+    
+      const handleCountryChange = (event) => {
+        const country = event.target.value;
+        setSelectedCountry(country);
+        setSelectedState('');
+        setSelectedCity('');
+    
+        const stateData = State.getStatesOfCountry(country);
+        console.log(stateData);
+        setStates(stateData);
+        setCities([]);
+      };
 
+      const handleStateChange = (event) => {
+        // const state = event.target.value;
+
+        // Access the selected option element
+        const selectedOption = event.target.options[event.target.selectedIndex];
+
+        // Retrieve the value of the data-stateid attribute using dataset
+        const state = selectedOption.dataset.stateid;
+
+        setSelectedState(state);
+        setSelectedCity('');
+
+        const cityData = City.getCitiesOfState(selectedCountry, state);
+        setCities(cityData);
+    };
+
+    
+ 
      // Define validation schema using Yup
   const validationSchema = Yup.object().shape({
     first_name: Yup.string().required('First Name is required'),
