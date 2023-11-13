@@ -1,16 +1,17 @@
-import { useState } from 'react';
-import Reviews from '../tabs/Reviews';
-import UploadLinks from '../tabs/UploadLinks';
-import ProfessionalDetails from '../tabs/ProfessionalDetails';
-import BasicInfo from '../tabs/BasicInfo';
+import React, { useState } from 'react';
 import Overview from '../others/Overview';
+import BasicInfo from './BasicInfo';
+import ProfessionalProfile from './ProfessionalProfile';
+import Links from './Links';
+import Reviews from './Reviews';
+
 
 const tabs = [
-  { label: 'Overview', allowedUserTypes: ['user_2','user', 'expert'], authStatus: false, hiddenForMe: true },
-  { label: 'Basic Info', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false },
-  { label: 'Professional Details', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false },
-  { label: 'Links', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false },
-  { label: 'Reviews', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false },
+  { label: 'Overview', allowedUserTypes: ['user_2','user', 'expert'], authStatus: false, hiddenForMe: true, component:  Overview},
+  { label: 'Basic Info', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false, component: BasicInfo },
+  { label: 'Professional Details', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false, component:  ProfessionalProfile},
+  { label: 'Links', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false, component:  Links},
+  { label: 'Reviews', allowedUserTypes: ['expert', 'user_2'], authStatus: true, hiddenForMe: false, component:  Reviews},
 ];
  
 const tabIcons = {
@@ -106,11 +107,24 @@ function ExpertProfile({ allData }) {
           >
             {tab.label === 'Overview' && <Overview ProfileData={ProfileData} config={config} />}
             {tab.label === 'Basic Info' && <BasicInfo ProfileData={ProfileData} config={config} />}
-            {tab.label === 'Professional Details' && <ProfessionalDetails ProfileData={ProfileData} config={config} />}
-            {tab.label === 'Links' && <UploadLinks ProfileData={ProfileData} config={config} />}
+            {tab.label === 'Professional Details' && <ProfessionalProfile ProfileData={ProfileData} config={config} />}
+            {tab.label === 'Links' && <Links ProfileData={ProfileData} config={config} />}
             {tab.label === 'Reviews' && <Reviews ProfileData={ProfileData} config={config} />}
           </div>
         ))}
+
+        {/* {tabs.map((tab) => (
+          <div
+            key={tab.label}
+            className={`${
+              activeTab === tab.label
+                ? 'block transition-opacity duration-300'
+                : 'hidden transition-opacity duration-300'
+            }`}
+          >
+            {React.createElement(tab.component, { allData })}
+          </div>
+        ))} */}
       </div>
     </div>
   );

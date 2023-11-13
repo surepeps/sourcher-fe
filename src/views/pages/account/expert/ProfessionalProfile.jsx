@@ -5,5 +5,5 @@ function ProfessionalProfile() {
     <div>ProfessionalProfile</div>
   )
 }
-
+ 
 export default ProfessionalProfile
