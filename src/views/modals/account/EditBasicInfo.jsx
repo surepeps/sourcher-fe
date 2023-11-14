@@ -29,13 +29,19 @@ function EditBasicInfo({allData, closeModal}) {
 
     const [selectedOption, setSelectedOption] = useState(null);
 
+    const account_type = myData.account_type;
+
     useEffect(() => {
         if(ProfileData.account_type === "expert"){
             const countryData = Country.getAllCountries();
+            const stateData = State.getStatesOfCountry(ProfileData?.country_id);
+            const cityData = City.getCitiesOfState(ProfileData?.country_id, ProfileData?.state);
             setCountries(countryData);
+            setStates(stateData);
+            setCities(cityData)
             setSelectedCountry(ProfileData?.country_id);
-            setSelectedState(ProfileData.state);
-            setSelectedCity(ProfileData.city);
+            setSelectedState(ProfileData?.state);
+            setSelectedCity(ProfileData?.city);
         }
     }, [ProfileData.account_type]);
     
@@ -77,6 +83,18 @@ function EditBasicInfo({allData, closeModal}) {
     title_id: Yup.number().required('Title is required'),
     industry_id: Yup.number().required('Industry is required'),
     cat_id: Yup.number().required('Category is required'),
+    country_id: Yup.string().when('account_type', {
+        is: 'expert',
+        then: Yup.string().required('Country is required'),
+    }),
+    state: Yup.string().when('account_type', {
+        is: 'expert',
+        then: Yup.string().required('State is required'),
+    }),
+    city: Yup.string().when('account_type', {
+        is: 'expert',
+        then: Yup.string().required('City is required'),
+    }),
   });
 
   // Define the formik object with initial values
@@ -88,6 +106,9 @@ function EditBasicInfo({allData, closeModal}) {
       title_id: allData.myData.title_id,
       industry_id: allData.myData.industry_id,
       cat_id: allData.myData.cat_id,
+      country_id: allData.myData.account_type === "expert" ? allData.myData?.country_id : '',
+      state: allData.myData.account_type === "expert" ? allData.myData?.state : '',
+      city: allData.myData.account_type === "expert" ? allData.myData?.city : '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -114,6 +135,21 @@ const transformDataToOptions = (data) => data.map((item) => ({label: item.title,
 
         <div className="formDetails pt-3">
             <form onSubmit={formik.handleSubmit} className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+                <div className="inpOne flex flex-col gap-2">
+                    <label className='text-xs font-semibold flex justify-between' htmlFor="title_id">
+                        Title
+                        {formik.touched.title_id && formik.errors.title_id && (
+                            <span className="text-red-500 text-xs">{formik.errors.title_id}</span>
+                        )}
+                    </label>
+                    <SearchSelect
+                    classStyle='w-full rounded-lg text-sm h-full bg-red-300'
+                    options={transformedOptionsTitles}
+                    onChange={(selectedOption) => formik.setFieldValue('title_id', selectedOption ? selectedOption.value : null)}
+                    value={transformedOptionsTitles.find(option => option.value === formik.values.title_id)}
+                    />
+                </div>
+
                 <div className="inpOne flex flex-col gap-2">
                     <label className='text-xs font-semibold flex justify-between' htmlFor="first_name">
                         First Name
@@ -143,22 +179,103 @@ const transformDataToOptions = (data) => data.map((item) => ({label: item.title,
                     </label>
                     <input type="text" className='rounded-lg focus:outline-none py-3 text-sm' id='phone_number' name='phone_number' value={formik.values.phone_number} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
                 </div>
+                
+                {
+                    ProfileData.account_type === "expert" ? (
+                        <>
+                            <div className="inpOne flex flex-col gap-2">
+                                <label className='text-xs font-semibold flex justify-between' htmlFor="country_id">
+                                    Country
+                                    {formik.touched.country_id && formik.errors.country_id && (
+                                        <span className="text-red-500 text-xs">{formik.errors.country_id}</span>
+                                    )} 
+                                </label>
+                                <select
+                                    name="country_id"
+                                    id="country_id"
+                                    value={formik.values['country_id']}
+                                    onChange={(e) => {
+                                        handleCountryChange(e);
+                                        formik.handleChange(e);
+                                    }}
+                                    className={`w-full py-3 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
+                                >
+                                <option value="">Select Country</option>
+                                {
+                                    countries.map((country) => (
+                                        <option key={country.isoCode} value={country.isoCode}>
+                                        {country.name}
+                                        </option>
+                                    ))
+                                }
+                                </select>
 
-                <div className="inpOne flex flex-col gap-2">
-                    <label className='text-xs font-semibold flex justify-between' htmlFor="title_id">
-                        Title
-                        {formik.touched.title_id && formik.errors.title_id && (
-                            <span className="text-red-500 text-xs">{formik.errors.title_id}</span>
-                        )}
-                    </label>
-                    <SearchSelect
-                    classStyle='w-full rounded-lg text-sm h-full bg-red-300'
-                    options={transformedOptionsTitles}
-                    onChange={(selectedOption) => formik.setFieldValue('title_id', selectedOption ? selectedOption.value : null)}
-                    value={transformedOptionsTitles.find(option => option.value === formik.values.title_id)}
-                    />
-                </div>
+                            </div>
 
+
+                            <div className="inpOne flex flex-col gap-2">
+                                <label className='text-xs font-semibold flex justify-between' htmlFor="state">
+                                    State
+                                    {formik.touched.state && formik.errors.state && (
+                                        <span className="text-red-500 text-xs">{formik.errors.state}</span>
+                                    )} 
+                                </label>
+                                <select
+                                    name="state"
+                                    id="state"
+                                    value={formik.values['state']}
+                                    onChange={(e) => {
+                                        handleStateChange(e);
+                                        formik.handleChange(e);
+                                    }}
+                                    className={`w-full py-3 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
+                                >
+                                <option value="">Select State</option>
+                                {
+                                    states.map((state) => (
+                                        <option key={state.name} data-stateid={state.isoCode} value={state.name}>
+                                        {state.name}
+                                        </option>
+                                    ))
+                                }
+                                </select>
+
+                            </div>
+
+
+                            <div className="inpOne flex flex-col gap-2">
+                                <label className='text-xs font-semibold flex justify-between' htmlFor="city">
+                                    City/Town
+                                    {formik.touched.city && formik.errors.city && (
+                                        <span className="text-red-500 text-xs">{formik.errors.city}</span>
+                                    )} 
+                                </label>
+                                <select
+                                    name="city"
+                                    id="city"
+                                    value={formik.values['city']}
+                                    onChange={(e) => {
+                                        formik.handleChange(e); 
+                                    }}
+                                    className={`w-full py-3 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
+                                >
+                                <option value="">Select City/Town</option>
+                                {
+                                    cities.map((city) => (
+                                        <option key={city.name} data-cityid={city.isoCode} value={city.name}>
+                                        {city.name}
+                                        </option>
+                                    ))
+                                }
+                                </select>
+
+                            </div>
+                        </>
+                    ) : ''
+                }
+
+                
+                
                 <div className="inpOne flex flex-col gap-2">
                     <label className='text-xs font-semibold flex justify-between' htmlFor="industry_id">
                         Industry

@@ -68,13 +68,11 @@ function ExpertRegister() {
     setSelectedCity('');
 
     const stateData = State.getStatesOfCountry(country);
-    console.log(stateData);
     setStates(stateData);
     setCities([]);
   };
 
   const handleStateChange = (event) => {
-    // const state = event.target.value;
 
     // Access the selected option element
     const selectedOption = event.target.options[event.target.selectedIndex];
