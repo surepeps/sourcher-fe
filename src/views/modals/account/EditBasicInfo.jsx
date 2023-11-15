@@ -7,6 +7,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { useRequestLoading } from '../../../context/LoadingContext';
 import IsDoneSpinner from '../../miscellaneous/IsDoneSpinner';
 import { Country, State, City } from 'country-state-city';
+import { getCountryLabelByValue } from '../../../helpers/Helper';
 
 
 
@@ -52,13 +53,11 @@ function EditBasicInfo({allData, closeModal}) {
         setSelectedCity('');
     
         const stateData = State.getStatesOfCountry(country);
-        console.log(stateData);
         setStates(stateData);
         setCities([]);
       };
 
       const handleStateChange = (event) => {
-        // const state = event.target.value;
 
         // Access the selected option element
         const selectedOption = event.target.options[event.target.selectedIndex];
@@ -111,13 +110,13 @@ function EditBasicInfo({allData, closeModal}) {
       city: allData.myData.account_type === "expert" ? allData.myData?.city : '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-        setRequestLoading(true);
-        updateUserData({updatedUserData:values});
+    onSubmit: async (values) => {
         setIsDone(true)
-        closeModal();
+        setRequestLoading(true);
+        await updateUserData({updatedUserData:values});
         setIsDone(false)
         setRequestLoading(false)
+        closeModal();
     },
   });
 
@@ -201,6 +200,7 @@ const transformDataToOptions = (data) => data.map((item) => ({label: item.title,
                                     className={`w-full py-3 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
                                 >
                                 <option value="">Select Country</option>
+                                <option value={allData.myData?.country_id}>{getCountryLabelByValue(allData.myData?.country_id)}</option>
                                 {
                                     countries.map((country) => (
                                         <option key={country.isoCode} value={country.isoCode}>
@@ -231,6 +231,7 @@ const transformDataToOptions = (data) => data.map((item) => ({label: item.title,
                                     className={`w-full py-3 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
                                 >
                                 <option value="">Select State</option>
+                                <option value={allData.myData?.state}>{allData.myData?.state}</option>
                                 {
                                     states.map((state) => (
                                         <option key={state.name} data-stateid={state.isoCode} value={state.name}>
@@ -260,6 +261,7 @@ const transformDataToOptions = (data) => data.map((item) => ({label: item.title,
                                     className={`w-full py-3 rounded-lg px-4 text-xs lg:text-sm text-gray-700 focus:outline-none focus:shadow-outline`}
                                 >
                                 <option value="">Select City/Town</option>
+                                <option value={allData.myData?.city}>{allData.myData?.city}</option>
                                 {
                                     cities.map((city) => (
                                         <option key={city.name} data-cityid={city.isoCode} value={city.name}>

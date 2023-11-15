@@ -1,14 +1,25 @@
-import React from 'react'
+import React, {useState} from 'react'
 import UpgradeExpertForm from '../others/UpgradeExpertForm'
 import { getCountryLabelByValue } from '../../../../helpers/Helper';
 import EditBasicInfo from '../../../modals/account/EditBasicInfo';
 import { useModal } from '../../../../context/ModalService';
+import { DateRange } from 'react-date-range';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 
  
 function BasicInfo({allData}) {
   const {openModal, closeModal} = useModal();
   const {ProfileData} = allData;
   const {Title, Category, Industry, publications, professions, workExperiences} = ProfileData;
+  const [isScheduleChecked, setIsScheduleChecked] = useState(false);
+  const [selectedRange, setSelectedRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    },
+  ]);
 
   const editProfessionalModal = () => {
 
@@ -19,6 +30,17 @@ function BasicInfo({allData}) {
       modalSize: 'max-w-4xl'
     })
   }
+
+  
+
+  const handleScheduleToggle = () => {
+    setIsScheduleChecked(!isScheduleChecked);
+  };
+
+  const handleSelect = (ranges) => {
+    console.log([ranges.selection])
+    setSelectedRange([ranges.selection]);
+  };
 
   return (
     <div className='font-notoSans'>
@@ -129,6 +151,53 @@ function BasicInfo({allData}) {
       </div>
 
       <div className="line my-5 w-full bg-[#0F172A13] h-0.5 rounded-xl"></div>
+
+      <div className="">
+        <div className="topTitle">
+          <h3 className='font-semibold pb-5'>Interview Availability</h3>
+        </div>
+
+        <div className='toggles flex flex-col mb-4 gap-3'>
+          <label className="mb-5 lg:w-[25%] w-full justify-between flex gap-5 cursor-pointer">
+            <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Available for interview now</span>
+            <div className="relative">
+              <input type="checkbox" value="" className="sr-only peer" />
+              <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-awimGreen dark:peer-focus:ring-awimGreen rounded-full peer dark:bg-gray-700 peer-checked:before:translate-x-full rtl:peer-checked:before:-translate-x-full peer-checked:before:border-white before:content-[''] before:absolute before:top-[2px] before:start-[2px] before:bg-white before:border-gray-300 before:border before:rounded-full before:h-4 before:w-4 before:transition-all dark:border-gray-600 peer-checked:bg-awimGreen"></div>
+            </div>
+          </label>
+
+          <label className="mb-5 lg:w-[25%] w-full justify-between flex gap-5 cursor-pointer">
+            <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Schedule my availability</span>
+            <div className="relative">
+              <input type="checkbox" value="" className="sr-only peer" onChange={handleScheduleToggle} />
+              <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-awimGreen dark:peer-focus:ring-awimGreen rounded-full peer dark:bg-gray-700 peer-checked:before:translate-x-full rtl:peer-checked:before:-translate-x-full peer-checked:before:border-white before:content-[''] before:absolute before:top-[2px] before:start-[2px] before:bg-white before:border-gray-300 before:border before:rounded-full before:h-4 before:w-4 before:transition-all dark:border-gray-600 peer-checked:bg-awimGreen"></div>
+            </div>
+          </label>
+        </div>
+
+        {isScheduleChecked && (
+        <div className="showCalendar">
+          <DateRange
+            className='border border-[#0F172A13] rounded-lg p-6'
+            editableDateInputs={true}
+            moveRangeOnFirstSelection={false}
+            ranges={selectedRange}
+            onChange={handleSelect}
+            minDate={new Date()} 
+            rangeColors={['#004C3F']}
+          />
+          <div className="textReport">
+            <p className='text-awimGreen font-semibold pt-4 text-sm'>Available from  </p>
+          </div>
+        </div>
+      )}
+
+
+        
+
+        
+
+      </div>
       
     </div>
   )
