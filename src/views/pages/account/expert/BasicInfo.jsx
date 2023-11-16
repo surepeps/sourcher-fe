@@ -6,6 +6,10 @@ import { useModal } from '../../../../context/ModalService';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import ApiService from '../../../../helpers/http/apiService';
+import { useRequestLoading } from '../../../../context/LoadingContext';
+import { responseCatcher } from '../../../../helpers/http/response';
+import { useAuth } from '../../../../context/AuthContext';
 
  
 function BasicInfo({allData}) {
@@ -21,6 +25,13 @@ function BasicInfo({allData}) {
     },
   ]);
 
+  const [isAvailableForInterview, setAvailableForInterview] = useState(ProfileData.availableForInterviewNow === '1');
+  const [isScheduleAvailable, setScheduleAvailable] = useState(ProfileData.scheduleAvailability === '1');
+
+  const { setRequestLoading } = useRequestLoading();
+
+  const {updateUserData} = useAuth();
+
   const editProfessionalModal = () => {
 
   }
@@ -33,9 +44,56 @@ function BasicInfo({allData}) {
 
   
 
-  const handleScheduleToggle = () => {
-    setIsScheduleChecked(!isScheduleChecked);
+  const handleScheduleToggle = async () => {
+    setScheduleAvailable(!isScheduleAvailable);
+    setRequestLoading(true)
+    try {
+
+      const availableData = {
+        availableForInterviewNow: '0',
+        scheduleAvailability: isScheduleAvailable ? '0' : '1',
+      };
+
+      await updateUserData({updatedUserData:availableData})
+
+      // hide schedule available 
+      !isAvailableForInterview && !isScheduleAvailable ? setAvailableForInterview(false) : '';
+
+    } catch (error) {
+      responseCatcher(error)
+    }finally{
+      setRequestLoading(false)
+    }
   };
+
+
+
+
+  const handleAvailableForInterview = async () => {
+    setAvailableForInterview(!isAvailableForInterview);
+    setRequestLoading(true)
+    try {
+
+      const availableData = {
+        availableForInterviewNow: isAvailableForInterview ? '0' : '1',
+        scheduleAvailability: '0',
+        scheduleAvailabilityDate: null
+      };
+
+      await updateUserData({updatedUserData:availableData})
+
+      // hide schedule available 
+      if (!isAvailableForInterview) {
+        setScheduleAvailable(false)
+      }
+
+    } catch (error) {
+      responseCatcher(error)
+    }finally{
+      setRequestLoading(false)
+    }
+
+  }
 
   const handleSelect = (ranges) => {
     console.log([ranges.selection])
@@ -161,7 +219,7 @@ function BasicInfo({allData}) {
           <label className="mb-5 lg:w-[25%] w-full justify-between flex gap-5 cursor-pointer">
             <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Available for interview now</span>
             <div className="relative">
-              <input type="checkbox" value="" className="sr-only peer" />
+              <input type="checkbox" checked={isAvailableForInterview} name='availableForInterviewNow' onChange={handleAvailableForInterview} className="sr-only peer" />
               <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-awimGreen dark:peer-focus:ring-awimGreen rounded-full peer dark:bg-gray-700 peer-checked:before:translate-x-full rtl:peer-checked:before:-translate-x-full peer-checked:before:border-white before:content-[''] before:absolute before:top-[2px] before:start-[2px] before:bg-white before:border-gray-300 before:border before:rounded-full before:h-4 before:w-4 before:transition-all dark:border-gray-600 peer-checked:bg-awimGreen"></div>
             </div>
           </label>
@@ -169,13 +227,13 @@ function BasicInfo({allData}) {
           <label className="mb-5 lg:w-[25%] w-full justify-between flex gap-5 cursor-pointer">
             <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Schedule my availability</span>
             <div className="relative">
-              <input type="checkbox" value="" className="sr-only peer" onChange={handleScheduleToggle} />
+              <input type="checkbox" checked={isScheduleAvailable} disabled={isAvailableForInterview} name="scheduleAvailability" className="sr-only peer" onChange={handleScheduleToggle} />
               <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-awimGreen dark:peer-focus:ring-awimGreen rounded-full peer dark:bg-gray-700 peer-checked:before:translate-x-full rtl:peer-checked:before:-translate-x-full peer-checked:before:border-white before:content-[''] before:absolute before:top-[2px] before:start-[2px] before:bg-white before:border-gray-300 before:border before:rounded-full before:h-4 before:w-4 before:transition-all dark:border-gray-600 peer-checked:bg-awimGreen"></div>
             </div>
           </label>
         </div>
 
-        {isScheduleChecked && (
+        {isScheduleAvailable && (
         <div className="showCalendar">
           <DateRange
             className='border border-[#0F172A13] rounded-lg p-6'
