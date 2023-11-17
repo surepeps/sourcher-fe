@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import UpgradeExpertForm from '../others/UpgradeExpertForm'
 import { getCountryLabelByValue } from '../../../../helpers/Helper';
 import EditBasicInfo from '../../../modals/account/EditBasicInfo';
@@ -17,13 +17,13 @@ function BasicInfo({allData}) {
   const {ProfileData} = allData;
   const {Title, Category, Industry, publications, professions, workExperiences} = ProfileData;
   const [isScheduleChecked, setIsScheduleChecked] = useState(false);
-  const [selectedRange, setSelectedRange] = useState([
-    {
+  const [selectedRange, setSelectedRange] = useState([{
       startDate: new Date(),
       endDate: new Date(),
       key: 'selection',
     },
   ]);
+  
 
   const [isAvailableForInterview, setAvailableForInterview] = useState(ProfileData.availableForInterviewNow === '1');
   const [isScheduleAvailable, setScheduleAvailable] = useState(ProfileData.scheduleAvailability === '1');
@@ -42,6 +42,15 @@ function BasicInfo({allData}) {
     })
   }
 
+ 
+  useEffect(() => {
+    if (ProfileData.scheduleAvailabilityDate) {
+      console.log("Start Date :", ProfileData.scheduleAvailabilityDate.startDate);
+      // ProfileData.scheduleAvailabilityDate.startDate = new Date(ProfileData.scheduleAvailabilityDate.startDate.toISOString());
+      // ProfileData.scheduleAvailabilityDate.endDate = new Date(ProfileData.scheduleAvailabilityDate.endDate.toISOString());
+      // setSelectedRange(ProfileData.scheduleAvailabilityDate); 
+    }
+  },[ProfileData.scheduleAvailabilityDate])
   
 
   const handleScheduleToggle = async () => {
@@ -95,9 +104,28 @@ function BasicInfo({allData}) {
 
   }
 
-  const handleSelect = (ranges) => {
-    console.log([ranges.selection])
+  const updateScheduleDate = async (ranges) => {
     setSelectedRange([ranges.selection]);
+    setRequestLoading(true)
+    try {
+
+      const startDate = ranges.selection.startDate.toISOString();
+      const endDate = ranges.selection.endDate.toISOString();
+
+      const availableData = {
+        scheduleAvailabilityDate: { startDate, endDate, key: 'selection' },
+      };
+
+      console.log("New Date :", availableData)
+      
+      await updateUserData({updatedUserData:availableData})
+
+    } catch (error) {
+      responseCatcher(error)
+    }finally{
+      setRequestLoading(false)
+    }
+
   };
 
   return (
@@ -240,7 +268,7 @@ function BasicInfo({allData}) {
             editableDateInputs={true}
             moveRangeOnFirstSelection={false}
             ranges={selectedRange}
-            onChange={handleSelect}
+            onChange={updateScheduleDate}
             minDate={new Date()} 
             rangeColors={['#004C3F']}
           />

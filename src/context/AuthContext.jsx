@@ -46,6 +46,8 @@ export function AuthProvider({ children }) {
       const response = await api.putWithToken('/user/update', newUserData);
     
       // Assuming the API response contains the updated user data
+      console.log("UpdatedData response :",response.data);
+      
       const updatedUserData = response.data.user;
 
       // Update the user data in the context
