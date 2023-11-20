@@ -1,16 +1,72 @@
-import React from 'react'
+import React, {useState, useRef} from 'react'
 import { NavLink } from 'react-router-dom'
 import SingleContact from './SingleContact'
 import SingleRightChat from './SingleRightChat'
 import SingleLeftChat from './SingleLeftChat'
 import NoContactFound from './NoContactFound'
 import { UserImageUrlCreator } from '../../../helpers/Helper'
+import ApiService from '../../../helpers/http/apiService'
+import { toast } from 'react-toastify'
+import { responseCatcher } from '../../../helpers/http/response'
 
 
 function MyChat({...rest}) {
-    console.log("Chtting Page Data :",rest)
+    const [message, setMessage] = useState('');
+    const inputRef = useRef(null);
+    const [isSendingMsg, setIsSendMsg] = useState(false);
 
-    const {config, showContactsBar, username, myData, ProfileData, allContacts, contactMessages} = rest;
+    const {config, showContactsBar, username, myData, setContactMessages, fetchContacts, ProfileData, allContacts, contactMessages} = rest;
+    const api = new ApiService();
+
+    const handleInputChange = (e) => {
+        const inputValue = e.target.value;
+        const trimmedValue = inputValue.trimStart(); // Remove leading whitespace only
+        setMessage(trimmedValue);
+      };
+
+    const sendMessage = async () => {
+        if (message.length > 0) {
+          try {
+            setIsSendMsg(true);
+            const payload = {
+              receiverId: ProfileData.id,
+              message,
+            };
+    
+            const response = await api.postWithToken('/chat/message', payload);
+    
+            setContactMessages((prevMessages) => [
+              ...prevMessages,
+              {
+                id: response.data.id,
+                senderId: response.data.senderId,
+                receiverId: response.data.receiverId,
+                read: response.data.read,
+                message: response.data.message,
+                timestamp: response.data.createdAt,
+              },
+            ]);
+    
+            await fetchContacts();
+    
+            setMessage('');
+          } catch (error) {
+            responseCatcher(error);
+          }finally{
+            setIsSendMsg(false)
+          }
+        } else {
+          toast.error('Please enter a non-empty message');
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+    };
+
   return (
     <div className='w-full'>
         <div className="max-w-screen-2xl relative mx-auto lg:px-4 px-6 mt-12 lg:mt-0 py-10 font-notoSans">
@@ -99,10 +155,28 @@ function MyChat({...rest}) {
 
                                 </div>
                                 <div className="msgInput w-full pt-5">
-                                    <div className="msgg p-2 flex justify-between gap-3 border border-[#D9D9D9 rounded-lg">
-                                        <input type="text" className='w-full border-none' placeholder="Type a message..." name="message" id="message"/>
-                                        <button type="submit" className='py-3 px-6 transition duration-300 ease-in-out hover:opacity-50 rounded-lg bg-awimGreen text-bgColor text-sm'>Send</button>
-                                    </div>
+                                    <form className="msgg p-2 flex justify-between gap-3 border border-[#D9D9D9 rounded-lg">
+                                        <input
+                                            type="text"
+                                            className='w-full border-none'
+                                            placeholder="Type a message..."
+                                            name="message"
+                                            id="message"
+                                            value={message}
+                                            onChange={handleInputChange}
+                                            onKeyPress={handleKeyPress}
+                                            ref={inputRef}
+                                            disabled={isSendingMsg}
+                                        />
+                                        <button
+                                            disabled={isSendingMsg}
+                                            type="button"
+                                            onClick={sendMessage}
+                                            className='py-3 px-6 transition duration-300 ease-in-out hover:opacity-50 rounded-lg bg-awimGreen text-bgColor text-sm'
+                                        >
+                                        Send
+                                        </button>
+                                    </form>
                                 </div>
 
                             </div>
