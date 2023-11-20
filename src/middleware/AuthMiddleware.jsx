@@ -35,7 +35,7 @@ const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, ske
         navigate(`/sh/${user.username}`)
       }
 
-      if (isLoggedIn && (user.expert_status !== 0) && rest.path !== '/expert-steps') {
+      if (isLoggedIn && (user.expert_status !== 0 && user.account_type == 'expert') && rest.path !== '/expert-steps') {
         navigate('/expert-steps')
       }
       

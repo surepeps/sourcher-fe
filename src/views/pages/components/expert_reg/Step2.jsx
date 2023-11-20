@@ -145,7 +145,7 @@ function Step2({ userData, moveToNext }) {
       <div className="AllProfessions mb-10">
 
         <div className="ContTitle">
-          <h4 className="font-bold text-md">Professionals</h4>
+          <h4 className="font-bold text-md">Professionals {userData.account_type}</h4>
         </div>
 
         <div className="ShowProfessions my-6">

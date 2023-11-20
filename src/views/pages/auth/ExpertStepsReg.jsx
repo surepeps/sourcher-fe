@@ -71,7 +71,7 @@ function ExpertStepsReg({ userData, config }) {
             className={`singleStep flex justify-center items-center flex-col relative ${
               index <= currentStep ? 'cursor-pointer' : ''
             } ${index === currentStep ? 'current-step' : ''}`}
-            onClick={() => setCurrentStep(index)}
+            
           >
             <div
               className={`top rounded-full py-0.5 px-2 text-sm flex justify-center items-center ${

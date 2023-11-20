@@ -18,11 +18,24 @@ function MyChat({...rest}) {
     const {config, showContactsBar, username, myData, setContactMessages, fetchContacts, ProfileData, allContacts, contactMessages} = rest;
     const api = new ApiService();
 
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredContacts = allContacts.filter((contact) => {
+        const searchTerm = searchQuery.toLowerCase();
+        const isMatch =
+        contact.first_name.toLowerCase().includes(searchTerm) ||
+        contact.last_name.toLowerCase().includes(searchTerm) ||
+        contact.username.toLowerCase().includes(searchTerm) ||
+        contact.lastMessage.toLowerCase().includes(searchTerm);
+
+        return isMatch;
+    });
+
     const handleInputChange = (e) => {
         const inputValue = e.target.value;
         const trimmedValue = inputValue.trimStart(); // Remove leading whitespace only
         setMessage(trimmedValue);
-      };
+    };
 
     const sendMessage = async () => {
         if (message.length > 0) {
@@ -80,16 +93,31 @@ function MyChat({...rest}) {
                             <h1 className='text-2xl pb-7 font-bold'>Messages</h1>
                         </div>
                         <div className="searchSection pb-3">
-                            <input type="search" name="" id="" className='w-full h-14 rounded-lg border border-[#D9D9D9]' placeholder='Search by names' />
+                            <input 
+                                type="search" 
+                                name="" 
+                                id="" 
+                                className='w-full h-14 rounded-lg border border-[#D9D9D9]' 
+                                placeholder='Search by names' 
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
                         </div>
 
                         <div className="AllContacts h-[620px] overflow-y-auto ScrollableCont py-5">
                         {
-                            allContacts ?
-                                allContacts.map((contactData, index) => (
-                                    <SingleContact recieverUsername={username} contactData={contactData} key={index} config={config} />
+                            filteredContacts.length > 0 ? (
+                                filteredContacts.map((contactData, index) => (
+                                <SingleContact
+                                    recieverUsername={username}
+                                    contactData={contactData}
+                                    key={index}
+                                    config={config}
+                                />
                                 ))
-                            : <NoContactFound />
+                            ) : (
+                                <NoContactFound />
+                            )
                         }
                         </div>
                     </div>
