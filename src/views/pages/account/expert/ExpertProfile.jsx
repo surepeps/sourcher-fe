@@ -105,9 +105,9 @@ function ExpertProfile({ allData }) {
                 : 'hidden transition-opacity duration-300'
             }`}
           >
-            {tab.label === 'Overview' && <Overview ProfileData={ProfileData} config={config} />}
+            {tab.label === 'Overview' && <Overview iamLoggedIn={iamLoggedIn} myData={myData} ProfileData={ProfileData} config={config} />}
             {tab.label === 'Basic Info' && <BasicInfo allData={allData} />}
-            {tab.label === 'Professional Details' && <ProfessionalProfile ProfileData={ProfileData} config={config} />}
+            {tab.label === 'Professional Details' && <ProfessionalProfile userData={myData} ProfileData={ProfileData} config={config} />}
             {tab.label === 'Links' && <Links ProfileData={ProfileData} config={config} />}
             {tab.label === 'Reviews' && <Reviews ProfileData={ProfileData} config={config} />}
           </div>
