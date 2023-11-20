@@ -14,6 +14,7 @@ import ResetPassword from '../views/pages/auth/ResetPassword';
 import VerifyAccount from '../views/pages/auth/VerifyAccount';
 import ExpertRegister from '../views/pages/auth/ExpertRegister';
 import ExpertStepsReg from '../views/pages/auth/ExpertStepsReg';
+import ChatController from '../controllers/ChatController';
 
 
 
@@ -31,6 +32,8 @@ const routes = [
   createRoute('/experts', NewPage, 'Experts', false, MainLayout, LayoutSkeleton, 'semiPrivate'),
   createRoute('/route1', Home, 'Route1', true, MainLayout, LayoutSkeleton, 'private'),
   createRoute('/sh/:username', ProfileController, 'My Profile', false, MainLayout, LayoutSkeleton, 'semiPrivate'),
+  createRoute('/sh/chat/:username', ChatController, 'Chat', true, MainLayout, LayoutSkeleton, 'private'),
+  createRoute('/sh/chat', ChatController, 'Chat', true, MainLayout, LayoutSkeleton, 'private'),
 ];
 
 export default routes;

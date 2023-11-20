@@ -40,14 +40,12 @@ export function AuthProvider({ children }) {
     }
   }; 
 
-  const updateUserData = async (newUserData) => {
+  const updateUserData = async (newUserData, message = "User data updated successfully.") => {
     try {
       // Make a request to update user data using the API
       const response = await api.putWithToken('/user/update', newUserData);
     
       // Assuming the API response contains the updated user data
-      console.log("UpdatedData response :",response.data);
-      
       const updatedUserData = response.data.user;
 
       // Update the user data in the context
@@ -56,7 +54,8 @@ export function AuthProvider({ children }) {
         user: updatedUserData,
       }));
 
-      toast.success('User data updated successfully.');
+      toast.success(message);
+      
     } catch (error) {
       responseCatcher(error);
     }

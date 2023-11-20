@@ -9,7 +9,7 @@ function ProfileBanner({allData}) {
     const {config, myData, ProfileData, iamLoggedIn, isMyAccount, isProfileExpert, isProfileLevel1, isProfileLevel2, isMyAccountExpert, isMyAccountLevel1, isMyAccountLevel2} = allData;
     console.log(allData);
 
-    const {google, twitter, linkedin, youtube, instagram, facebook} = ProfileData
+    const {google, twitter, linkedin, youtube, instagram, facebook, username} = ProfileData
 
     const {openModal, closeModal} = useModal();
 
@@ -106,10 +106,10 @@ function ProfileBanner({allData}) {
             </div>
 
             {
-                ((isMyAccountLevel2 || isMyAccountExpert) && !isMyAccount) ?
+                ((isMyAccountLevel2 || isMyAccountExpert) && !isMyAccount && (isProfileLevel2 || isProfileExpert)) ?
 
                 <div className="btnMessage relative flex justify-start">
-                    <NavLink className='text-md bg-textWhite shadow-none items-center rounded-lg px-4 py-3 flex gap-2 border border-textWhite hover:bg-transparent hover:text-textWhite transition duration-300 ease-in-out text-textPurple' onClick={allowChatAccess}>
+                    <NavLink to={`/sh/chat/${username}`} className='text-md bg-textWhite shadow-none items-center rounded-lg px-4 py-3 flex gap-2 border border-textWhite hover:bg-transparent hover:text-textWhite transition duration-300 ease-in-out text-textPurple'>
                         <svg className='fill-current' width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.493 10.3333V13.725C13.493 14.025 13.4596 14.3083 13.3846 14.5667C13.0763 15.7917 12.0596 16.5583 10.6596 16.5583H8.39297L5.8763 18.2333C5.5013 18.4917 5.0013 18.2167 5.0013 17.7667V16.5583C4.1513 16.5583 3.44297 16.275 2.9513 15.7833C2.4513 15.2833 2.16797 14.575 2.16797 13.725V10.3333C2.16797 8.75 3.1513 7.65833 4.66797 7.51667C4.7763 7.50833 4.88464 7.5 5.0013 7.5H10.6596C12.3596 7.5 13.493 8.63333 13.493 10.3333Z" fill="fill-current"/>
                             <path d="M15.293 13C16.3513 13 17.243 12.65 17.8596 12.025C18.4846 11.4083 18.8346 10.5167 18.8346 9.45832V5.20832C18.8346 3.24999 17.2513 1.66666 15.293 1.66666H8.20964C6.2513 1.66666 4.66797 3.24999 4.66797 5.20832V5.83332C4.66797 6.06666 4.8513 6.24999 5.08464 6.24999H10.6596C12.918 6.24999 14.743 8.07499 14.743 10.3333V12.5833C14.743 12.8167 14.9263 13 15.1596 13H15.293Z" fill="fill-current"/>

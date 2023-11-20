@@ -11,7 +11,7 @@ function BasicInfo({allData}) {
   const {ProfileData, myData, config, isProfileLevel1, isProfileLevel2, isMyAccount} = allData;
 
   const {openModal, closeModal} = useModal();
-
+ 
   const { setRequestLoading } = useRequestLoading();
 
   // Logged in profile data

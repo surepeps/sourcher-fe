@@ -45,12 +45,12 @@ function BasicInfo({allData}) {
  
   useEffect(() => {
     if (ProfileData.scheduleAvailabilityDate) {
-      console.log("Start Date :", ProfileData.scheduleAvailabilityDate.startDate);
-      // ProfileData.scheduleAvailabilityDate.startDate = new Date(ProfileData.scheduleAvailabilityDate.startDate.toISOString());
-      // ProfileData.scheduleAvailabilityDate.endDate = new Date(ProfileData.scheduleAvailabilityDate.endDate.toISOString());
-      // setSelectedRange(ProfileData.scheduleAvailabilityDate); 
+      const newScheduleDateValue = JSON.parse(ProfileData.scheduleAvailabilityDate);
+      newScheduleDateValue.startDate = new Date(newScheduleDateValue.startDate);
+      newScheduleDateValue.endDate = new Date(newScheduleDateValue.endDate);
+      setSelectedRange([newScheduleDateValue]); 
     }
-  },[ProfileData.scheduleAvailabilityDate])
+  },[ProfileData])
   
 
   const handleScheduleToggle = async () => {
@@ -63,7 +63,7 @@ function BasicInfo({allData}) {
         scheduleAvailability: isScheduleAvailable ? '0' : '1',
       };
 
-      await updateUserData({updatedUserData:availableData})
+      await updateUserData({updatedUserData:availableData}, "Schedule Availablility Updated")
 
       // hide schedule available 
       !isAvailableForInterview && !isScheduleAvailable ? setAvailableForInterview(false) : '';
@@ -89,7 +89,7 @@ function BasicInfo({allData}) {
         scheduleAvailabilityDate: null
       };
 
-      await updateUserData({updatedUserData:availableData})
+      await updateUserData({updatedUserData:availableData}, "Interview Availablility Updated")
 
       // hide schedule available 
       if (!isAvailableForInterview) {
@@ -115,10 +115,8 @@ function BasicInfo({allData}) {
       const availableData = {
         scheduleAvailabilityDate: { startDate, endDate, key: 'selection' },
       };
-
-      console.log("New Date :", availableData)
       
-      await updateUserData({updatedUserData:availableData})
+      await updateUserData({updatedUserData:availableData}, "Schedule Availablility Updated")
 
     } catch (error) {
       responseCatcher(error)
