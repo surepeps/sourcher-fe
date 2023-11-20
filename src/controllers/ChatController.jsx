@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import ApiService from '../helpers/http/apiService';
 import { responseCatcher } from '../helpers/http/response';
 import MyChat from '../views/pages/chat/MyChat';
+import { useRequestLoading } from '../context/LoadingContext';
 
 
 function ChatController({config, userData, isLoggedIn, skeleton: Skeleton, Error_404: Error_404, ...rest}) {
@@ -13,6 +14,8 @@ function ChatController({config, userData, isLoggedIn, skeleton: Skeleton, Error
     const [pgLoading, setPgLoading] = useState(true);
 
     const { username } = useParams();
+
+    const { setRequestLoading } = useRequestLoading();
 
     const api = new ApiService();
 
@@ -32,6 +35,7 @@ function ChatController({config, userData, isLoggedIn, skeleton: Skeleton, Error
 
     useEffect(() => {
         async function fetchChatData(username) {
+            setRequestLoading(true);
             try {
                 const getContacts = await api.getWithToken('/chat/getContacts');
                 setAllContacts(getContacts.data)
@@ -47,6 +51,7 @@ function ChatController({config, userData, isLoggedIn, skeleton: Skeleton, Error
                 responseCatcher(err);
             } finally {
                 setPgLoading(false);
+                setRequestLoading(false)
             }
         }
     
@@ -58,7 +63,7 @@ function ChatController({config, userData, isLoggedIn, skeleton: Skeleton, Error
     <div>
         {
             pgLoading ? (<Skeleton />) : 
-            isProfileData || !username ? (<MyChat config={config} contactMessages={contactMessages} showContactsBar={showContactsBar} allContacts={allContacts} iamLoggedIn={isLoggedIn ?? false} myData={userData ?? null} ProfileData={isProfileData} />) : <Error_404 />
+            isProfileData || !username ? (<MyChat config={config} username={username ?? null} contactMessages={contactMessages} showContactsBar={showContactsBar} allContacts={allContacts} iamLoggedIn={isLoggedIn ?? false} myData={userData ?? null} ProfileData={isProfileData} />) : <Error_404 />
         }
     </div>
   )

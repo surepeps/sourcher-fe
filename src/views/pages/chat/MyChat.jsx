@@ -4,12 +4,13 @@ import SingleContact from './SingleContact'
 import SingleRightChat from './SingleRightChat'
 import SingleLeftChat from './SingleLeftChat'
 import NoContactFound from './NoContactFound'
+import { UserImageUrlCreator } from '../../../helpers/Helper'
 
 
 function MyChat({...rest}) {
     console.log("Chtting Page Data :",rest)
 
-    const {config, showContactsBar, allContacts, contactMessages} = rest;
+    const {config, showContactsBar, username, myData, ProfileData, allContacts, contactMessages} = rest;
   return (
     <div className='w-full'>
         <div className="max-w-screen-2xl relative mx-auto lg:px-4 px-6 mt-12 lg:mt-0 py-10 font-notoSans">
@@ -30,7 +31,7 @@ function MyChat({...rest}) {
                         {
                             allContacts ?
                                 allContacts.map((contactData, index) => (
-                                    <SingleContact contactData={contactData} key={index} config={config} />
+                                    <SingleContact recieverUsername={username} contactData={contactData} key={index} config={config} />
                                 ))
                             : <NoContactFound />
                         }
@@ -60,15 +61,15 @@ function MyChat({...rest}) {
                                         </NavLink>
                                     </div>
                                     <div className="img lg:h-16 lg:w-16 w-12 h-12 rounded-full">
-                                        <img src={config.noImage} className='w-full h-full rounded-full' alt="" />
+                                        <img src={UserImageUrlCreator(ProfileData.avatar)} className='w-full h-full rounded-full' alt="" />
                                     </div>
                                     <div className="name">
-                                        <h2 className="name font-semibold lg:text-lg text-md">Hassan Tijani</h2>
+                                        <h2 className="name font-semibold lg:text-lg text-md">{ProfileData.first_name+ ' '+ ProfileData.last_name}</h2>
                                     </div>
 
                                 </div>
                                 <div className="rightProf">
-                                    <NavLink className='lg:p-3 p-3 text-bgColor lg:text-sm text-xs rounded-lg bg-awimGreen'>View Profile</NavLink>
+                                    <NavLink to={`/sh/${ProfileData.username}`} className='lg:p-3 p-3 text-bgColor lg:text-sm text-xs rounded-lg bg-awimGreen'>View Profile</NavLink>
                                 </div>
                             </div>
 
@@ -81,17 +82,19 @@ function MyChat({...rest}) {
                                     </div>
 
                                     <div className="AllMessages overflow-y-auto lg:h-[570px] h-[500px] pb-5 w-full ScrollableCont">
-                                        {/* Other Chat */}
-                                        <SingleLeftChat config={config} />
+                                        {contactMessages.map((message) => {
+                                            const isMyMessage = message.senderId === myData.id;
 
-                                        {/* My Chat */}
-                                        <SingleRightChat />
-                                        <SingleRightChat />
-                                        <SingleRightChat />
-                                        <SingleRightChat />
-                                        <SingleRightChat />
-                                        <SingleRightChat />
-                                        <SingleRightChat />
+                                            return (
+                                            <React.Fragment key={message.id}>
+                                                {isMyMessage ? (
+                                                <SingleRightChat message={message} />
+                                                ) : (
+                                                <SingleLeftChat imageUrl={ProfileData.avatar} message={message} />
+                                                )}
+                                            </React.Fragment>
+                                            );
+                                        })}
                                     </div>
 
                                 </div>
