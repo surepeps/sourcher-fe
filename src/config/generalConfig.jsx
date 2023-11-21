@@ -14,6 +14,8 @@ import profileBanner from '/assets/images/profileBanner.png'
 import noAvatar from '/assets/images/noAvatar.png'
 import emptyData from '/assets/images/emptyData.png'
 
+import canadaImg from '/assets/images/canadaImg.png'
+
 
 const generalConfig =  {
     APIURL: 'https://api.sourceher.com/v1',
@@ -30,6 +32,7 @@ const generalConfig =  {
     partner2: partner2,
     partner3: partner3,
     partner4: partner4,
+    canadaImg: canadaImg,
     BecomeExpertImage:BecomeExpertImage,
 
 }
