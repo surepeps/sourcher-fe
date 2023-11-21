@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import UpgradeExpertForm from '../others/UpgradeExpertForm'
-import { getCountryLabelByValue } from '../../../../helpers/Helper';
+import { formatAvailability, getCountryLabelByValue } from '../../../../helpers/Helper';
 import EditBasicInfo from '../../../modals/account/EditBasicInfo';
 import { useModal } from '../../../../context/ModalService';
 import { DateRange } from 'react-date-range';
@@ -24,6 +24,8 @@ function BasicInfo({allData}) {
       key: 'selection',
     },
   ]);
+
+  const [availabilityDate, setAvailabilityDate] = useState(null);
   
 
   const [isAvailableForInterview, setAvailableForInterview] = useState(ProfileData.availableForInterviewNow === '1');
@@ -51,6 +53,11 @@ function BasicInfo({allData}) {
       const newScheduleDateValue = JSON.parse(ProfileData.scheduleAvailabilityDate);
       newScheduleDateValue.startDate = new Date(newScheduleDateValue.startDate);
       newScheduleDateValue.endDate = new Date(newScheduleDateValue.endDate);
+      setAvailabilityDate({
+        startDate: newScheduleDateValue.startDate, 
+        endDate: newScheduleDateValue.endDate
+      });
+      
       setSelectedRange([newScheduleDateValue]); 
     }
   },[ProfileData])
@@ -274,7 +281,7 @@ function BasicInfo({allData}) {
             rangeColors={['#004C3F']}
           />
           <div className="textReport">
-            <p className='text-awimGreen font-semibold pt-4 text-sm'>Available from  </p>
+            <p className='text-awimGreen font-semibold pt-4 text-sm'>{formatAvailability(availabilityDate?.startDate, availabilityDate?.endDate)}</p>
           </div>
         </div>
       )}

@@ -60,3 +60,26 @@ export const chatTimer = (timestamp) => {
     return `${years} ${years === 1 ? 'year' : 'years'} ago`;
   }
 };
+
+
+// Availbility format
+export const formatAvailability = (startDate, endDate) => {
+  const formatOptions = {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  };
+
+  const startDateFormat = new Date(startDate).toLocaleDateString('en-US', formatOptions);
+  const endDateFormat = new Date(endDate).toLocaleDateString('en-US', formatOptions);
+
+  if (!startDate || !endDate) {
+    return ``;
+  }
+  
+  if (startDate === endDate) {
+    return `Available On ${startDateFormat}.`;
+  } else {
+    return `Available from ${startDateFormat} to ${endDateFormat}.`;
+  }
+};
