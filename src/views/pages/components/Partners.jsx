@@ -21,6 +21,9 @@ function Partners({config}) {
             <div className="partner">
                 <img src={config.partner4} alt="" />
             </div>
+            <div className="partner">
+                <img src={config.canadaImg} alt="" />
+            </div>
         </div>
 
         <div className="h-0.5 w-full bg-gradient-to-r from-[#0F172A02] via-[#0F172A20] to-[#0F172A02]"></div>

@@ -10,6 +10,7 @@ import ApiService from '../../../../helpers/http/apiService';
 import { useRequestLoading } from '../../../../context/LoadingContext';
 import { responseCatcher } from '../../../../helpers/http/response';
 import { useAuth } from '../../../../context/AuthContext';
+import EditAboutMe from '../../../modals/account/EditAboutMe';
 
  
 function BasicInfo({allData}) {
@@ -33,7 +34,9 @@ function BasicInfo({allData}) {
   const {updateUserData} = useAuth();
 
   const editProfessionalModal = () => {
-
+    openModal(<EditAboutMe closeModal={closeModal} allData={allData} />, {
+      modalSize: 'max-w-4xl'
+    })
   }
 
   const editBasicInfoModal = () => {
@@ -137,7 +140,7 @@ function BasicInfo({allData}) {
         </div>
         <div className="flex justify-between w-full items-start">
           <p className="lg:w-[70%] ">
-              {ProfileData?.about} Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi corrupti debitis ad quidem illo, nobis exercitationem itaque sunt distinctio possimus dicta, facere in voluptatem nulla tempore iusto nihil accusantium enim pariatur. Sequi officia nihil harum dolore nulla tenetur voluptatem, excepturi asperiores minima. Voluptatum, officia accusantium? Eum quia nulla quam esse dolorem itaque rerum delectus impedit sed expedita architecto rem, voluptatibus blanditiis sunt quae iste numquam beatae fuga in eos culpa sequi doloribus. Neque eius et iusto possimus maiores. Sunt laudantium aspernatur, natus, nemo repudiandae quos, eos nostrum quasi impedit consequatur quis illo tenetur tempora. Voluptas atque incidunt animi officia itaque.
+              {ProfileData?.about}
           </p>
 
           <div className="editBtn">
