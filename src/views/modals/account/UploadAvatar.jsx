@@ -30,7 +30,7 @@ function UploadAvatar({ previousImage, closeModal }) {
     try {
       setLoading(true);
       const [, imageType] = url.match(/\.(\w+)$/);
-      const response = await fetch(`https:api.sourceher.com/v1/cdn?url=${url}`);
+      const response = await fetch(`https://api.sourceher.com/v1/cdn?url=${url}`);
       const blob = await response.blob();
       const filename = `image_${Date.now()}.${imageType}`;
       const formattedFile = new File([blob], filename, { type: `image/${imageType}` });
