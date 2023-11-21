@@ -46,7 +46,6 @@ function ChatController({ config, userData, isLoggedIn, skeleton: Skeleton, Erro
     setRequestLoading(true);
 
     try {
-      
         await fetchContacts();
 
       if (username) {
