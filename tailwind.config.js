@@ -33,6 +33,7 @@ export default {
         'awimDarkBlue': '#0F172A',
         'awimInputBorder': '#969595',
         'awimRed': '#EB0E3E',
+        'cardBg': '#D7D7D7',
       },
       fontFamily: {
         notoSans: ['Noto Sans', 'sans'],

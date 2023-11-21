@@ -75,11 +75,6 @@ const AuthMiddleware = ({ component: Component, layout: Layout = MainLayout, ske
           </Layout>
         )
       }
-      {/* {!user && rest.privateRoute ? <LayoutSkeleton skeleton={skeleton} /> :
-        <Layout skeleton={skeleton} config={combineConfig} userData={user}>
-          <Component {...rest} />
-        </Layout>
-      } */}
     </>
   );
 };
