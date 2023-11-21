@@ -43,6 +43,7 @@ function Step4({ userData, moveToNext }) {
   const validationSchema = Yup.object().shape({
     beyoundMediaEngage: Yup.string().required('This field is required'),
     nominateFemaleEmail: Yup.string().email('Invalid email address'),
+    i_am_african_expert: Yup.bool().oneOf([true], 'You must agree that you are an african expert'),
     agree_information: Yup.bool().oneOf([true], 'You must agree to the information usage'),
   });
 
@@ -121,14 +122,6 @@ function Step4({ userData, moveToNext }) {
         <div className="mt-10 flex flex-col gap-5">
           <button type="submit" className="w-full py-5 rounded-lg px-4 text-sm text-white bg-awimGreen hover:bg-awimFadeGreen focus:outline-none focus:shadow-outline transition duration-300 ease-in-out">
             Submit
-          </button>
-
-          <button
-            onClick={() => moveToNext(0, 3)}
-            type="button"
-            className="w-full py-5 rounded-lg px-4 text-sm border border-awimGreen text-awimGreen hover-bg-awimGreen hover-text-textWhite focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
-          >
-            Skip for Later
           </button>
         </div>
       </form>

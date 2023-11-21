@@ -76,7 +76,7 @@ function ChatController({ config, userData, isLoggedIn, skeleton: Skeleton, Erro
 
   return (
     <div>
-      {pgLoading ? <Skeleton /> : (isProfileData || !username) ? (
+      {pgLoading ? <Skeleton showContactsBar={showContactsBar} /> : (isProfileData || !username) ? (
         <MyChat
           config={config}
           username={username ?? null}
