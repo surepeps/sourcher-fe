@@ -26,7 +26,7 @@ function Register() {
     title_id: Yup.string().required('Title is required'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters')
-      .matches(/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^0-9a-zA-Z]).*$/, 'Password must have at least one number, one letter, and one special character')
+      // .matches(/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^0-9a-zA-Z]).*$/, 'Password must have at least one number, one letter, and one special character')
       .required('Password is required'),
     confirm_password: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')

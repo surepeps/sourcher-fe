@@ -16,6 +16,9 @@ import emptyData from '/assets/images/emptyData.png'
 
 import canadaImg from '/assets/images/canadaImg.png'
 
+import conference from '/assets/images/conference.png'
+import sourceherLogo from '/assets/images/sourceherLogo.jpg'
+import SourceherNoBgLogo from '/assets/images/SourceherNoBgLogo.png'
 
 const generalConfig =  {
     APIURL: 'https://api.sourceher.com/v1',
@@ -33,6 +36,9 @@ const generalConfig =  {
     partner3: partner3,
     partner4: partner4,
     canadaImg: canadaImg,
+    conference:conference,
+    sourceherLogo:sourceherLogo,
+    SourceherNoBgLogo:SourceherNoBgLogo,
     BecomeExpertImage:BecomeExpertImage,
 
 }

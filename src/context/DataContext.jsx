@@ -8,6 +8,7 @@ export function DataProvider({ children }) {
   const [categories, setCategories] = useState(null);
   const [titles, setTitles] = useState(null);
   const [industries, setIndustries] = useState(null);
+  const [experts, setExperts] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const api = new ApiService();
@@ -26,19 +27,23 @@ export function DataProvider({ children }) {
     const fetchDataFromAPI = async () => {
       setLoading(true);
       try {
-        const [categoriesData, industriesData, titlesData] = await Promise.all([
+        const [categoriesData, industriesData, titlesData, expertData] = await Promise.all([
           fetchData('/service/categories', setCategories),
           fetchData('/service/industries', setIndustries),
           fetchData('/service/titles', setTitles),
+          fetchData('/fetch/getAllExperts', setExperts),
         ]);
-        if (categoriesData && industriesData && titlesData) {
-          setLoading(false);
-        }
+
+        setLoading(false);
+        
+        // if (categoriesData && industriesData && titlesData && expertData) {
+        //   setLoading(false);
+        // }
       } catch (error) {
         setLoading(false);
       }
     };
-
+ 
     // Fetch data from API endpoints
     fetchDataFromAPI();
   }, []);
@@ -48,9 +53,10 @@ export function DataProvider({ children }) {
       loading,
       categories,
       titles,
+      experts,
       industries,
     };
-  }, [loading, categories, titles, industries]);
+  }, [loading, categories, titles, experts, industries]);
 
   return (
     <DataContext.Provider value={dataContextValue}>

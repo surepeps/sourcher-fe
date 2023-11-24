@@ -24,9 +24,11 @@ function AuthLayout({ children, config, isLoggedIn, userData, skeleton, Error_40
       {isRequestLoading ? <OverlaySpinner /> : ""}
 
       <div className="w-[50%] pl-20 pt-10 hidden lg:block xl:bg-top bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(${config.authBanner})` }}>
-        <NavLink to='/'>
-          <img src={config.awimLogo} alt="" className='' />
-        </NavLink>
+        <div className='h-20 w-40'>
+          <NavLink to='/' >
+            <img src={config.SourceherNoBgLogo} alt="" className='h-full w-full' />
+          </NavLink>
+        </div>
       </div>
       <div className="lg:w-[50%] w-full px-6 md:px-20 lg:px-32 xl:px-38 2xl:px-44 py-5 lg:py-10 ">
 

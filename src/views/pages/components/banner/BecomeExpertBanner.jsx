@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom"
 
 function BecomeExpertBanner({config}) {
   return (
@@ -9,7 +10,7 @@ function BecomeExpertBanner({config}) {
 
                     <p className="lg:text-lg text-sm px-2 leading-7 w-11/12 text-textWhite ">Are you an accomplished professional looking to share your wisdom? Join our thriving community of experts.</p>
 
-                    <button className="bg-textWhite py-2.5 w-[30%] lg:w-[23%] rounded-xl text-sm lg:text-md font-semibold">Join Us</button>
+                    <NavLink to='/expert-reg' className="bg-textWhite flex justify-center items-center py-2.5 w-[30%] lg:w-[23%] rounded-xl text-sm lg:text-md font-semibold">Join Us</NavLink>
                 </div>
                 <div className="rounded-r-xl flex justify-end">
                     <img className='rounded-r-xl' src={config.BecomeExpertImage} alt="" />

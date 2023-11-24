@@ -40,7 +40,6 @@ function EditWorkExperience({ experience, onCancel, deleteWorkExperience, showDe
     onSubmit: async (values) => {
       try {
         setRequestLoading(true);
-        console.log("Submitted Values :", values);
         await api.postWithToken('/workExperience/add', { workExperiences: [values] });
         toast.success(`Work Experience Profile updated Successfully`);
         fetchAllData();

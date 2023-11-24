@@ -78,7 +78,6 @@ const TabSwitcher = ({ userType, activeTab, handleTabClick, allData  }) => {
 }; 
 
 function ExpertProfile({ allData }) {
-  console.log("All Datas :", allData)
   const { ProfileData, iamLoggedIn, myData, isMyAccount, config } = allData;
   const [activeTab, setActiveTab] = useState(isMyAccount ? 'Basic Info' : 'Overview');
 

@@ -7,7 +7,6 @@ import UploadAvatar from '../../modals/account/UploadAvatar';
 
 function ProfileBanner({allData}) {
     const {config, myData, ProfileData, iamLoggedIn, isMyAccount, isProfileExpert, isProfileLevel1, isProfileLevel2, isMyAccountExpert, isMyAccountLevel1, isMyAccountLevel2} = allData;
-    console.log(allData);
 
     const {google, twitter, linkedin, youtube, instagram, facebook, username} = ProfileData
 

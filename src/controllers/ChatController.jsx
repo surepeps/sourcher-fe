@@ -69,7 +69,7 @@ function ChatController({ config, userData, isLoggedIn, skeleton: Skeleton, Erro
       fetchChatData(username);
     }else{
       toast.error("Sorry Upgrade your Account to access this page");
-      navigate('/')
+      navigate(`/sh/${userData.username}`)
     }
   
   }, [username, isLoggedIn, userData]);

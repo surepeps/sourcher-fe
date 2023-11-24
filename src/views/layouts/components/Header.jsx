@@ -31,8 +31,8 @@ function Header({config, userData, isLoggedIn}) {
     <div className=''>
       <nav className="bg-bgColor py-2 lg:py-0 fixed w-full z-50 top-0 left-0 border-gray-200 dark:bg-gray-900 ">
         <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto lg:p-4">
-          <NavLink to='/' className="flex items-center px-4">
-              <img src={config.awimDarkLogo} className="mr-3" alt="" />
+          <NavLink to='/' className="flex items-center h-16 w-40 px-4">
+              <img src={config.sourceherLogo} className="mr-3 h-full" alt="" />
           </NavLink>
         <div className="flex items-center md:order-2 gap-3 px-4 relative">
             

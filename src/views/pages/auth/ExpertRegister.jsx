@@ -15,7 +15,7 @@ const initialValues = {};
 ExpertRegForm.forEach((field) => {
   initialValues[field.name] = field.value;
 });
-
+ 
 const generateValidationSchema = (fields) => {
   const schema = {};
 
@@ -27,13 +27,13 @@ const generateValidationSchema = (fields) => {
     } else if (field.name === 'password') {
       schema[field.name] = schema[field.name]
         .matches(
-          /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          // /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
           'Password must be at least 8 characters and contain a mixture of alphabets, numbers, and special characters'
         )
         .required('Password is required');
     } else if (field.name === 'phone_number') {
       schema[field.name] = schema[field.name]
-        .matches(/^\+?\d{10,14}$/, 'Invalid phone number format')
+        // .matches(/^\+?\d{10,14}$/, 'Invalid phone number format')
         .required('Phone Number is required');
     }
   });

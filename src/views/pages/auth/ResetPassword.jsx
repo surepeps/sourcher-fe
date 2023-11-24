@@ -26,7 +26,7 @@ function ResetPassword() {
     newPassword: Yup.string()
       .required('Password is required')
       .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/,
+        // /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/,
         'Password must contain at least 9 characters, including at least one alphabet, one number, and one special character (@$!%*?&)'
       ),
     confirm_password: Yup.string()

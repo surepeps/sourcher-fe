@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SingleExpert from './SingleExpert';
-import { exploreExperts } from '../../../../models/experts';
+import { shuffleArray } from '../../../../helpers/Helper';
+import { NavLink } from 'react-router-dom';
 
 
 
-function ExplorExpert({ categories }) {
+function ExplorExpert({ experts, categories }) {
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [showScrollRight, setShowScrollRight] = useState(true);
     const listRef = useRef(null);
 
-    const fourExperts = exploreExperts.slice(0, 4);
+    const [categorizedExperts, setCategorizedExperts] = useState(shuffleArray(experts).slice(0, 4));
+ 
 
     useEffect(() => {
+
         const list = listRef.current;
 
         const handleScroll = () => {
@@ -24,10 +27,24 @@ function ExplorExpert({ categories }) {
         return () => {
         list.removeEventListener('scroll', handleScroll);
         };
-    }, []);
 
-    const handleCategoryClick = (name) => {
-        setSelectedCategory(name);
+    }, []);
+    
+  // const fourExperts = exploreExperts.slice(0, 4);
+
+    const handleCategoryClick = (catId) => {
+       // Assuming your data array is named 'data'
+      const filteredData = experts.filter(item => item.cat_id === catId);
+      
+      // Shuffle the filtered array
+      const shuffledData = shuffleArray(filteredData);
+
+      // Take the first four elements
+      const randomFourData = shuffledData.slice(0, 4);
+
+      setCategorizedExperts(randomFourData)
+
+      setSelectedCategory(catId);
     };
 
     const scrollRight = () => {
@@ -54,15 +71,15 @@ function ExplorExpert({ categories }) {
         <ul className="flex gap-6 overflow-x-auto ScrollableCont" ref={listRef} style={{ paddingRight: showScrollRight ? '2rem' : '0' }}>
           {categories.map((category) => (
             <li
-              key={category.name}
+              key={category.id}
               className={`px-6 py-3 text-sm lg:text-md cursor-pointer transition duration-300 ease-in-out whitespace-nowrap flex items-center rounded-3xl ${
-                selectedCategory === category.name
+                selectedCategory === category.id
                   ? 'bg-textPurple text-white'
                   : 'bg-[#F2F4F7] hover:bg-textPurple hover:text-white'
               }`}
-              onClick={() => handleCategoryClick(category.name)}
+              onClick={() => handleCategoryClick(category.id)}
             >
-              {category.name}
+              {category.title}
             </li>
           ))}
         </ul>
@@ -98,20 +115,27 @@ function ExplorExpert({ categories }) {
       </div>
 
       <div className="experts w-full pt-10">
-        <div className="AllCards w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:grid-cols-4">
-           {
-            fourExperts.map(expert => (<SingleExpert key={expert.id} expert={expert} />))
-           }
+        
+        {
+          categorizedExperts && categorizedExperts.length > 0 ? (
+            <div className="AllCards w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:grid-cols-4">
+              {categorizedExperts.map(expert => (<SingleExpert key={expert.id} expert={expert} />))}
+            </div>
+          )
+          : <div className="text-center w-full py-10 text-lg font-semibold text-red-500">
+              Sorry No Experts found
+            </div>
+        }
             
-        </div>
+        
         <div className="btnView flex justify-center pt-10">
-           <button className='px-8 py-3 flex transition duration-300 ease-in-out gap-3 items-center rounded-xl text-textPurple text-sm border-2 border-textPurple bg-transparent hover:text-textWhite hover:bg-textPurple '>
+           <NavLink to='/find-expert' className='px-8 py-3 flex transition duration-300 ease-in-out gap-3 items-center rounded-xl text-textPurple text-sm border-2 border-textPurple bg-transparent hover:text-textWhite hover:bg-textPurple '>
               View All
               <svg className='fill-current' width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.0253 15.6833C11.8669 15.6833 11.7086 15.625 11.5836 15.5C11.3419 15.2583 11.3419 14.8583 11.5836 14.6166L16.2003 9.99998L11.5836 5.38331C11.3419 5.14164 11.3419 4.74164 11.5836 4.49998C11.8253 4.25831 12.2253 4.25831 12.4669 4.49998L17.5253 9.55831C17.7669 9.79998 17.7669 10.2 17.5253 10.4416L12.4669 15.5C12.3419 15.625 12.1836 15.6833 12.0253 15.6833Z" fill="fill-current"/>
                 <path d="M16.941 10.625H2.91602C2.57435 10.625 2.29102 10.3417 2.29102 10C2.29102 9.65833 2.57435 9.375 2.91602 9.375H16.941C17.2827 9.375 17.566 9.65833 17.566 10C17.566 10.3417 17.2827 10.625 16.941 10.625Z" fill="fill-current"/>
               </svg>
-           </button>
+           </NavLink>
         </div>
       </div>
     </div>

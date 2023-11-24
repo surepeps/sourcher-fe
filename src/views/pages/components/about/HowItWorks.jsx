@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 function HowItWorks({}) {
 
     const youTubeUrl = `https://www.youtube.com/embed/54HxJdsk6NY`;
@@ -67,7 +69,7 @@ function HowItWorks({}) {
                 </div>
 
                 <div className="getStart">
-                    <button className='bg-awimGreen text-textWhite font-semibold rounded-lg flex items-center justify-center hover:text-awimGreen border border-awimGreen hover:bg-transparent trasition duration-300 ease-in-out py-3 px-6'>Get Started</button>
+                    <NavLink to='/register' className='bg-awimGreen text-textWhite font-semibold rounded-lg flex items-center justify-center lg:w-[30%] w-full hover:text-awimGreen border border-awimGreen hover:bg-transparent trasition duration-300 ease-in-out py-3 px-6'>Get Started</NavLink>
                 </div>
 
             </div>

@@ -1,11 +1,13 @@
+import { NavLink } from "react-router-dom"
 
-function HomeBanner({config}) {
+function HomeBanner({config, countries, industries}) {
+  console.log(industries)
   return (
     <div className='bg-no-repeat bg-center bg-cover flex flex-col gap-6 lg:gap-8 justify-center items-center pt-36 lg:pb-36 pb-14 font-semibold font-notoSans' style={{ backgroundImage: `url(${config.homeBanner})`}}>
       <h1 className="lg:text-6xl text-4xl text-textWhite w-full md:w-10/12 lg:w-8/12 xl:w-4/12 text-center leading-snug"> Find & Connect with Experts </h1>
       <p className="text-textWhite text-sm lg:text-lg md:w-6/12 xl:w-4/12 lg:w-5/12 w-full text-center px-4 lg:px-10 leading-7 lg:leading-8 font-normal">We empower your journey by connecting you with accomplished female experts across diverse disciplines.</p>
 
-      <div className="lg:w-auto w-[92%] px-2 mx-auto bg-bgColor rounded-xl py-2 mt-5 lg:mt-8 lg:mb-10 flex lg:flex-row flex-col gap-3">
+      <div className="lg:w-auto w-[92%] px-2  mx-auto bg-bgColor rounded-xl py-2 mt-5 lg:mt-8 lg:mb-10 flex lg:flex-row flex-col gap-3">
         
         <div className="flex gap-2 px-2 items-center">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,36 +26,33 @@ function HomeBanner({config}) {
 
           <select className='focus:outline-none border-none text-sm lg:text-md forceOutlineNone py-0 w-full lg:w-[130px]' name="" id="">
             <option value="">Country</option>
-            <option value="">Nigeria</option>
-            <option value="">Nigeria jbjjnjnnnjn njn</option>
-            <option value="">Nigeria</option>
-            <option value="">Nigeria</option>
-            <option value="">Nigeria</option>
+            {
+              countries.map((country) => (
+                <option key={country.label} value={country.value}>{country.label}</option>
+              ))
+            }
+            
           </select>
 
           <div className="line lg:h-full lg:w-0.5 bg-[#0F172A13] w-full h-0.5 rounded-xl"></div>
 
           <select className='border-none py-0 text-sm lg:text-md' name="" id="">
             <option value="">Expertise</option>
-            <option value="">Nigeria</option>
-            <option value="">Nigeria</option>
-            <option value="">Nigeria</option>
-            <option value="">Nigeria</option>
-            <option value="">Nigeria</option>
-            <option value="">Nigeria</option>
+            {
+              industries.map((industry) => (
+                <option key={industry.id} value={industry.id}>{industry.title}</option>
+              ))
+            }
           </select>
 
           <div className="line lg:h-full lg:w-0.5 bg-[#0F172A13] w-full h-0.5 rounded-xl"></div>
 
-          <div className="btn">
-            <button className='bg-awimGreen w-full text-textWhite text-sm hover:text-awimGreen hover:bg-textWhite transition duration-300 ease-in-out border hover:border-awimGreen lg:py-3 py-4 px-8 rounded-lg'>Search</button>
+          <div className="btn flex items-center">
+            <NavLink to='/find-expert' className='bg-awimGreen w-full text-textWhite text-sm hover:text-awimGreen hover:bg-textWhite transition duration-300 ease-in-out border hover:border-awimGreen lg:py-3 py-4 px-8 rounded-lg'>Search</NavLink>
           </div>
 
         </div>
 
-        
-
-        
 
       </div>
     </div>

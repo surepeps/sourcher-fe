@@ -11,8 +11,8 @@ function Footer({config}) {
         <div className="grid grid-cols-1 lg:grid-cols-3 justify-between w-full items-start gap-10">
 
           <div className="flex flex-col w-full gap-5">
-            <div className="logo">
-              <img src={config.awimLogo} alt="" />
+            <div className="logo h-auto w-40">
+              <img src={config.SourceherNoBgLogo} className='h-full w-full' alt="" />
             </div>
 
             <div className="socials">
