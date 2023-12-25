@@ -41,7 +41,7 @@ function Header({config, userData, isLoggedIn}) {
               EN
             </button>
     
-            <div className={`z-50 ${isLanguageMenuOpen ? 'block' : 'hidden'} my-4 absolute top-8 lg:top-10 left-2 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`} id="language-dropdown-menu">
+            {/* <div className={`z-50 ${isLanguageMenuOpen ? 'block' : 'hidden'} my-4 absolute top-8 lg:top-10 left-2 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`} id="language-dropdown-menu">
               <ul className="py-2 font-medium" role="none">
                 <li>
                   <NavLink to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
@@ -76,7 +76,7 @@ function Header({config, userData, isLoggedIn}) {
                   </NavLink>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
 
             <div className="gap-3 justify-between hidden lg:flex py-2 px-7">

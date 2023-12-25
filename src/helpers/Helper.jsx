@@ -15,7 +15,9 @@ export const getCountryLabelByValue = (value) => {
 
 // User image creator 
 export const UserImageUrlCreator = (imgPath) => {
-  return imgPath ? `${generalConfig.fileURL}${imgPath}` : generalConfig.noImage;
+  const imageUrl = imgPath ? `${generalConfig.fileURL}${imgPath}` : generalConfig.noImage;
+  console.log('Image URL:', imageUrl);
+  return imageUrl;
 }
 
 // Add elipsis if string is long

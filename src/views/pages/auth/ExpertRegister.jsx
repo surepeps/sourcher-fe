@@ -28,7 +28,7 @@ const generateValidationSchema = (fields) => {
       schema[field.name] = schema[field.name]
         .matches(
           // /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          'Password must be at least 8 characters and contain a mixture of alphabets, numbers, and special characters'
+          // 'Password must be at least 8 characters and contain a mixture of alphabets, numbers, and special characters'
         )
         .required('Password is required');
     } else if (field.name === 'phone_number') {

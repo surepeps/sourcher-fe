@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import HtmlRender from '../../../../helpers/HtmlRender'
 import CountryFlag from 'react-country-flag';
 import { UserImageUrlCreator } from '../../../../helpers/Helper';
@@ -6,13 +6,24 @@ import { useNavigate } from 'react-router-dom';
 
 
 function SingleExpert({expert, myclass = 'w-full'}) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
 
   const goToMessageExpert = (userName) => {
     navigate(`/sh/chat/${userName}`);
   }
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
-    <div className={`${myclass} border-2 border-[#0F172A10] h-auto ${expert.availableForInterviewNow == '1' ? 'rounded-r-3xl rounded-bl-3xl rounded-tl-lg' : 'rounded-3xl'} `}>
+    <div className={`${myclass} border-2 flex flex-col justify-between border-[#0F172A10] h-auto ${expert.availableForInterviewNow == '1' ? 'rounded-r-3xl rounded-bl-3xl rounded-tl-lg' : 'rounded-3xl'} `}>
         <div className="middle h-auto w-full relative">
             {
               expert.availableForInterviewNow == '1' ?
@@ -24,32 +35,46 @@ function SingleExpert({expert, myclass = 'w-full'}) {
               </div>
               : ''
             }
-            <div className="imgConr w-full h-[169px] rounded-tr-xl rounded-tl-xl">
-              <img src={UserImageUrlCreator(expert.avatar)} className='w-full h-full rounded-tr-xl rounded-tl-xl' alt=""  />
+            <div className="imgConr w-full h-auto rounded-tr-xl rounded-tl-xl">
+              {!imageLoaded && !imageError && (
+                <div className="animate-pulse bg-cardBg w-full h-[230px] rounded-tr-xl rounded-tl-xl"></div>
+              )}
+              <img
+                src={UserImageUrlCreator(expert.avatar)}
+                className={`w-full h-full transition duration-300 ease-in-out rounded-tr-xl rounded-tl-xl ${imageLoaded ? '' : 'hidden'}`}
+                style={{ objectFit: 'cover', width: '100%', height: '209px' }}
+                alt=""
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+              />
             </div>
         </div>
-        <div className="middle auto py-7 px-4">
+        <div className="middle flex justify-between flex-col h-auto w-full py-7 px-4">
             
-            <div className="top flex gap-3 items-center">
-                <h2 className="text-xl font-medium">{expert.first_name} {expert.last_name}</h2>
-                {expert.country_id ? <CountryFlag className='!w-[41px] !h-[25px]' countryCode={expert.country_id} svg /> : ''}
-                
-            </div>
-
-            <div className="title flex gap-3 pt-1 items-center">
-              <div className="text-[#0F172A60]">{expert?.Category?.title}</div>
-              <div className="h-7 w-0.5 bg-[#0F172A13] rounded-xl"></div>
-              <div className="flex gap-2 font-semibold items-center">
-                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.0789 2.26064C9.25115 1.91312 9.74885 1.91312 9.9211 2.26064L11.8749 6.20242C11.9433 6.34042 12.0756 6.43607 12.2285 6.4582L16.5974 7.09029C16.9826 7.14602 17.1364 7.61731 16.8577 7.88781L13.6963 10.9561C13.5856 11.0635 13.5351 11.2182 13.5613 11.3699L14.3075 15.7024C14.3733 16.0843 13.9707 16.3756 13.6262 16.1953L9.71852 14.1498C9.58172 14.0781 9.41828 14.0781 9.28148 14.1498L5.37381 16.1953C5.0293 16.3756 4.62666 16.0843 4.69245 15.7024L5.43875 11.3699C5.46488 11.2182 5.41437 11.0635 5.30369 10.9561L2.14233 7.88781C1.86361 7.61731 2.01741 7.14602 2.40258 7.09029L6.77149 6.4582C6.92444 6.43607 7.05666 6.34042 7.12506 6.20242L9.0789 2.26064Z" fill="#FFB21A"/>
-                </svg>
-                0
+            <div className="topC w-full">
+              <div className="top flex gap-3 items-center">
+                  <h2 className="text-xl font-medium">{expert.first_name} {expert.last_name}</h2>
+                  {expert.country_id ? <CountryFlag className='!w-[41px] !h-[25px]' countryCode={expert.country_id} svg /> : ''}
+                  
               </div>
-            </div>
 
-            <div className="language pt-5">
-              <p className="lang text-xs font-semibold">Interview Language: {expert.interviewLanguage || 'English'}</p>
+              <div className="title flex gap-3 pt-1 items-center">
+                <div className="text-[#0F172A60]">{expert?.Category?.title}</div>
+                <div className="h-7 w-0.5 bg-[#0F172A13] rounded-xl"></div>
+                <div className="flex gap-2 font-semibold items-center">
+                  <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.0789 2.26064C9.25115 1.91312 9.74885 1.91312 9.9211 2.26064L11.8749 6.20242C11.9433 6.34042 12.0756 6.43607 12.2285 6.4582L16.5974 7.09029C16.9826 7.14602 17.1364 7.61731 16.8577 7.88781L13.6963 10.9561C13.5856 11.0635 13.5351 11.2182 13.5613 11.3699L14.3075 15.7024C14.3733 16.0843 13.9707 16.3756 13.6262 16.1953L9.71852 14.1498C9.58172 14.0781 9.41828 14.0781 9.28148 14.1498L5.37381 16.1953C5.0293 16.3756 4.62666 16.0843 4.69245 15.7024L5.43875 11.3699C5.46488 11.2182 5.41437 11.0635 5.30369 10.9561L2.14233 7.88781C1.86361 7.61731 2.01741 7.14602 2.40258 7.09029L6.77149 6.4582C6.92444 6.43607 7.05666 6.34042 7.12506 6.20242L9.0789 2.26064Z" fill="#FFB21A"/>
+                  </svg>
+                  0
+                </div>
+              </div>
+
+              <div className="language pt-5">
+                <p className="lang text-xs font-semibold">Interview Language: {expert.interviewLanguage || 'English'}</p>
+              </div>
+
             </div>
+          
 
             <div className="messageBtn pt-9">
               <button onClick={() => goToMessageExpert(expert.username)} disabled={expert.availableForInterviewNow == '1' ? false : true} className={`bg-awimGreen transition duration-300 ease-in-out border-2 cursor-pointer border-awimGreen py-3 w-full text-textWhite font-medium text-sm rounded-xl flex items-center justify-center gap-3 hover:bg-transparent hover:border-awimGreen hover:text-awimGreen ${expert.availableForInterviewNow == '1' ? '' : 'disabled:opacity-50 disabled:pointer-events-none'}`}>
