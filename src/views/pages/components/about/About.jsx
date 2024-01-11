@@ -22,7 +22,7 @@ function About() {
 
             <div className="relative w-full lg:w-[37%] flex justify-end z-30 h-auto">
                 <div className="z-50 relative ml-6 mb-7 lg:mb-10">
-                    <img className='' src={AboutImg} />
+                    <img className='' alt='about_sourceher' src={AboutImg} />
                 </div>
                 <div className='bg-textPurple rounded-lg absolute bottom-0 z-0 left-0 w-[90%] h-[70%]'></div>
             </div>

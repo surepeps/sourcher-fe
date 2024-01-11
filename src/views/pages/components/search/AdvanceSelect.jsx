@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FiSearch, FiCheck } from 'react-icons/fi';
 import debounce from 'lodash/debounce';
 
 const AdvancedSelect = ({ options, showPerPage = 3, optionName = 'Options', setSelectedOption, isOpen, toggleDropdown }) => {
@@ -76,16 +75,16 @@ const AdvancedSelect = ({ options, showPerPage = 3, optionName = 'Options', setS
                     className="inline-flex items-center px-2 py-2 text-sm mr-1 mt-1 bg-awimLightPurple text-white rounded"
                   >
                     {option.label}
-                    <FiCheck className="ml-1" />
+                    <i className="ml-1 fa-solid fa-check"></i>
                   </span>
                 ))}
               </div>
             )}
           </div>
           {isOpen && (
-            <div className="absolute top-full left-0 mt-2 w-full border border-t-0 rounded-md bg-white shadow-md">
+            <div className="absolute top-full left-0 mt-2 w-full border border-t-0 rounded-md bg-white z-50 shadow-md">
               <div className="flex items-center p-2">
-                <FiSearch className="mr-2 text-gray-500" />
+                <i className="fa-solid text-gray-500 mr-2 fa-magnifying-glass"></i>
                 <input
                   ref={inputRef}
                   type="text"
@@ -105,7 +104,7 @@ const AdvancedSelect = ({ options, showPerPage = 3, optionName = 'Options', setS
                 >
                   {option.label}
                   {selectedOptions.includes(option) && (
-                    <FiCheck className="text-blue-500" />
+                    <i className="fa-solid fa-check text-blue-500"></i>
                   )}
                 </div>
               ))}

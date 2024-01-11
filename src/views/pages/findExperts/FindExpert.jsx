@@ -19,6 +19,7 @@ function FindExpert({experts, categories, industries, config}) {
 
   const { openModal, closeModal } = useModal();
 
+
   const handleCategoryClick = (catId) => {
     const filteredData = experts.filter((item) => item.cat_id === catId);
 
@@ -112,9 +113,9 @@ function FindExpert({experts, categories, industries, config}) {
                 <div className="searcSection w-full mt-16 lg:mt-1 flex flex-col  lg:flex-row gap-5 justify-between">
                     <div className="leftSearch w-full">
                         <div className="formGroup w-full relative">
-                            <input type="search" placeholder='Search for Experts ' value={searchTerm} onChange={(e) => handleSearchChange(e.target.value)} className='lg:w-[550px] font-light pl-10 text-md w-full border border-[#D9D9D9] outline-none rounded-lg h-[60px]' />
-                            <span className='absolute top-5 left-3'>
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <input type="search" placeholder='Search for Experts ' value={searchTerm} onChange={(e) => handleSearchChange(e.target.value)} className='lg:w-[550px] font-light pl-10 removeOutline text-sm w-full border border-[#D9D9D9] outline-none rounded-lg h-[55px]' />
+                            <span className='absolute top-5 text-sm left-3'>
+                                <svg width="19" height="19" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9.58464 18.125C4.8763 18.125 1.04297 14.2917 1.04297 9.58332C1.04297 4.87499 4.8763 1.04166 9.58464 1.04166C14.293 1.04166 18.1263 4.87499 18.1263 9.58332C18.1263 14.2917 14.293 18.125 9.58464 18.125ZM9.58464 2.29166C5.55964 2.29166 2.29297 5.56666 2.29297 9.58332C2.29297 13.6 5.55964 16.875 9.58464 16.875C13.6096 16.875 16.8763 13.6 16.8763 9.58332C16.8763 5.56666 13.6096 2.29166 9.58464 2.29166Z" fill="#969595"/>
                                     <path d="M18.3326 18.9583C18.1742 18.9583 18.0159 18.9 17.8909 18.775L16.2242 17.1083C15.9826 16.8666 15.9826 16.4666 16.2242 16.225C16.4659 15.9833 16.8659 15.9833 17.1076 16.225L18.7742 17.8916C19.0159 18.1333 19.0159 18.5333 18.7742 18.775C18.6492 18.9 18.4909 18.9583 18.3326 18.9583Z" fill="#969595"/>
                                 </svg>

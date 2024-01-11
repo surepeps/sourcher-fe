@@ -1,0 +1,3 @@
+.removeOutline:focus {
+    outline: none !important;
+}

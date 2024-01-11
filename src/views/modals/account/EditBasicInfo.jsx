@@ -6,8 +6,9 @@ import * as Yup from 'yup';
 import { useAuth } from '../../../context/AuthContext';
 import { useRequestLoading } from '../../../context/LoadingContext';
 import IsDoneSpinner from '../../miscellaneous/IsDoneSpinner';
-import { Country, State, City } from 'country-state-city';
 import { getCountryLabelByValue } from '../../../helpers/Helper';
+import GeonamesService from '../../../services/GeonamesService';
+import { responseCatcher } from '../../../helpers/http/response';
 
 
 
@@ -32,14 +33,24 @@ function EditBasicInfo({allData, closeModal}) {
 
     const account_type = myData.account_type;
 
+    const geonamesService = new GeonamesService();
+
     useEffect(() => {
         if(ProfileData.account_type === "expert"){
-            const countryData = Country.getAllCountries();
-            const stateData = State.getStatesOfCountry(ProfileData?.country_id);
-            const cityData = City.getCitiesOfState(ProfileData?.country_id, ProfileData?.state);
-            setCountries(countryData);
-            setStates(stateData);
-            setCities(cityData)
+            // const countryData = Country.getAllCountries();
+            // const stateData = State.getStatesOfCountry(ProfileData?.country_id);
+            // const cityData = City.getCitiesOfState(ProfileData?.country_id, ProfileData?.state);
+
+
+             // get all countries
+            geonamesService.getCountries()
+            .then(data => setCountries(data))
+            .catch(error => responseCatcher(error));
+
+            // setCountries(countryData);
+
+            // setStates(stateData);
+            // setCities(cityData)
             setSelectedCountry(ProfileData?.country_id);
             setSelectedState(ProfileData?.state);
             setSelectedCity(ProfileData?.city);
@@ -47,15 +58,29 @@ function EditBasicInfo({allData, closeModal}) {
     }, [ProfileData.account_type]);
     
       const handleCountryChange = (event) => {
+
+        // Access the selected option element
+        const selectedOption = event.target.options[event.target.selectedIndex];
+
+        // Retrieve the value of the data-countryid attribute using dataset
+        const countryID = selectedOption.dataset.countryid;
+
+
         const country = event.target.value;
+
         setSelectedCountry(country);
         setSelectedState('');
         setSelectedCity('');
-    
-        const stateData = State.getStatesOfCountry(country);
-        setStates(stateData);
+
+        // const stateData = State.getStatesOfCountry(country);
+        geonamesService.getStates(countryID)
+        .then(states => setStates(states))
+        .catch(error => responseCatcher(error));
+
+        // setStates(stateData);
         setCities([]);
       };
+
 
       const handleStateChange = (event) => {
 
@@ -63,13 +88,16 @@ function EditBasicInfo({allData, closeModal}) {
         const selectedOption = event.target.options[event.target.selectedIndex];
 
         // Retrieve the value of the data-stateid attribute using dataset
-        const state = selectedOption.dataset.stateid;
+        const stateId = selectedOption.dataset.stateid;
+
+        const state = event.target.value;
 
         setSelectedState(state);
         setSelectedCity('');
 
-        const cityData = City.getCitiesOfState(selectedCountry, state);
-        setCities(cityData);
+        geonamesService.getCities(stateId)
+        .then(states => setCities(states))
+        .catch(error => responseCatcher(error));
     };
 
     

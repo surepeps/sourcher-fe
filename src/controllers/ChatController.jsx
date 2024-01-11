@@ -6,7 +6,7 @@ import MyChat from '../views/pages/chat/MyChat';
 import { useRequestLoading } from '../context/LoadingContext';
 import { toast } from 'react-toastify';
 
-
+ 
 function ChatController({ config, userData, isLoggedIn, skeleton: Skeleton, Error_404: Error404, ...rest }) {
   const [isProfileData, setIsProfileData] = useState(null);
   const [contactMessages, setContactMessages] = useState(null);

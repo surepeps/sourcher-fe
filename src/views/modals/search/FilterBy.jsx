@@ -3,18 +3,18 @@ import AdvancedSelect from '../../pages/components/search/AdvanceSelect'
 
 
 function FilterBy({industries, countries}) {
+    // console.log("Industries Inner: "+industries)
     const [selectedIndustries, setSelectedIndustries] = useState(null);
     const [selectedCountries, setSelectedCountries] = useState(null);
     const [isIndustriesDropdownOpen, setIsIndustriesDropdownOpen] = useState(false);
     const [isCountriesDropdownOpen, setIsCountriesDropdownOpen] = useState(false);
-    const options = [
-        { label: 'Option 1', value: 'option1' },
-        { label: 'Option 2', value: 'option2' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 4', value: 'option4' },
-        { label: 'Option 5', value: 'option5' },
-    ];
 
+    const indistriesOpts = industries.map(item => ({
+        label: item.title,
+        value: String(item.id) // Assuming you want the value as a string
+      }));
+
+    
     const toggleIndustriesDropdown = () => {
         setIsIndustriesDropdownOpen((prevState) => !prevState);
         setIsCountriesDropdownOpen(false);
@@ -38,7 +38,7 @@ function FilterBy({industries, countries}) {
             <form action="" className='w-full'>
                 <div className="singleFormData flex flex-col mb-4 gap-1 w-full">
                     <label htmlFor="" className='font-semibold text-md'>Select Industries</label>
-                    <AdvancedSelect  options={options} showPerPage={3} optionName="Industries" setSelectedOption={setSelectedIndustries} isOpen={isIndustriesDropdownOpen} toggleDropdown={toggleIndustriesDropdown} />
+                    <AdvancedSelect  options={indistriesOpts} showPerPage={5} optionName="Industries" setSelectedOption={setSelectedIndustries} isOpen={isIndustriesDropdownOpen} toggleDropdown={toggleIndustriesDropdown} />
                 </div>
 
                 <div className="singleFormData flex flex-col gap-1 w-full">

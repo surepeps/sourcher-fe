@@ -13,7 +13,7 @@ function BecomeExpertBanner({config}) {
                     <NavLink to='/expert-reg' className="bg-textWhite flex justify-center items-center py-2.5 w-[30%] lg:w-[23%] rounded-xl text-sm lg:text-md font-semibold">Join Us</NavLink>
                 </div>
                 <div className="rounded-r-xl flex justify-end">
-                    <img className='rounded-r-xl' src={config.BecomeExpertImage} alt="" />
+                    <img className='rounded-r-xl' src={config.BecomeExpertImage} alt="become_an_expert" />
                 </div>
             </div>
 

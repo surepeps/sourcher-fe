@@ -10,19 +10,19 @@ function Partners({config}) {
 
         <div className="Logos flex gap-8 lg:gap-24 items-center">
             <div className="partner">
-                <img src={config.partner2} alt="" />
+                <img src={config.partner2} alt="partner_1" />
             </div>
             <div className="partner">
-                <img src={config.partner3} alt="" />
+                <img src={config.partner3} alt="partner_2" />
             </div>
             <div className="partner">
-                <img src={config.canadaImg} alt="" />
+                <img src={config.canadaImg} alt="partner_3" />
             </div>
             <div className="partner">
-                <img src={config.partner1} alt="" />
+                <img src={config.partner1} alt="partner_4" />
             </div>    
             <div className="partner">
-                <img src={config.partner4} alt="" />
+                <img src={config.partner4} alt="partner_5" />
             </div>
             
         </div>

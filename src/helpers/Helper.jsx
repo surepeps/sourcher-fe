@@ -16,7 +16,6 @@ export const getCountryLabelByValue = (value) => {
 // User image creator 
 export const UserImageUrlCreator = (imgPath) => {
   const imageUrl = imgPath ? `${generalConfig.fileURL}${imgPath}` : generalConfig.noImage;
-  console.log('Image URL:', imageUrl);
   return imageUrl;
 }
 

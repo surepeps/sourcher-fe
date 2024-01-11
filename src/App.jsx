@@ -9,7 +9,7 @@ import { ModalService } from './context/ModalService';
 import SureModal from './views/miscellaneous/SureModal';
 import { useAuth } from './context/AuthContext';
 import LoadingSpinner from './views/miscellaneous/LoadingSpinner';
-
+import '../public/assets/css/special.css';
 
 function App() {
 

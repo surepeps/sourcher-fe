@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Country, State, City } from 'country-state-city';
 import { ExpertRegForm } from '../../../models/ExpertRegForm';
 import ApiService from '../../../helpers/http/apiService';
 import { useModal } from '../../../context/ModalService';
 import { useAuth } from '../../../context/AuthContext';
 import SuccessRegistered from '../../modals/SuccessRegistered';
 import { useRequestLoading } from '../../../context/LoadingContext';
+import GeonamesService from '../../../services/GeonamesService';
+import { responseCatcher } from '../../../helpers/http/response';
  
 
 const initialValues = {};
@@ -27,7 +28,7 @@ const generateValidationSchema = (fields) => {
     } else if (field.name === 'password') {
       schema[field.name] = schema[field.name]
         .matches(
-          // /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
           // 'Password must be at least 8 characters and contain a mixture of alphabets, numbers, and special characters'
         )
         .required('Password is required');
@@ -49,6 +50,8 @@ function ExpertRegister() {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
 
+  const geonamesService = new GeonamesService();
+
   const { setRequestLoading } = useRequestLoading();
   const { register } = useAuth();
 
@@ -57,20 +60,39 @@ function ExpertRegister() {
   const { openModal } = useModal();
 
   useEffect(() => {
-    const countryData = Country.getAllCountries();
-    setCountries(countryData);
+    // const countryData = Country.getAllCountries();
+    // setCountries(countryData);
+
+    // get all countries
+    geonamesService.getCountries()
+      .then(data => setCountries(data))
+      .catch(error => responseCatcher(error));
+
   }, []);
 
   const handleCountryChange = (event) => {
+    // Access the selected option element
+    const selectedOption = event.target.options[event.target.selectedIndex];
+
+    // Retrieve the value of the data-countryid attribute using dataset
+    const countryID = selectedOption.dataset.countryid;
+
+
     const country = event.target.value;
     setSelectedCountry(country);
     setSelectedState('');
     setSelectedCity('');
 
-    const stateData = State.getStatesOfCountry(country);
-    setStates(stateData);
+    // const stateData = State.getStatesOfCountry(country);
+    geonamesService.getStates(countryID)
+      .then(states => setStates(states))
+      .catch(error => responseCatcher(error));
+
+    // setStates(stateData);
     setCities([]);
   };
+
+  
 
   const handleStateChange = (event) => {
 
@@ -78,14 +100,23 @@ function ExpertRegister() {
     const selectedOption = event.target.options[event.target.selectedIndex];
 
     // Retrieve the value of the data-stateid attribute using dataset
-    const state = selectedOption.dataset.stateid;
+    const stateId = selectedOption.dataset.stateid;
+
+    const state = event.target.value;
 
     setSelectedState(state);
     setSelectedCity('');
 
-    const cityData = City.getCitiesOfState(selectedCountry, state);
-    setCities(cityData);
+    // const cityData = City.getCitiesOfState(selectedCountry, state);
+    // setCities(cityData);
+
+    geonamesService.getCities(stateId)
+      .then(states => setCities(states))
+      .catch(error => responseCatcher(error));
+
   };
+
+
 
   const validationSchema = generateValidationSchema(ExpertRegForm);
 
@@ -152,19 +183,19 @@ function ExpertRegister() {
                 <option value="">{field.placeholder}</option>
                 {field.name === 'country_id'
                   ? countries.map((country) => (
-                      <option key={country.isoCode} value={country.isoCode}>
-                        {country.name}
+                      <option key={country.geonameId} data-countryid={country.geonameId} value={country.countryCode}>
+                        {country.countryName}
                       </option>
                     ))
                   : field.name === 'state' && selectedCountry
                   ? states.map((state) => (
-                      <option key={state.name} data-stateid={state.isoCode} value={state.name}>
+                      <option key={state.name} data-stateid={state.geonameId} value={state.name}>
                         {state.name}
                       </option>
                     ))
                   : field.name === 'city' && selectedState && selectedCountry
                   ? cities.map((city) => (
-                      <option key={city.name} data-cityid={city.isoCode} value={city.name}>
+                      <option key={city.name} data-cityid={city.geonameId} value={city.name}>
                         {city.name}
                       </option>
                     ))

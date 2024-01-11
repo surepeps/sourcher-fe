@@ -1,3 +1,4 @@
+import React from 'react'
 import HomeBanner from './components/banner/HomeBanner'
 import Partners from './components/Partners'
 import ExplorExpert from './components/experts/ExplorExpert'

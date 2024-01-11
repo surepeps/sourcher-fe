@@ -1,5 +1,5 @@
 import React from 'react'
-
+ 
 function SingleCategory({category}) {
   return (
     <div className='flex-none w-[285px] relative rounded-3xl'>

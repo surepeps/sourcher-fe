@@ -5,7 +5,7 @@ import { useData } from '../context/DataContext'
 
 function FindExpertController({config, skeleton: Skeleton}) {
     const {categories, loading, industries, experts} = useData();
-    
+
   return (
     <div>
         {
