@@ -16,7 +16,7 @@ import EditAboutMe from '../../../modals/account/EditAboutMe';
 function BasicInfo({allData}) {
   const {openModal, closeModal} = useModal();
   const {ProfileData} = allData;
-  const {Title, Category, Industry, publications, professions, workExperiences} = ProfileData;
+  const {Title, Category, Industry, publications, professions, workExperiences, request_type} = ProfileData;
   const [isScheduleChecked, setIsScheduleChecked] = useState(false);
   const [selectedRange, setSelectedRange] = useState([{
       startDate: new Date(),
@@ -138,6 +138,7 @@ function BasicInfo({allData}) {
 
   return (
     <div className='font-notoSans'>
+
 
       <UpgradeExpertForm />
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Links from './Links';
 import ProfessionalProfile from './ProfessionalProfile';
 import BasicInfo from './BasicInfo';
+import PendingAccount from '../others/PendingAccount';
 
  
 const tabs = [
@@ -57,6 +58,7 @@ function UserProfile({ allData }) {
   const { ProfileData, iamLoggedIn, isMyAccount, config } = allData;
   const [activeTab, setActiveTab] = useState('Basic Info');
   const userType = ProfileData?.account_type;
+  const requestType = ProfileData?.request_type;
 
   const handleTabClick = (tabLabel) => {
     setActiveTab(tabLabel);
@@ -66,19 +68,27 @@ function UserProfile({ allData }) {
     <div className="">
       <TabSwitcher userType={userType} activeTab={activeTab} handleTabClick={handleTabClick} isMyAccount={isMyAccount} />
 
+    
       <div className="bg-white p-4 rounded-b-lg">
-        {tabs.map((tab) => (
-          <div
-            key={tab.label}
-            className={`${
-              activeTab === tab.label
-                ? 'block transition-opacity duration-300'
-                : 'hidden transition-opacity duration-300'
-            }`}
-          >
-            {React.createElement(tab.component, { allData })}
-          </div>
-        ))}
+        {
+          userType == 'user_2' && requestType == "pending" ? <PendingAccount /> : <>
+
+            {tabs.map((tab) => (
+                <div
+                  key={tab.label}
+                  className={`${
+                    activeTab === tab.label
+                      ? 'block transition-opacity duration-300'
+                      : 'hidden transition-opacity duration-300'
+                  }`}
+                >
+                  {React.createElement(tab.component, { allData })}
+                </div>
+            ))}
+          
+          </>
+        }
+
       </div>
     </div>
   );

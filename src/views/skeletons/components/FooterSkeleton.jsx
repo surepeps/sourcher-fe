@@ -1,6 +1,6 @@
 import React from 'react'
 import { Menu } from '../../../models/topNavMenu'
-
+  
 function FooterSkeleton() {
   return (
     <div className='bg-cardBg py-14 px-4 lg:px-20 font-notoSans'>

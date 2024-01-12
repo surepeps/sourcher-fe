@@ -4,6 +4,7 @@ import BasicInfo from './BasicInfo';
 import ProfessionalProfile from './ProfessionalProfile';
 import Links from './Links';
 import Reviews from './Reviews';
+import PendingAccount from '../others/PendingAccount';
 
 
 const tabs = [
@@ -87,6 +88,8 @@ function ExpertProfile({ allData }) {
 
   const userType = ProfileData?.account_type;
 
+  const requestType = ProfileData?.request_type;
+
   const viewerAccountType = myData?.account_type;
   
   return (
@@ -95,23 +98,27 @@ function ExpertProfile({ allData }) {
       <TabSwitcher userType={userType} activeTab={activeTab} handleTabClick={handleTabClick} allData={allData} />
 
       <div className="bg-white p-4 rounded-b-lg">
-        {tabs.map((tab) => (
-          <div
-            key={tab.label}
-            className={`${
-              activeTab === tab.label
-                ? 'block transition-opacity duration-300'
-                : 'hidden transition-opacity duration-300'
-            }`}
-          >
-            {tab.label === 'Overview' && <Overview iamLoggedIn={iamLoggedIn} myData={myData} ProfileData={ProfileData} config={config} />}
-            {tab.label === 'Basic Info' && <BasicInfo allData={allData} />}
-            {tab.label === 'Professional Details' && <ProfessionalProfile userData={myData} ProfileData={ProfileData} config={config} />}
-            {tab.label === 'Links' && <Links ProfileData={ProfileData} config={config} />}
-            {/* {tab.label === 'Reviews' && <Reviews ProfileData={ProfileData} config={config} />} */}
-          </div>
-        ))}
-
+        {
+          requestType == 'pending' ? <PendingAccount /> : <>
+            {tabs.map((tab) => (
+              <div
+                key={tab.label}
+                className={`${
+                  activeTab === tab.label
+                    ? 'block transition-opacity duration-300'
+                    : 'hidden transition-opacity duration-300'
+                }`}
+              >
+                {tab.label === 'Overview' && <Overview iamLoggedIn={iamLoggedIn} myData={myData} ProfileData={ProfileData} config={config} />}
+                {tab.label === 'Basic Info' && <BasicInfo allData={allData} />}
+                {tab.label === 'Professional Details' && <ProfessionalProfile userData={myData} ProfileData={ProfileData} config={config} />}
+                {tab.label === 'Links' && <Links ProfileData={ProfileData} config={config} />}
+                {/* {tab.label === 'Reviews' && <Reviews ProfileData={ProfileData} config={config} />} */}
+              </div>
+            ))}
+          </>
+        }
+      
       </div>
     </div>
   );

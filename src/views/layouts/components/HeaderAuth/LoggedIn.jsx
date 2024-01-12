@@ -50,7 +50,7 @@ function LoggedIn({user, config}) {
             <path d="M31.9802 16.79V20.79C31.9802 22.79 31.3602 24.15 30.1202 24.9C29.8202 25.08 29.4702 24.84 29.4702 24.49L29.4802 20.79C29.4802 16.79 27.1902 14.5 23.1902 14.5L17.1002 14.51C16.7502 14.51 16.5102 14.16 16.6902 13.86C17.4402 12.62 18.8002 12 20.7902 12H27.1902C30.3802 12 31.9802 13.6 31.9802 16.79Z" fill="#0F172A"/>
             </g>
           </svg>
-          <label htmlFor="" className='badge px-1.5 py-0.5 rounded-full bg-red-600 text-textWhite text-[9px] absolute -top-1 -right-1'>2</label>
+          {/* <label htmlFor="" className='badge px-1.5 py-0.5 rounded-full bg-red-600 text-textWhite text-[9px] absolute -top-1 -right-1'>0</label> */}
         </span>
       </NavLink>
     
@@ -62,7 +62,7 @@ function LoggedIn({user, config}) {
           <path d="M24.8297 30.01C24.4097 31.17 23.2997 32 21.9997 32C21.2097 32 20.4297 31.68 19.8797 31.11C19.5597 30.81 19.3197 30.41 19.1797 30C19.3097 30.02 19.4397 30.03 19.5797 30.05C19.8097 30.08 20.0497 30.11 20.2897 30.13C20.8597 30.18 21.4397 30.21 22.0197 30.21C22.5897 30.21 23.1597 30.18 23.7197 30.13C23.9297 30.11 24.1397 30.1 24.3397 30.07C24.4997 30.05 24.6597 30.03 24.8297 30.01Z" fill="#0F172A"/>
           </g>
         </svg>
-        <label htmlFor="" className='badge px-1.5 py-0.5 rounded-full bg-red-600 text-textWhite text-[9px] absolute -top-1 -right-1'>2</label>
+        {/* <label htmlFor="" className='badge px-1.5 py-0.5 rounded-full bg-red-600 text-textWhite text-[9px] absolute -top-1 -right-1'>0</label> */}
       </span>
 
       <div className="user">
